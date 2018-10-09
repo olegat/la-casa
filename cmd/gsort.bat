@@ -1,1 +1,1 @@
-%LocalAppData%\Programs\Git\usr\bin\sort.exe %*
+@%LocalAppData%\Programs\Git\usr\bin\sort.exe %*

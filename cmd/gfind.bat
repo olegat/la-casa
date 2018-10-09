@@ -1,1 +1,1 @@
-%LocalAppData%\Programs\Git\usr\bin\find.exe %*
+@%LocalAppData%\Programs\Git\usr\bin\find.exe %*
