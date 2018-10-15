@@ -57,6 +57,53 @@
 
 
 ;;-----------------------------------------------------------------------------
+;; Ediff
+;;-----------------------------------------------------------------------------
+(require 'ediff)
+
+(custom-set-variables
+ '(ediff-split-window-function (quote split-window-horizontally)))
+
+;; Make the faces visible in a term without x256 colors (e.g. CMD on Windows)
+;;
+;; In a nutshell:
+;;   current A = black on green
+;;   current B = black on red
+;;   current C = black on blue
+;;   everything else = nil on gray
+
+;; Current
+(set-face-foreground 'ediff-current-diff-A "black")
+(set-face-background 'ediff-current-diff-A "green")
+(set-face-foreground 'ediff-current-diff-B "black")
+(set-face-background 'ediff-current-diff-B "red")
+(set-face-foreground 'ediff-current-diff-C "black")
+(set-face-background 'ediff-current-diff-C "cyan")
+
+;; Fine
+(set-face-foreground 'ediff-fine-diff-A "black")
+(set-face-background 'ediff-fine-diff-A "lightgreen")
+(set-face-foreground 'ediff-fine-diff-B "black")
+(set-face-background 'ediff-fine-diff-B "lightred")
+(set-face-foreground 'ediff-fine-diff-C "black")
+(set-face-background 'ediff-fine-diff-C "lightcyan")
+
+;; Unselected
+(set-face-foreground 'ediff-even-diff-A nil)
+(set-face-background 'ediff-even-diff-A "darkgray")
+(set-face-foreground 'ediff-even-diff-B nil)
+(set-face-background 'ediff-even-diff-B "darkgray")
+(set-face-foreground 'ediff-even-diff-C nil)
+(set-face-background 'ediff-even-diff-C "darkgray")
+(set-face-foreground 'ediff-odd-diff-A nil)
+(set-face-background 'ediff-odd-diff-A "darkgray")
+(set-face-foreground 'ediff-odd-diff-B nil)
+(set-face-background 'ediff-odd-diff-B "darkgray")
+(set-face-foreground 'ediff-odd-diff-C nil)
+(set-face-background 'ediff-odd-diff-C "darkgray")
+
+
+;;-----------------------------------------------------------------------------
 ;;  Key bindings
 ;;-----------------------------------------------------------------------------
 (defun olegat-insert-§ ()
