@@ -1,0 +1,6 @@
+[user]
+	name = Oli Legat
+	email = olegat@google.com
+
+[alias]
+	arbol = log --graph --oneline --decorate
