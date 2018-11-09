@@ -4,4 +4,4 @@
 
 [alias]
 	arbol = log --graph --oneline --decorate
-	madera = log '--format=%C(auto,yellow)%h%C(auto)%d %C(auto,cyan)%ai%C(auto) %C(auto,black bold)%ae%C(auto) %s' --graph
+	madera = log '--format=%C(auto,yellow)%h%C(auto)%d %C(auto,cyan)%ai%C(auto) %C(auto,magenta)%ae%Creset %s' --graph
