@@ -5,4 +5,4 @@
 [alias]
 	arbol = log --graph --oneline --decorate
 	madera = log '--format=%C(auto,yellow)%h %C(auto,cyan)%ai %C(auto,magenta)%ae%C(auto)%d %Creset%s' --graph
-	oak = log '--date=format:%Y-%m-%d %H:%M' '--format=%C(auto,yellow)%h %cd %Creset%C(auto,magenta)% %ad %ae%Creset %C(auto)%d %s' --graph
+	oak = log '--date=format:%Y-%m-%d %H:%M' '--format=%C(auto,yellow)%h %cd %Creset%C(auto,magenta)% %ad %ae%Creset%C(auto)%d %s' --graph
