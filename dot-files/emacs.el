@@ -149,3 +149,4 @@
 ;; Misc
 (global-set-key (kbd "§ TAB") 'imenu)
 (global-set-key (kbd "§ e r") 'eval-region)
+(global-set-key (kbd "§ b")   'recompile)
