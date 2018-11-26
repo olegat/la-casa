@@ -1,0 +1,5 @@
+[protocol "sso"]
+	allow = always
+
+[include]
+  path = C:/Users/olegat/la-casa/dot-files/gitconfig
