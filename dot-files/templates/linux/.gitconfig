@@ -1,0 +1,5 @@
+[http]
+	cookiefile = /usr/local/google/home/olegat/.gitcookies
+
+[include]
+	path = /usr/local/google/home/olegat/la-casa/dot-files/gitconfig
