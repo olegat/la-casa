@@ -1,0 +1,1 @@
+A mix of scripts and configuration files shared across olegat's devices
