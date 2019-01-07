@@ -37,6 +37,14 @@
 
 
 ;;-----------------------------------------------------------------------------
+;; EditorConfig
+;;-----------------------------------------------------------------------------
+;; TODO(olegat) - use use-package: https://www.emacswiki.org/emacs/UsePackage
+(when (fboundp 'editorconfig-mode)
+  (editorconfig-mode 1))
+
+
+;;-----------------------------------------------------------------------------
 ;; Speedbar
 ;;-----------------------------------------------------------------------------
 (custom-set-variables '(speedbar-show-unknown-files t))
