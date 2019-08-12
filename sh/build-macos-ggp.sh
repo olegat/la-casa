@@ -33,12 +33,12 @@ popd > /dev/null
 #------------------------------------------------------------------------------
 # Rename / Re-structure hierarchy.
 rm -fr "${TMPDIR}"
-mkdir -p "/${TMPDIR}/sdk/dev/bin"
+mkdir -p "/${TMPDIR}/sdk/dev/bin/chrome_client"
 cp "${GOOGLE3}/blaze-bin/chrome/cloudcast/tools/cli/ggp_darwin" \
   "${TMPDIR}/sdk/dev/bin/ggp"
 
 cp "${GOOGLE3}/blaze-bin/chrome/cloudcast/devchromefe/chrome_client/chrome_client_darwin" \
-  "${TMPDIR}/sdk/dev/bin/chrome_client"
+  "${TMPDIR}/sdk/dev/bin/chrome_client/chrome_client"
 
 # Create tarball
 pushd "/${TMPDIR}/sdk" > /dev/null
