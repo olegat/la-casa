@@ -1,0 +1,1 @@
+@python %UserProfile%\la-casa\py\json-validate.py %*
