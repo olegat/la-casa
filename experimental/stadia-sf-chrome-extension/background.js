@@ -75,13 +75,14 @@ chrome.runtime.onInstalled.addListener(function() {
   console.log("hello world")
   chrome.contextMenus.create(
     {
-      id:"olegat test",
-      title:"olegat test"
+      id:"shareCase_MenuItem",
+      title:"Copy Case Link",
+      documentUrlPatterns: ["https://google-stadia.lightning.force.com/*"]
     }
   )
 });
 
 chrome.contextMenus.onClicked.addListener(function(itemData) {
-  if (itemData.menuItemId == "olegat test")
+  if (itemData.menuItemId == "shareCase_MenuItem")
       onContextMenuClick()
 });
