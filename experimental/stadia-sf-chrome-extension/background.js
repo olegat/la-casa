@@ -75,7 +75,6 @@ function copyRichTextToClipboard(str) {
 
 function copyLinkToClipboard(text, url) {
   const a = document.createElement('a');
-  a.style.position = 'fixed';
   a.style.opacity = 0;
   a.textContent = text;
   a.setAttribute("href",url);
