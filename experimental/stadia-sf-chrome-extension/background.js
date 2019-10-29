@@ -1,52 +1,20 @@
 // -*- Mode:js; js-indent-level: 2 -*-
-function promiseQuery(options){
+function promiseTabsQuery(options){
   return new Promise(function(resolve,reject){
     chrome.tabs.query(options, resolve);
   });
 }
 
 function promiseGetURLWithoutQuery() {
-  return promiseQuery({'active': true, 'lastFocusedWindow': true, 'currentWindow': true})
+  return promiseTabsQuery({'active': true, 'lastFocusedWindow': true, 'currentWindow': true})
     .then(function (tabs) {
       return tabs[0].url.split("?", 1);
     });
 }
 
-function injected_getCaseNumber() {                                                      
-  /** Salesforce Renders the HTML like.
-      <div>
-        <div>
-  (1)     <span>Case Number</span>
-        </div>
-  (2)   <div>
-          <span><span>00000001</span></span>
-        </div>
-      </div>
-  */ 
-  // Search for node (1)
-  let xpath = '//span[contains(., "Case Number")]'
-  let label = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null);
-
-  // Get first common ancestor of (1) and (2)
-  let x = label.iterateNext().parentNode.parentNode;
-
-  // Search for node (2)
-  xpath = './/span'
-  var value = document.evaluate(xpath, x, null, XPathResult.ANY_TYPE, null)
-  value.iterateNext()
-
-  return String(value.iterateNext().textContent)
-}
-
 function promiseGetCaseNumber() {
   return new Promise(function(resolve,reject){
-    chrome.tabs.executeScript(
-      null,
-      {
-        // TODO(olegat) see if possible to inject this function permanantely
-        code: injected_getCaseNumber.toString() + 'injected_getCaseNumber()'
-      },
-      resolve)
+    chrome.tabs.executeScript(null, {code: 'findCaseNumber()'}, resolve)
   })
 }
 

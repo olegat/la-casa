@@ -8,7 +8,17 @@
   },
   "browser_action": {
     "default_popup": "popup.html"
-  },  
-  "permissions": ["contextMenus", "tabs", "activeTab"],
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://google-stadia.lightning.force.com/*"],
+      "js": ["stadia-sf-scrapper.js"]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "tabs"
+  ],
   "manifest_version": 2
 }
