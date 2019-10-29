@@ -79,6 +79,7 @@ function copyLinkToClipboard(text, url) {
   a.style.opacity = 0;
   a.textContent = text;
   a.setAttribute("href",url);
+  document.body.appendChild(a);
   copyRichTextToClipboard(a.outerHTML);
   document.body.removeChild(a);
 }
