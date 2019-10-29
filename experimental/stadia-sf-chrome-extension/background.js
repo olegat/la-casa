@@ -50,7 +50,7 @@ function promiseGetCaseNumber() {
   })
 }
 
-function copyToClipboard(text) {
+function copyTextToClipboard(text) {
   const input = document.createElement('input');
   input.style.position = 'fixed';
   input.style.opacity = 0;
@@ -59,7 +59,29 @@ function copyToClipboard(text) {
   input.select();
   document.execCommand('Copy');
   document.body.removeChild(input);
-};
+}
+
+// https://stackoverflow.com/questions/23934656/javascript-copy-rich-text-contents-to-clipboard
+function copyRichTextToClipboard(str) {
+  function listener(e) {
+    e.clipboardData.setData("text/html", str);
+    e.clipboardData.setData("text/plain", str);
+    e.preventDefault();
+  }
+  document.addEventListener("copy", listener);
+  document.execCommand("copy");
+  document.removeEventListener("copy", listener);
+}
+
+function copyLinkToClipboard(text, url) {
+  const a = document.createElement('a');
+  a.style.position = 'fixed';
+  a.style.opacity = 0;
+  a.textContent = text;
+  a.setAttribute("href",url);
+  copyRichTextToClipboard(a.outerHTML);
+  document.body.removeChild(a);
+}
 
 function onContextMenuClick() {
   pURL    = promiseGetURLWithoutQuery();
@@ -67,7 +89,7 @@ function onContextMenuClick() {
   Promise.all([pURL,pCaseNo]).then(function(result) {
     var url    = result[0]
     var caseNo = result[1]
-    copyToClipboard(caseNo +" = "+url)
+    copyLinkToClipboard(caseNo, url)
   })
 }
 
