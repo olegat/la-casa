@@ -12,7 +12,24 @@ function promiseGetURLWithoutQuery() {
     });
 }
 
-function findCaseNumber() {
+function promiseGetCaseNumberInTitle() {
+  return promiseTabsQuery({'active': true, 'lastFocusedWindow': true, 'currentWindow': true})
+    .then(function (tabs) {
+      return tabs[0].title.split(" ", 1);
+    });
+}
+
+// Old way to do get the Case Number. This doesn't work well when changing
+// between tabs in SF. When you change SF Case tab, the extension copies
+// the case number of the 1st case tab that was opened. To the get tool to
+// copy the case number of the newest selected case tab, the whole page needs
+// to  be refreshed. This is likely because SF appends additional HTML
+// elements as the user opens more cases, and our tools only picks up the
+// first matching element (not the currently selected element).
+//
+// The new way to do it is to copy the HTML Page Title instead, because
+// that's a singleton and it contains the case number of the selected SF tab.
+function findCaseNumberInHTML() {
   /** Salesforce Renders the HTML like.
       <div>
         <div>
@@ -38,13 +55,14 @@ function findCaseNumber() {
   return String(value.iterateNext().textContent)
 }
 
-function promiseGetCaseNumber() {
+// Old way to get the Case Number. @see findCaseNumberInHTML for more info
+function promiseGetCaseNumberInHTML() {
   return new Promise(function(resolve,reject){
     chrome.tabs.executeScript(
       null,
       {
         // TODO(olegat) see if possible to inject this function permanently
-        code: findCaseNumber.toString() + 'findCaseNumber()'
+        code: findCaseNumberInHTML.toString() + 'findCaseNumberInHTML()'
       },
       resolve)
   })
@@ -85,7 +103,9 @@ function copyLinkToClipboard(text, url) {
 
 function onContextMenuClick() {
   pURL    = promiseGetURLWithoutQuery();
-  pCaseNo = promiseGetCaseNumber()
+  // Old way to get the Case Number. @see findCaseNumberInHTML for more info
+  // pCaseNo = promiseGetCaseNumberInHTML()
+  pCaseNo = promiseGetCaseNumberInTitle()
   Promise.all([pURL,pCaseNo]).then(function(result) {
     var url    = result[0]
     var caseNo = result[1]
