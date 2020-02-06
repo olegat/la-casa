@@ -2,9 +2,9 @@ import json
 import sys
 import os
 
-def parse(text):
+def parse(json_file):
   try:
-    return json.loads(text)
+    return json.load(json_file)
   except ValueError as e:
     print('invalid json: %s' % e)
     return None # or: raise
@@ -12,6 +12,7 @@ def parse(text):
 if __name__ == "__main__":
   for path in sys.argv[1:]:
     if os.path.isfile(path):
-      parse(path)
+      with open(path) as f:
+        parse(f)
     else:
       print('file ' + path + ' does not exist.')
