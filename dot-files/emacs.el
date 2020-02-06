@@ -10,8 +10,9 @@
  delete-old-versions t
  kept-new-versions 6
  kept-old-versions 2
- version-control t   ; use versioned backups
- set-default-coding-systems 'utf-8-unix)
+ version-control t)   ; use versioned backups
+ 
+(setq-default buffer-file-coding-system 'utf-8-unix)
 
 
 ;; Code Styling
@@ -158,3 +159,4 @@
 (global-set-key (kbd "§ TAB") 'imenu)
 (global-set-key (kbd "§ e r") 'eval-region)
 (global-set-key (kbd "§ b")   'recompile)
+(global-set-key (kbd "§ s l") 'sort-lines)
