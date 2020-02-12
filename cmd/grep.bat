@@ -1,1 +1,1 @@
-@%LocalAppData%\Programs\Git\usr\bin\grep.exe --color=auto %*
+@"%GIT_ROOT%\usr\bin\grep.exe" --color=auto %*

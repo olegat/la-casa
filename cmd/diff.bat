@@ -1,1 +1,1 @@
-@%LocalAppData%\Programs\Git\usr\bin\diff.exe %*
+@"%GIT_ROOT%\usr\bin\diff.exe" %*

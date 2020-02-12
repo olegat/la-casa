@@ -1,4 +1,4 @@
-@%LocalAppData%\Programs\Git\usr\bin\grep.exe -Rn -E --color=always^
+@"%GIT_ROOT%\usr\bin\grep.exe" -Rn -E --color=always^
  "--exclude-dir=.git"^
  "--exclude-dir=bazel-*"^
  %*

@@ -1,1 +1,1 @@
-@%LocalAppData%\Programs\Git\usr\bin\cat.exe %*
+@"%GIT_ROOT%\usr\bin\cat.exe" %*

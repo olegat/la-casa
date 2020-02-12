@@ -1,1 +1,1 @@
-@%LocalAppData%\Programs\Git\usr\bin\awk.exe %*
+@"%GIT_ROOT%\usr\bin\awk.exe" %*

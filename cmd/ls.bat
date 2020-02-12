@@ -1,1 +1,1 @@
-@%LocalAppData%\Programs\Git\usr\bin\ls.exe %*
+@"%GIT_ROOT%\usr\bin\ls.exe" %*

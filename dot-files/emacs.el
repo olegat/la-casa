@@ -1,5 +1,20 @@
 
 ;;-----------------------------------------------------------------------------
+;;  Platform-specific config
+;;-----------------------------------------------------------------------------
+(when (string-equal system-type "windows-nt")
+  ;; Use git-bash Unix environment
+  (setenv "PATH"
+          (concat (getenv "PATH")
+                  (getenv "GIT_ROOT") "\\usr\\bin;"))
+
+  ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
+  (unless (boundp 'olegat-cmake-share-path)
+    (when (file-directory-p "C:/Program Files/CMake/share/cmake-3.16")
+      (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.16"))))
+
+
+;;-----------------------------------------------------------------------------
 ;; Defaults
 ;;-----------------------------------------------------------------------------
 ;; Filesystem I/O Config

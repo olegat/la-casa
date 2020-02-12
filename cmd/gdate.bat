@@ -1,1 +1,1 @@
-@%LocalAppData%\Programs\Git\usr\bin\date.exe %*
+@"%GIT_ROOT%\usr\bin\date.exe" %*
