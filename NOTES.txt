@@ -15,7 +15,7 @@ How to Build YetiSDKInstaller in yeti://dev/visual_studio_integration
   > cd %USERPROFILE%\Downloads
   > mkdir tmp 
   > cd tmp
-  > gsutil cp -r gs://yeti_builds/sdk_release/sdk/13994.1.42.0/Debug/windows/artifacts/renderdoc/client/* .
+  > gsutil -m cp -r gs://yeti_builds/sdk_release/sdk/13994.1.42.0/Debug/windows/artifacts/renderdoc/client/* .
   # Then zip "tmp/*", rename to YetiSDK-windows-renderdoc.zip and move it
 
   Tips: use this URL for browsing:
