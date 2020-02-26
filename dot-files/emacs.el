@@ -36,6 +36,7 @@
  tab-width 2
  indent-tabs-mode nil
  require-final-newline nil  ; Don't mess with final newlines in files.
+ js-indent-level 2
  mode-require-final-newline nil)
 
 ;; Don't add multiple newlines when scrolling past the end of the file.
