@@ -33,10 +33,10 @@ def ggp(*args):
   if ggp.returncode:
     # Failure
     if stdout:
-      print "ggp process failed :-("
-      print "Exit code:  "+ str(ggp.returncode)
-      print "Args:       " + " ".join(ggp_args)
-      print "Output:"
+      print 'ggp process failed :-('
+      print 'Exit code:  '+ str(ggp.returncode)
+      print 'Args:       ' + ' '.join(ggp_args)
+      print 'Output:'
       print stdout
       exit(ggp.returncode)
     return None
@@ -45,7 +45,7 @@ def ggp(*args):
   if stdout:
     return stdout
   else:
-    return ""
+    return ''
 
 
 #------------------------------------------------------------------------------
@@ -53,7 +53,12 @@ def ggp(*args):
 #------------------------------------------------------------------------------
 def CIDR_generator_mersennetwister():
   def octet():
-    return str(random.randrange(1 ,256))
+    # We need to understand what's the maximum number of subnets that we can
+    # add to the firewall config.
+    #
+    # Windows has a maximum amount of characters that are permitted in the CLI,
+    # So we'll use 3 digits octets because that's the worst case scenario.
+    return str(random.randrange(100 ,256))
   return '.'.join([ octet(), octet(), octet(), octet() ]) + '/32'
 
 def generate_CIDR_notations(generator_fn, count):
@@ -97,8 +102,12 @@ def main():
   global help_description
   parser = argparse.ArgumentParser(description=help_description,
     formatter_class=lambda prog: argparse.HelpFormatter(prog,max_help_position=50))
-  parser.add_argument('--n-subnets', dest='n_subnets', type=int, nargs=1, help="number of random subnets to use")
-  parser.add_argument('args', type=str, nargs='*', help="additional arguments to pass to ggp.exe")
+  parser.add_argument('--quiet-ggp', dest='quiet_ggp', action='store_const',
+                      const=True, default=False, help='mute stdout of ggp.exe')
+  parser.add_argument('--n-subnets', dest='n_subnets', type=int, nargs=1,
+                      help='number of random subnets to use')
+  parser.add_argument('args', type=str, nargs='*',
+                      help='additional arguments to pass to ggp.exe')
   opt = parser.parse_args()
 
   # Build args for ggp.exe
@@ -106,10 +115,18 @@ def main():
   subnets = []
   if opt.n_subnets:
     subnets = build_firewall_subnets(opt.n_subnets[0])
-  args = rules + subnets + opt.args
+  args = ['network', 'firewall', 'update'] + rules + subnets + opt.args
+
+  # Calculate the length to the command-line in bytes.
+  size = len('ggp')
+  size += len(args) # number of spaces
+  for a in args:
+    size += len(a)
 
   # Run ggp.exe
-  out = ggp( 'network', 'firewall', 'update', *args )
+  if not opt.quiet_ggp:
+    print 'Running ggp.exe (command line is ' + str(size) + ' bytes long)'
+  out = ggp(  *args )
   print(out)
 
 
