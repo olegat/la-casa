@@ -124,10 +124,10 @@ def main():
     size += len(a)
 
   # Run ggp.exe
-  if not opt.quiet_ggp:
-    print 'Running ggp.exe (command line is ' + str(size) + ' bytes long)'
+  print 'Running ggp.exe (command line is ' + str(size) + ' bytes long)'
   out = ggp(  *args )
-  print(out)
+  if not opt.quiet_ggp:
+    print(out)
 
 
 if __name__ == '__main__':
