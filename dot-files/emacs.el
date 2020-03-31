@@ -11,7 +11,10 @@
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
   (unless (boundp 'olegat-cmake-share-path)
     (when (file-directory-p "C:/Program Files/CMake/share/cmake-3.16")
-      (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.16"))))
+      (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.16")))
+
+  (setq find-program "gfind.bat"))
+
 
 
 ;;-----------------------------------------------------------------------------
