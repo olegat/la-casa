@@ -30,7 +30,9 @@
  kept-old-versions 2
  version-control t)   ; use versioned backups
  
-(setq-default buffer-file-coding-system 'utf-8-unix)
+(setq-default
+ buffer-file-coding-system 'utf-8-unix
+ show-trailing-whitespace t)
 
 
 ;; Code Styling
