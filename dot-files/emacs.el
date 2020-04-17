@@ -5,8 +5,8 @@
 (when (string-equal system-type "windows-nt")
   ;; Use git-bash Unix environment
   (setenv "PATH"
-          (concat (getenv "PATH")
-                  (getenv "GIT_ROOT") "\\usr\\bin;"))
+          (concat (getenv "PATH") ";"
+                  (getenv "GIT_ROOT") "\\usr\\bin"))
 
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
   (unless (boundp 'olegat-cmake-share-path)
@@ -29,7 +29,7 @@
  kept-new-versions 6
  kept-old-versions 2
  version-control t)   ; use versioned backups
- 
+
 (setq-default
  buffer-file-coding-system 'utf-8-unix
  show-trailing-whitespace t)
