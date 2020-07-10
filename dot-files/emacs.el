@@ -169,6 +169,7 @@
 ;; Opening files
 (global-set-key (kbd "§ t t") 'toggle-truncate-lines)
 (global-set-key (kbd "§ f f") 'find-file-at-point)
+(global-set-key (kbd "§ j o") 'ff-find-other-file)
 
 ;; Window navigation
 (global-set-key (kbd "§ <right>") 'windmove-right)
