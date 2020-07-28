@@ -9,11 +9,14 @@
                   (getenv "GIT_ROOT") "\\usr\\bin"))
 
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
-  (unless (boundp 'olegat-cmake-share-path)
-    (when (file-directory-p "C:/Program Files/CMake/share/cmake-3.16")
-      (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.16")))
+  (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.16")
 
   (setq find-program "gfind.bat"))
+
+(when (string-equal system-type "cygwin")
+  ;; Use the same CMake as windows-nt (with cygdrive Unix path)
+  (setq olegat-cmake-share-path "/cygdrive/c/Program Files/CMake/share/cmake-3.16"))
+
 
 
 
@@ -79,11 +82,12 @@
 ;;  (setq olegat-cmake-share-path "~/cmake/share/cmake-3.12/")
 ;;  (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.12")
 (when (boundp 'olegat-cmake-share-path)
-  (setq load-path
-        (cons
-         (expand-file-name (concat olegat-cmake-share-path "/editors/emacs"))
-         load-path))
-  (require 'cmake-mode))
+  (when (file-directory-p olegat-cmake-share-path)
+    (setq load-path
+          (cons
+           (expand-file-name (concat olegat-cmake-share-path "/editors/emacs"))
+           load-path))
+    (require 'cmake-mode)))
 
 
 ;;-----------------------------------------------------------------------------
