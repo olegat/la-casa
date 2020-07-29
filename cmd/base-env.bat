@@ -1,0 +1,13 @@
+@set PATH=C:\Windows\system32;
+@set PATH=%PATH%C:\Windows;
+@set PATH=%PATH%C:\Windows\CCM\;
+@set PATH=%PATH%C:\Windows\ccmsetup;
+@set PATH=%PATH%C:\Windows\System32\Wbem;
+@set PATH=%PATH%C:\Windows\System32\WindowsPowerShell\v1.0;
+@set PATH=%PATH%C:\Users\olegat\AppData\Local\Microsoft\WindowsApps;
+@set PATH=%PATH%C:\Users\olegat\la-casa\ps1\Scripts\;
+@set PATH=%PATH%C:\Users\olegat\la-casa\cmd\;
+@set PATH=%PATH%C:\Users\olegat\AppData\Local\Programs\ag-2018-08-08_2.2.0-2-gbd82cd3-x64;
+@REM @set PATH=%PATH%C:\Users\olegat\AppData\Local\Programs\ninja-v1.10.0;
+@REM @set PATH=%PATH%C:\Users\olegat\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;
+@set PATH=%PATH%C:\Git\cmd;
