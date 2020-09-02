@@ -1,4 +1,55 @@
 
+
+;;-----------------------------------------------------------------------------
+;;  Key bindings
+;;-----------------------------------------------------------------------------
+(defun olegat-insert-§ ()
+  (interactive)
+  (insert "§"))
+(defun olegat-select-speedbar-frame ()
+  (interactive)
+  (select-frame-by-name "Speedbar"))
+(defun olegat-select-frame-F1 ()
+  (interactive)
+  (select-frame-by-name "F1"))
+(defun olegat-select-frame-F2 ()
+  (interactive)
+  (select-frame-by-name "F2"))
+(defun olegat-select-frame-F3 ()
+  (interactive)
+  (select-frame-by-name "F3"))
+(defun olegat-select-frame-F4 ()
+  (interactive)
+  (select-frame-by-name "F4"))
+
+;; Escape the § symbol
+(global-set-key (kbd "§") nil)
+(global-set-key (kbd "§ §") 'olegat-insert-§)
+
+;; Frame selection
+(global-set-key (kbd "§ /") 'olegat-select-speedbar-frame)
+(global-set-key (kbd "§ 1") 'olegat-select-frame-F1)
+(global-set-key (kbd "§ 2") 'olegat-select-frame-F2)
+(global-set-key (kbd "§ 3") 'olegat-select-frame-F3)
+(global-set-key (kbd "§ 4") 'olegat-select-frame-F4)
+
+;; Opening files
+(global-set-key (kbd "§ t t") 'toggle-truncate-lines)
+(global-set-key (kbd "§ f f") 'find-file-at-point)
+
+;; Window navigation
+(global-set-key (kbd "§ <right>") 'windmove-right)
+(global-set-key (kbd "§ <left>")  'windmove-left)
+(global-set-key (kbd "§ <down>")  'windmove-down)
+(global-set-key (kbd "§ <up>")    'windmove-up)
+
+;; Misc
+(global-set-key (kbd "§ TAB") 'imenu)
+(global-set-key (kbd "§ e r") 'eval-region)
+(global-set-key (kbd "§ b")   'recompile)
+(global-set-key (kbd "§ s l") 'sort-lines)
+
+
 ;;-----------------------------------------------------------------------------
 ;;  Platform-specific config
 ;;-----------------------------------------------------------------------------
@@ -9,9 +60,15 @@
                   (getenv "GIT_ROOT") "\\usr\\bin;"))
 
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
-  (unless (boundp 'olegat-cmake-share-path)
-    (when (file-directory-p "C:/Program Files/CMake/share/cmake-3.16")
-      (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.16"))))
+  (unless (boundp 'olegat-cmake-mode-path)
+    (setq olegat-cmake-mode-path
+          "C:/Program Files/CMake/share/cmake-3.16/editors/emacs")))
+
+(when (string-equal system-type "darwin")
+  (unless (boundp 'olegat-cmake-mode-path)
+    (setq olegat-cmake-mode-path
+          "/Users/olegat/homebrew/Cellar/cmake/3.18.2/share/emacs/site-lisp/cmake")))
+  
 
 
 ;;-----------------------------------------------------------------------------
@@ -71,14 +128,15 @@
 ;; CMake
 ;;-----------------------------------------------------------------------------
 ;; E.g.
-;;  (setq olegat-cmake-share-path "~/cmake/share/cmake-3.12/")
-;;  (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.12")
-(when (boundp 'olegat-cmake-share-path)
-  (setq load-path
-        (cons
-         (expand-file-name (concat olegat-cmake-share-path "/editors/emacs"))
-         load-path))
-  (require 'cmake-mode))
+;;  (setq olegat-cmake-mode-path "~/cmake/share/cmake-3.12/editors/emacs")
+;;  (setq olegat-cmake-mode-path "C:/Program Files/CMake/share/cmake-3.12/editors/emacs")
+(when (boundp 'olegat-cmake-mode-path)
+  (when (file-directory-p olegat-cmake-mode-path)
+    (setq load-path
+          (cons
+           (expand-file-name olegat-cmake-mode-path)
+           load-path))
+    (require 'cmake-mode)))
 
 
 ;;-----------------------------------------------------------------------------
@@ -126,53 +184,3 @@
 (set-face-background 'ediff-odd-diff-B "darkgray")
 (set-face-foreground 'ediff-odd-diff-C nil)
 (set-face-background 'ediff-odd-diff-C "darkgray")
-
-
-;;-----------------------------------------------------------------------------
-;;  Key bindings
-;;-----------------------------------------------------------------------------
-(defun olegat-insert-§ ()
-  (interactive)
-  (insert "§"))
-(defun olegat-select-speedbar-frame ()
-  (interactive)
-  (select-frame-by-name "Speedbar"))
-(defun olegat-select-frame-F1 ()
-  (interactive)
-  (select-frame-by-name "F1"))
-(defun olegat-select-frame-F2 ()
-  (interactive)
-  (select-frame-by-name "F2"))
-(defun olegat-select-frame-F3 ()
-  (interactive)
-  (select-frame-by-name "F3"))
-(defun olegat-select-frame-F4 ()
-  (interactive)
-  (select-frame-by-name "F4"))
-
-;; Escape the § symbol
-(global-set-key (kbd "§") nil)
-(global-set-key (kbd "§ §") 'olegat-insert-§)
-
-;; Frame selection
-(global-set-key (kbd "§ /") 'olegat-select-speedbar-frame)
-(global-set-key (kbd "§ 1") 'olegat-select-frame-F1)
-(global-set-key (kbd "§ 2") 'olegat-select-frame-F2)
-(global-set-key (kbd "§ 3") 'olegat-select-frame-F3)
-(global-set-key (kbd "§ 4") 'olegat-select-frame-F4)
-
-;; Opening files
-(global-set-key (kbd "§ t t") 'toggle-truncate-lines)
-(global-set-key (kbd "§ f f") 'find-file-at-point)
-
-;; Window navigation
-(global-set-key (kbd "§ <right>") 'windmove-right)
-(global-set-key (kbd "§ <left>")  'windmove-left)
-(global-set-key (kbd "§ <down>")  'windmove-down)
-(global-set-key (kbd "§ <up>")    'windmove-up)
-
-;; Misc
-(global-set-key (kbd "§ TAB") 'imenu)
-(global-set-key (kbd "§ e r") 'eval-region)
-(global-set-key (kbd "§ b")   'recompile)
-(global-set-key (kbd "§ s l") 'sort-lines)
