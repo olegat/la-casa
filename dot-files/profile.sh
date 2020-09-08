@@ -4,7 +4,7 @@ if  [ -f "$(dirname ${BASH_SOURCE[0]})/profile-$(uname).sh" ] ; then
 fi
 
 #------------------------------------------------------------------------------
-# Yeti GGP CLI (Unix)
+# GGP CLI (Unix)
 #------------------------------------------------------------------------------
-export YETI_SDK_PATH=${HOME}/YetiSDK
-export PATH=${PATH}:${HOME}/YetiSDK/dev/bin
+export GGP_SDK_PATH=${HOME}/YetiSDK/1.48
+export PATH=${PATH}:${GGP_SDK_PATH}/dev/bin

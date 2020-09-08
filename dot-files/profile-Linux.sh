@@ -7,7 +7,7 @@
 export PS1='\[\033[01;32m\]\h\[\033[00m\]:\[\033[01;34m\]..${PWD: -20}\[\033[00m\]\$ '
 export P4DIFF="diff --color -up"
 # Yeti toolchain (clang, llvm, etc...)
-export PATH="${PATH}:/usr/local/google/home/olegat/yeti/tools/bin"
+#export PATH="${PATH}:/usr/local/google/home/olegat/yeti/tools/bin"
 
 
 #------------------------------------------------------------------------------

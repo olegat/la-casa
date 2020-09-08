@@ -1,3 +1,6 @@
+[core]
+  pager = less -S
+
 [user]
 	name = Oli Legat
 	email = olegat@google.com

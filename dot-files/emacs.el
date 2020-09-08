@@ -36,6 +36,7 @@
 ;; Opening files
 (global-set-key (kbd "§ t t") 'toggle-truncate-lines)
 (global-set-key (kbd "§ f f") 'find-file-at-point)
+(global-set-key (kbd "§ j o") 'ff-find-other-file)
 
 ;; Window navigation
 (global-set-key (kbd "§ <right>") 'windmove-right)
@@ -56,19 +57,27 @@
 (when (string-equal system-type "windows-nt")
   ;; Use git-bash Unix environment
   (setenv "PATH"
-          (concat (getenv "PATH")
-                  (getenv "GIT_ROOT") "\\usr\\bin;"))
-
+          (concat (getenv "PATH") ";"
+                  (getenv "GIT_ROOT") "\\usr\\bin"))
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
   (unless (boundp 'olegat-cmake-mode-path)
     (setq olegat-cmake-mode-path
-          "C:/Program Files/CMake/share/cmake-3.16/editors/emacs")))
+          "C:/Program Files/CMake/share/cmake-3.16/editors/emacs"))
+  (setq find-program "gfind.bat"))
+
 
 (when (string-equal system-type "darwin")
   (unless (boundp 'olegat-cmake-mode-path)
     (setq olegat-cmake-mode-path
           "/Users/olegat/homebrew/Cellar/cmake/3.18.2/share/emacs/site-lisp/cmake")))
-  
+
+
+(when (string-equal system-type "cygwin")
+  ;; Use the same CMake as windows-nt (with cygdrive Unix path)
+  (unless (boundp 'olegat-cmake-mode-path)
+  (setq olegat-cmake-mode-path
+        "/cygdrive/c/Program Files/CMake/share/cmake-3.16/editors/emacs"))
+
 
 
 ;;-----------------------------------------------------------------------------
@@ -83,8 +92,10 @@
  kept-new-versions 6
  kept-old-versions 2
  version-control t)   ; use versioned backups
- 
-(setq-default buffer-file-coding-system 'utf-8-unix)
+
+(setq-default
+ buffer-file-coding-system 'utf-8-unix
+ show-trailing-whitespace t)
 
 
 ;; Code Styling
@@ -128,13 +139,13 @@
 ;; CMake
 ;;-----------------------------------------------------------------------------
 ;; E.g.
-;;  (setq olegat-cmake-mode-path "~/cmake/share/cmake-3.12/editors/emacs")
-;;  (setq olegat-cmake-mode-path "C:/Program Files/CMake/share/cmake-3.12/editors/emacs")
-(when (boundp 'olegat-cmake-mode-path)
-  (when (file-directory-p olegat-cmake-mode-path)
+;;  (setq olegat-cmake-share-path "~/cmake/share/cmake-3.12/")
+;;  (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.12")
+(when (boundp 'olegat-cmake-share-path)
+  (when (file-directory-p olegat-cmake-share-path)
     (setq load-path
           (cons
-           (expand-file-name olegat-cmake-mode-path)
+           (expand-file-name (concat olegat-cmake-share-path "/editors/emacs"))
            load-path))
     (require 'cmake-mode)))
 
