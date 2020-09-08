@@ -22,3 +22,18 @@ alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs-x86_64-10_10 -nw"
 # Homebrew
 #------------------------------------------------------------------------------
 export PATH="${PATH}:/Users/olegat/homebrew/bin"
+
+
+#------------------------------------------------------------------------------
+# Pip (python 2.7)
+#------------------------------------------------------------------------------
+# Installation instructions:
+#   https://gist.github.com/haircut/14705555d58432a5f01f9188006a04ed
+#
+export PATH="${PATH}:${HOME}/Library/Python/2.7/bin"
+
+
+#------------------------------------------------------------------------------
+# Vulkan (MoltenVK)
+#------------------------------------------------------------------------------
+export VULKAN_SDK=${HOME}/VulkanSDK/macOS
