@@ -138,15 +138,9 @@
 ;;-----------------------------------------------------------------------------
 ;; CMake
 ;;-----------------------------------------------------------------------------
-;; E.g.
-;;  (setq olegat-cmake-share-path "~/cmake/share/cmake-3.12/")
-;;  (setq olegat-cmake-share-path "C:/Program Files/CMake/share/cmake-3.12")
-(when (boundp 'olegat-cmake-share-path)
-  (when (file-directory-p olegat-cmake-share-path)
-    (setq load-path
-          (cons
-           (expand-file-name (concat olegat-cmake-share-path "/editors/emacs"))
-           load-path))
+(when (boundp 'olegat-cmake-mode-path)
+  (when (file-directory-p olegat-cmake-mode-path)
+    (setq load-path (cons olegat-cmake-mode-path load-path))
     (require 'cmake-mode)))
 
 
