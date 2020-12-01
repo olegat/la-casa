@@ -107,6 +107,14 @@
  js-indent-level 2
  mode-require-final-newline nil)
 
+;; R mode
+(add-hook
+ 'ess-mode-hook
+ (lambda ()
+   (setq ess-indent-offset 2)
+   (ess-toggle-underscore nil) ;leave underscore key alone!
+   (setq ess-fancy-comments nil)))
+
 ;; Don't add multiple newlines when scrolling past the end of the file.
 (setq-default next-line-add-newlines nil)
 
@@ -142,6 +150,23 @@
   (when (file-directory-p olegat-cmake-mode-path)
     (setq load-path (cons olegat-cmake-mode-path load-path))
     (require 'cmake-mode)))
+
+
+;;-----------------------------------------------------------------------------
+;; Custom
+;;-----------------------------------------------------------------------------
+(defvar olegat-chrome-mode-on t)
+(defun olegat-chrome-mode (enabled)
+  (interactive (list (not olegat-chrome-mode-on)))
+  (setq olegat-chrome-mode-on enabled)
+  (when olegat-chrome-mode-on
+    (tool-bar-mode nil)
+    (scroll-bar-mode nil)
+    (menu-bar-mode nil))
+  (unless olegat-chrome-mode-on
+    (tool-bar-mode -1)
+    (scroll-bar-mode -1)
+    (menu-bar-mode -1)))
 
 
 ;;-----------------------------------------------------------------------------
