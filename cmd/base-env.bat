@@ -10,4 +10,4 @@
 @set PATH=%PATH%C:\Users\olegat\AppData\Local\Programs\ag-2018-08-08_2.2.0-2-gbd82cd3-x64;
 @REM @set PATH=%PATH%C:\Users\olegat\AppData\Local\Programs\ninja-v1.10.0;
 @REM @set PATH=%PATH%C:\Users\olegat\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;
-@set PATH=%PATH%C:\Git\cmd;
+@set PATH=%PATH%%GIT_ROOT%\cmd;
