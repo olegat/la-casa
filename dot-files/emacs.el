@@ -56,16 +56,25 @@
 ;;-----------------------------------------------------------------------------
 ;;  Platform-specific config
 ;;-----------------------------------------------------------------------------
+(setq olegat-msys nil)
+
 (when (string-equal system-type "windows-nt")
-  ;; Use git-bash Unix environment
-  (setenv "PATH"
-          (concat (getenv "PATH") ";"
-                  (getenv "GIT_ROOT") "\\usr\\bin"))
+  ;; Check if this subsystem is MSYS
+  (when (string-match-p (regexp-quote "/usr/bin/bash") (getenv "SHELL"))
+    (setq olegat-msys t))
+
+  ;; Hacks to make Windows Emacs now Unix-like
+  (unless olegat-msys
+    ;; Use git-bash Unix environment
+    (setenv "PATH"
+            (concat (getenv "PATH") ";"
+                    (getenv "GIT_ROOT") "\\usr\\bin"))
+    (setq find-program "gfind.bat"))
+
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
   (unless (boundp 'olegat-cmake-mode-path)
     (setq olegat-cmake-mode-path
-          "C:/Program Files/CMake/share/cmake-3.16/editors/emacs"))
-  (setq find-program "gfind.bat"))
+          "C:/Program Files/CMake/share/cmake-3.16/editors/emacs")))
 
 
 (when (string-equal system-type "darwin")
