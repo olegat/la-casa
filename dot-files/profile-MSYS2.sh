@@ -5,3 +5,7 @@ emacs() {
   #       It should use "" and `cygpath -w` but good enough for now.
   cmd /c "cmd /c \"$EMACS_ROOT\\bin\\runemacs.exe\" $@"
 }
+
+openhere() {
+  cmd /c "cmd /c start ."
+}
