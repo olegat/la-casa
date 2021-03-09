@@ -108,6 +108,9 @@
  buffer-file-coding-system 'utf-8-unix
  show-trailing-whitespace t)
 
+;; OUCH!! MY EARS!!!!
+;; https://tldp.org/HOWTO/Visual-Bell-8.html#:~:text=To%20disable%20the%20visible%20bell,visible%2Dbell%20nil)%20%22.
+(setq visible-bell t)
 
 ;; Code Styling
 (setq-default
@@ -152,6 +155,16 @@
 ;; Speedbar
 ;;-----------------------------------------------------------------------------
 (custom-set-variables '(speedbar-show-unknown-files t))
+
+
+;;-----------------------------------------------------------------------------
+;; C
+;;-----------------------------------------------------------------------------
+;; Don't indent `extern "C" { ... }`
+;; https://www.linuxquestions.org/questions/programming-9/calling-emacs-experts-can-indentation-ignore-extern-c-%7B-%7D-887812/
+(add-hook 'c-mode-common-hook
+	        (lambda()
+	          (c-set-offset 'inextern-lang 0)))
 
 
 ;;-----------------------------------------------------------------------------
