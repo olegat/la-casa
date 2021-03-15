@@ -134,6 +134,12 @@
 
 (setq column-number-mode t) ; show column numbers
 
+;; The default face on Windows GUI is Courier New which is so thin and unreadable.
+;; Add this to ~/.emacs as needed.
+;; Courtesy of Stackoverflow: https://stackoverflow.com/questions/4821984/emacs-osx-default-font-setting-does-not-persist/4822066#4822066
+;;(custom-set-faces '(default ((t (:height 110 :family "Consolas")))))
+
+
 
 ;;-----------------------------------------------------------------------------
 ;; MELPA
