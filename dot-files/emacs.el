@@ -51,6 +51,7 @@
 (global-set-key (kbd "§ e r") 'eval-region)
 (global-set-key (kbd "§ b")   'recompile)
 (global-set-key (kbd "§ s l") 'sort-lines)
+(global-set-key (kbd "§ f n d") 'find-name-dired)
 
 
 ;;-----------------------------------------------------------------------------
@@ -260,4 +261,3 @@
 ;;     (when (eq major-mode 'compilation-mode)
 ;;       (ansi-color-apply-on-region compilation-filter-start (point-max))))
 ;;   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
-
