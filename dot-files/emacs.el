@@ -184,6 +184,18 @@
 
 
 ;;-----------------------------------------------------------------------------
+;; Google3
+;;-----------------------------------------------------------------------------
+;; The automatic formatting hook is a literal pain the ass.
+;; Code formatting is an art not a science goddammit; piss off.
+;; remove google3-build-try-cleanup from python-mode
+(add-hook
+ 'python-mode-hook
+ (lambda () "" nil
+   (remove-hook 'before-save-hook 'google3-build-try-cleanup t)))
+
+
+;;-----------------------------------------------------------------------------
 ;; Custom
 ;;-----------------------------------------------------------------------------
 (defvar olegat-chrome-mode-on t)

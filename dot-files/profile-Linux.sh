@@ -23,6 +23,11 @@ export VULKAN_SDK="/usr/local/google/home/olegat/VulkanSDK/1.2.141.2/x86_64"
 export OLEGAT_PREFIX="/usr/local/google/home/olegat/usr"
 export PATH="${PATH}:${OLEGAT_PREFIX}/bin"
 
+if [ -f /google/bin/releases/copybara/public/copybara/copybara ] ; then
+  alias copybara='/google/bin/releases/copybara/public/copybara/copybara'
+fi
+
+
 
 
 #------------------------------------------------------------------------------
