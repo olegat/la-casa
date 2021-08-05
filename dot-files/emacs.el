@@ -75,7 +75,7 @@
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
   (unless (boundp 'olegat-cmake-mode-path)
     (setq olegat-cmake-mode-path
-          "C:/Program Files/CMake/share/cmake-3.21/editors/emacs")))
+          "C:/Program Files/CMake/share/emacs/site-lisp")))
 
 
 (when (string-equal system-type "darwin")
@@ -88,7 +88,7 @@
   ;; Use the same CMake as windows-nt (with cygdrive Unix path)
   (unless (boundp 'olegat-cmake-mode-path)
   (setq olegat-cmake-mode-path
-        "/cygdrive/c/Program Files/CMake/share/cmake-3.21/editors/emacs")))
+        "/cygdrive/c/Program Files/CMake/share/emacs/site-lisp")))
 
 
 
