@@ -88,7 +88,7 @@
   ;; Use the same CMake as windows-nt (with cygdrive Unix path)
   (unless (boundp 'olegat-cmake-mode-path)
   (setq olegat-cmake-mode-path
-        "/cygdrive/c/Program Files/CMake/share/cmake-3.16/editors/emacs")))
+        "/cygdrive/c/Program Files/CMake/share/cmake-3.21/editors/emacs")))
 
 
 
