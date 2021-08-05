@@ -6,5 +6,6 @@ fi
 #------------------------------------------------------------------------------
 # GGP CLI (Unix)
 #------------------------------------------------------------------------------
-export GGP_SDK_PATH=${HOME}/YetiSDK/1.48
+export GGP_SDK_PATH=${HOME}/YetiSDK
 export PATH=${PATH}:${GGP_SDK_PATH}/dev/bin
+export SILENUS_TOOLCHAIN=${HOME}/silenus-toolchain/usr

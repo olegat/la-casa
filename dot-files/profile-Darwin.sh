@@ -15,7 +15,7 @@ alias fgrep='fgrep --color=auto'
 # Emacs
 #------------------------------------------------------------------------------
 export PATH="/Applications/Emacs.app/Contents/MacOS/bin-x86_64-10_10:${PATH}"
-alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs-x86_64-10_10 -nw"
+alias emacs="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 
 
 #------------------------------------------------------------------------------

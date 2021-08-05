@@ -1,3 +1,5 @@
+;; Add this to ~/.emacs where necessary.
+;; (setq frame-background-mode 'dark)
 
 
 ;;-----------------------------------------------------------------------------
@@ -49,21 +51,31 @@
 (global-set-key (kbd "§ e r") 'eval-region)
 (global-set-key (kbd "§ b")   'recompile)
 (global-set-key (kbd "§ s l") 'sort-lines)
+(global-set-key (kbd "§ f n d") 'find-name-dired)
 
 
 ;;-----------------------------------------------------------------------------
 ;;  Platform-specific config
 ;;-----------------------------------------------------------------------------
+(setq olegat-msys nil)
+
 (when (string-equal system-type "windows-nt")
-  ;; Use git-bash Unix environment
-  (setenv "PATH"
-          (concat (getenv "PATH") ";"
-                  (getenv "GIT_ROOT") "\\usr\\bin"))
+  ;; Check if this subsystem is MSYS
+  (when (string-match-p (regexp-quote "/usr/bin/bash") (getenv "SHELL"))
+    (setq olegat-msys t))
+
+  ;; Hacks to make Windows Emacs now Unix-like
+  (unless olegat-msys
+    ;; Use git-bash Unix environment
+    (setenv "PATH"
+            (concat (getenv "PATH") ";"
+                    (getenv "GIT_ROOT") "\\usr\\bin"))
+    (setq find-program "gfind.bat"))
+
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
   (unless (boundp 'olegat-cmake-mode-path)
     (setq olegat-cmake-mode-path
-          "C:/Program Files/CMake/share/cmake-3.21/editors/emacs"))
-  (setq find-program "gfind.bat"))
+          "C:/Program Files/CMake/share/cmake-3.21/editors/emacs")))
 
 
 (when (string-equal system-type "darwin")
@@ -97,6 +109,9 @@
  buffer-file-coding-system 'utf-8-unix
  show-trailing-whitespace t)
 
+;; OUCH!! MY EARS!!!!
+;; https://tldp.org/HOWTO/Visual-Bell-8.html#:~:text=To%20disable%20the%20visible%20bell,visible%2Dbell%20nil)%20%22.
+(setq visible-bell t)
 
 ;; Code Styling
 (setq-default
@@ -119,6 +134,12 @@
 (setq-default next-line-add-newlines nil)
 
 (setq column-number-mode t) ; show column numbers
+
+;; The default face on Windows GUI is Courier New which is so thin and unreadable.
+;; Add this to ~/.emacs as needed.
+;; Courtesy of Stackoverflow: https://stackoverflow.com/questions/4821984/emacs-osx-default-font-setting-does-not-persist/4822066#4822066
+;;(custom-set-faces '(default ((t (:height 110 :family "Consolas")))))
+
 
 
 ;;-----------------------------------------------------------------------------
@@ -144,12 +165,34 @@
 
 
 ;;-----------------------------------------------------------------------------
+;; C
+;;-----------------------------------------------------------------------------
+;; Don't indent `extern "C" { ... }`
+;; https://www.linuxquestions.org/questions/programming-9/calling-emacs-experts-can-indentation-ignore-extern-c-%7B-%7D-887812/
+(add-hook 'c-mode-common-hook
+	        (lambda()
+	          (c-set-offset 'inextern-lang 0)))
+
+
+;;-----------------------------------------------------------------------------
 ;; CMake
 ;;-----------------------------------------------------------------------------
 (when (boundp 'olegat-cmake-mode-path)
   (when (file-directory-p olegat-cmake-mode-path)
     (setq load-path (cons olegat-cmake-mode-path load-path))
     (require 'cmake-mode)))
+
+
+;;-----------------------------------------------------------------------------
+;; Google3
+;;-----------------------------------------------------------------------------
+;; The automatic formatting hook is a literal pain the ass.
+;; Code formatting is an art not a science goddammit; piss off.
+;; remove google3-build-try-cleanup from python-mode
+(add-hook
+ 'python-mode-hook
+ (lambda () "" nil
+   (remove-hook 'before-save-hook 'google3-build-try-cleanup t)))
 
 
 ;;-----------------------------------------------------------------------------
@@ -185,32 +228,48 @@
 ;;   current C = black on blue
 ;;   everything else = nil on gray
 
-;; Current
-(set-face-foreground 'ediff-current-diff-A "black")
-(set-face-background 'ediff-current-diff-A "green")
-(set-face-foreground 'ediff-current-diff-B "black")
-(set-face-background 'ediff-current-diff-B "red")
-(set-face-foreground 'ediff-current-diff-C "black")
-(set-face-background 'ediff-current-diff-C "cyan")
+;; (when (string-equal system-type "windows-nt")
+;;   ;; Current
+;;   (set-face-foreground 'ediff-current-diff-A "black")
+;;   (set-face-background 'ediff-current-diff-A "green")
+;;   (set-face-foreground 'ediff-current-diff-B "black")
+;;   (set-face-background 'ediff-current-diff-B "red")
+;;   (set-face-foreground 'ediff-current-diff-C "black")
+;;   (set-face-background 'ediff-current-diff-C "cyan")
 
-;; Fine
-(set-face-foreground 'ediff-fine-diff-A "black")
-(set-face-background 'ediff-fine-diff-A "lightgreen")
-(set-face-foreground 'ediff-fine-diff-B "black")
-(set-face-background 'ediff-fine-diff-B "lightred")
-(set-face-foreground 'ediff-fine-diff-C "black")
-(set-face-background 'ediff-fine-diff-C "lightcyan")
+;;   ;; Fine
+;;   (set-face-foreground 'ediff-fine-diff-A "black")
+;;   (set-face-background 'ediff-fine-diff-A "lightgreen")
+;;   (set-face-foreground 'ediff-fine-diff-B "black")
+;;   (set-face-background 'ediff-fine-diff-B "lightred")
+;;   (set-face-foreground 'ediff-fine-diff-C "black")
+;;   (set-face-background 'ediff-fine-diff-C "lightcyan")
 
-;; Unselected
-(set-face-foreground 'ediff-even-diff-A nil)
-(set-face-background 'ediff-even-diff-A "darkgray")
-(set-face-foreground 'ediff-even-diff-B nil)
-(set-face-background 'ediff-even-diff-B "darkgray")
-(set-face-foreground 'ediff-even-diff-C nil)
-(set-face-background 'ediff-even-diff-C "darkgray")
-(set-face-foreground 'ediff-odd-diff-A nil)
-(set-face-background 'ediff-odd-diff-A "darkgray")
-(set-face-foreground 'ediff-odd-diff-B nil)
-(set-face-background 'ediff-odd-diff-B "darkgray")
-(set-face-foreground 'ediff-odd-diff-C nil)
-(set-face-background 'ediff-odd-diff-C "darkgray")
+;;   ;; Unselected
+;;   (set-face-foreground 'ediff-even-diff-A nil)
+;;   (set-face-background 'ediff-even-diff-A "darkgray")
+;;   (set-face-foreground 'ediff-even-diff-B nil)
+;;   (set-face-background 'ediff-even-diff-B "darkgray")
+;;   (set-face-foreground 'ediff-even-diff-C nil)
+;;   (set-face-background 'ediff-even-diff-C "darkgray")
+;;   (set-face-foreground 'ediff-odd-diff-A nil)
+;;   (set-face-background 'ediff-odd-diff-A "darkgray")
+;;   (set-face-foreground 'ediff-odd-diff-B nil)
+;;   (set-face-background 'ediff-odd-diff-B "darkgray")
+;;   (set-face-foreground 'ediff-odd-diff-C nil)
+;;   (set-face-background 'ediff-odd-diff-C "darkgray")
+;; )
+
+
+
+;;-----------------------------------------------------------------------------
+;; Enable -fdiagnostics-color=always in Compilation mode
+;;-----------------------------------------------------------------------------
+;; https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
+;;
+;; (ignore-errors
+;;   (require 'ansi-color)
+;;   (defun my-colorize-compilation-buffer ()
+;;     (when (eq major-mode 'compilation-mode)
+;;       (ansi-color-apply-on-region compilation-filter-start (point-max))))
+;;   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))

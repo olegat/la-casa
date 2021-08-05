@@ -1,1 +1,1 @@
-@%EMACS_ROOT%\bin\emacs.exe -nw %*
+@"%EMACS_ROOT%\bin\emacs.exe" -nw %*
