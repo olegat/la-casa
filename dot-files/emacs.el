@@ -62,7 +62,7 @@
   ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
   (unless (boundp 'olegat-cmake-mode-path)
     (setq olegat-cmake-mode-path
-          "C:/Program Files/CMake/share/cmake-3.16/editors/emacs"))
+          "C:/Program Files/CMake/share/cmake-3.21/editors/emacs"))
   (setq find-program "gfind.bat"))
 
 
