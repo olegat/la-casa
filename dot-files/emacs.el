@@ -101,6 +101,10 @@
  backup-directory-alist
  '(("." . "~/.emacs.saves/"))   ; don't litter my fs tree
  delete-old-versions t
+ ;; Don't use C/C++ syntax highlighting in diff mode.
+ ;; https://github.com/magit/magit/issues/2942
+ ;; See Week 10 & 27 (2021)
+ diff-font-lock-syntax nil
  kept-new-versions 6
  kept-old-versions 2
  version-control t)   ; use versioned backups
