@@ -238,6 +238,13 @@
     (scroll-bar-mode -1)
     (menu-bar-mode -1)))
 
+(defvar olegat-vc-handled-backends nil)
+(defun olegat-toggle-vc ()
+  (interactive)
+  ;; Swap "vc-handled-backends" and "olegat-vc-handled-backends"
+  (let ((tmp vc-handled-backends))
+    (setq vc-handled-backends olegat-vc-handled-backends)
+    (setq olegat-vc-handled-backends tmp)))
 
 ;;-----------------------------------------------------------------------------
 ;; Ediff
