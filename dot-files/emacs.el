@@ -105,6 +105,10 @@
  ;; https://github.com/magit/magit/issues/2942
  ;; See Week 10 & 27 (2021)
  diff-font-lock-syntax nil
+ ;; Don't highlight which part of the diffs have changed, just color the +lines
+ ;; in green and the -lines in red. This speed things up.
+ ;; See Week 39 (2021)
+ diff-refine nil
  kept-new-versions 6
  kept-old-versions 2
  version-control t)   ; use versioned backups
