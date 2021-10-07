@@ -11,3 +11,4 @@
 	oak = log '--date=format:%Y-%m-%d %H:%M' '--format=%C(auto,yellow)%h %cd %Creset%C(auto,magenta)% %ad %ae%Creset%C(auto)%d %s' --graph
 	ff = merge --ff-only
 	ig = status --ignored
+	fetchout = !git fetch origin $1 && git checkout
