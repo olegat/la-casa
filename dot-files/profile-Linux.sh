@@ -27,6 +27,8 @@ if [ -f /google/bin/releases/copybara/public/copybara/copybara ] ; then
   alias copybara='/google/bin/releases/copybara/public/copybara/copybara'
 fi
 
+export EMACSCLIENT="emacsclient -t -a ''"
+
 
 
 
