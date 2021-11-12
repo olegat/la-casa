@@ -92,7 +92,7 @@
 
 ;; Use Dark mode in GUIs (w32, x, ns...)
 (when window-system
-  (set-background-color "black")
+  (set-background-color "gray10")
   (set-face-foreground 'default "white")
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
