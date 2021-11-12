@@ -257,6 +257,16 @@
     (setq vc-handled-backends olegat-vc-handled-backends)
     (setq olegat-vc-handled-backends tmp)))
 
+(defun copy-filepath-to-clipboard ()
+  (interactive)
+  (kill-new buffer-file-name)
+  (let ((known-window-system nil))
+    (when (string-equal window-system "w32")
+      (setq known-window-system t)
+      (w32-set-clipboard-data buffer-file-name))
+    (unless known-window-system
+      (message (concat "Unsupported window system: " window-system)))))
+
 ;;-----------------------------------------------------------------------------
 ;; Ediff
 ;;-----------------------------------------------------------------------------
