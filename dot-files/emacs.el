@@ -90,6 +90,13 @@
   (setq olegat-cmake-mode-path
         "/cygdrive/c/Program Files/CMake/share/emacs/site-lisp")))
 
+;; Use Dark mode in GUIs (w32, x, ns...)
+(when window-system
+  (set-background-color "black")
+  (set-face-foreground 'default "white")
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (setq frame-background-mode 'dark))
 
 
 ;;-----------------------------------------------------------------------------
