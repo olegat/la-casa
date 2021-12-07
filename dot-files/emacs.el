@@ -90,6 +90,13 @@
   (setq olegat-cmake-mode-path
         "/cygdrive/c/Program Files/CMake/share/emacs/site-lisp")))
 
+;; Use Dark mode in GUIs (w32, x, ns...)
+(when window-system
+  (set-background-color "gray10")
+  (set-face-foreground 'default "white")
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (setq frame-background-mode 'dark))
 
 
 ;;-----------------------------------------------------------------------------
@@ -249,6 +256,16 @@
   (let ((tmp vc-handled-backends))
     (setq vc-handled-backends olegat-vc-handled-backends)
     (setq olegat-vc-handled-backends tmp)))
+
+(defun copy-filepath-to-clipboard ()
+  (interactive)
+  (kill-new buffer-file-name)
+  (let ((known-window-system nil))
+    (when (string-equal window-system "w32")
+      (setq known-window-system t)
+      (w32-set-clipboard-data buffer-file-name))
+    (unless known-window-system
+      (message (concat "Unsupported window system: " window-system)))))
 
 ;;-----------------------------------------------------------------------------
 ;; Ediff
