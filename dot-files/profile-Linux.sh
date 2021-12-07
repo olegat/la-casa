@@ -18,6 +18,8 @@ export P4DIFF="diff --color -up"
 # Vulkan SDK
 export VULKAN_SDK="/usr/local/google/home/olegat/VulkanSDK/1.2.141.2/x86_64"
 
+# pip path
+export PATH="/usr/local/google/home/olegat/.local/bin:${PATH}"
 
 # Tools built manually 'e.g. configure --prefix= ; make install'
 export OLEGAT_PREFIX="/usr/local/google/home/olegat/usr"
@@ -28,6 +30,7 @@ if [ -f /google/bin/releases/copybara/public/copybara/copybara ] ; then
 fi
 
 export EMACSCLIENT="emacsclient -t -a ''"
+alias ec=$EMACSCLIENT
 
 
 
