@@ -83,12 +83,14 @@
     (setq olegat-cmake-mode-path
           "/Users/olegat/homebrew/Cellar/cmake/3.18.2/share/emacs/site-lisp/cmake")))
 
-
 (when (string-equal system-type "cygwin")
   ;; Use the same CMake as windows-nt (with cygdrive Unix path)
   (unless (boundp 'olegat-cmake-mode-path)
   (setq olegat-cmake-mode-path
         "/cygdrive/c/Program Files/CMake/share/emacs/site-lisp")))
+
+(when (string-equal system-name "silenus-docker")
+  (setq shell-file-name "bash")) ; change default from 'sh' to 'bash'
 
 ;; Use Dark mode in GUIs (w32, x, ns...)
 (when window-system
@@ -144,6 +146,12 @@
    (setq ess-indent-offset 2)
    (ess-toggle-underscore nil) ;leave underscore key alone!
    (setq ess-fancy-comments nil)))
+
+;; term-mode
+(add-hook
+ 'term-mode-hook
+ (lambda ()
+   (setq show-trailing-whitespace nil)))
 
 ;; Don't add multiple newlines when scrolling past the end of the file.
 (setq-default next-line-add-newlines nil)
