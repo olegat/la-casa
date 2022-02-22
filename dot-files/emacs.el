@@ -224,7 +224,7 @@
 (defvar olegat-silenus-el-file nil)
 (let ((paths
        (list
-        "~/la-casa/scripts/silenus.el"
+        "~/la-casa/silenus/silenus.el"
         )))
   (while (and paths (not olegat-silenus-el-file))
     (when (file-exists-p (car paths))
