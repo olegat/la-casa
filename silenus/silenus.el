@@ -85,18 +85,18 @@
     (if (file-accessible-directory-p dir) (expand-file-name dir) nil)))
 
 
-(defun silenus-compile-ggp (sudo-passwd sh-script)
+(defun silenus-compile-ggp (sh-script)
   (interactive
    (list
-    (silenus-read-passwd)
-    (read-string "Compile command: "
-                 "docker/build_glinux.sh --no-color"
-                 'silenus-compile-docker-history)))
-  (compile
-   (concat
-    ;; the compilation buffer is non-interactive and cannot read input passwd
-    "echo " sudo-passwd " | "
-    "sudo -S " sh-script)))
+    (read-string
+     "Compile command: "
+     (concat
+      "docker/run.sh --sudoless -- "
+      "/workspace/src/silenus/build.sh "
+      "--no-color --host-user=$(id -u):$(id -g) "
+      "&& scripts/deploy_to_instance.sh")
+     'silenus-compile-docker-history)))
+  (compile sh-script))
 
 (defun silenus-compile-and-deploy-vapor ()
   (interactive)
