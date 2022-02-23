@@ -12,3 +12,4 @@
 	ff = merge --ff-only
 	ig = status --ignored
 	fetchout = !git fetch origin $1 && git checkout
+	pending = log --graph --oneline --decorate '^HEAD'
