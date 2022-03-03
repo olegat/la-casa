@@ -206,6 +206,17 @@
     (require 'cmake-mode)))
 
 
+
+;;-----------------------------------------------------------------------------
+;; PowerShell mode
+;;-----------------------------------------------------------------------------
+(setq load-path
+      (cons (if (string-equal system-type "windows-nt")
+                "C:/Users/olegat/la-casa/emacs" "~/la-casa/emacs")
+            load-path))
+(require 'powershell-mode)
+
+
 ;;-----------------------------------------------------------------------------
 ;; Google3
 ;;-----------------------------------------------------------------------------
@@ -225,6 +236,7 @@
 (let ((paths
        (list
         "~/la-casa/silenus/silenus.el"
+        "C:/Users/olegat/la-casa/silenus/silenus.el"
         )))
   (while (and paths (not olegat-silenus-el-file))
     (when (file-exists-p (car paths))
