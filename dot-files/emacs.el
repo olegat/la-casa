@@ -288,6 +288,25 @@
 (custom-set-variables
  '(ediff-split-window-function (quote split-window-horizontally)))
 
+;;-----------------------------------------------------------------------------
+;; SSH (WFH) hacks
+;;-----------------------------------------------------------------------------
+(when (string-equal system-name "olegat")
+  (defun olegat-sshd-open ()
+    (interactive)
+    (message "Starting sshd...")
+    (shell-command "~/la-casa/scripts/ssh/start-sshd.sh"))
+
+  (defun olegat-sshd-close ()
+    (interactive)
+    (message "Stopping sshd...")
+    (shell-command "~/la-casa/scripts/ssh/stop-sshd.sh"))
+
+  (defun olegat-sshd-stop-all ()
+    (interactive)
+    (message "Stoping sshd...")
+    (shell-command "~/la-casa/scripts/ssh/stop-all.sh")))
+
 ;; Make the faces visible in a term without x256 colors (e.g. CMD on Windows)
 ;;
 ;; In a nutshell:
