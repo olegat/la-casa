@@ -1,4 +1,11 @@
 
+Gerrit meta/config pushing and pulling:
+* git push origin meta/config:refs/for/refs/meta/config
+* git fetch origin refs/meta/config:refs/remotes/origin/meta/config
+
+
+
+
 How to Build YetiSDKInstaller in yeti://dev/visual_studio_integration
 
 * Open YetiVSI.sln with VS 2015 Professional
