@@ -206,6 +206,17 @@
     (require 'cmake-mode)))
 
 
+
+;;-----------------------------------------------------------------------------
+;; PowerShell mode
+;;-----------------------------------------------------------------------------
+(setq load-path
+      (cons (if (string-equal system-type "windows-nt")
+                "C:/Users/olegat/la-casa/emacs" "~/la-casa/emacs")
+            load-path))
+(require 'powershell-mode)
+
+
 ;;-----------------------------------------------------------------------------
 ;; GN (Generate Ninja)
 ;;-----------------------------------------------------------------------------
@@ -236,6 +247,7 @@
 (let ((paths
        (list
         "~/la-casa/silenus/silenus.el"
+        "C:/Users/olegat/la-casa/silenus/silenus.el"
         )))
   (while (and paths (not olegat-silenus-el-file))
     (when (file-exists-p (car paths))
@@ -286,6 +298,25 @@
 
 (custom-set-variables
  '(ediff-split-window-function (quote split-window-horizontally)))
+
+;;-----------------------------------------------------------------------------
+;; SSH (WFH) hacks
+;;-----------------------------------------------------------------------------
+(when (string-equal system-name "olegat")
+  (defun olegat-sshd-open ()
+    (interactive)
+    (message "Starting sshd...")
+    (shell-command "~/la-casa/scripts/ssh/start-sshd.sh"))
+
+  (defun olegat-sshd-close ()
+    (interactive)
+    (message "Stopping sshd...")
+    (shell-command "~/la-casa/scripts/ssh/stop-sshd.sh"))
+
+  (defun olegat-sshd-stop-all ()
+    (interactive)
+    (message "Stoping sshd...")
+    (shell-command "~/la-casa/scripts/ssh/stop-all.sh")))
 
 ;; Make the faces visible in a term without x256 colors (e.g. CMD on Windows)
 ;;
