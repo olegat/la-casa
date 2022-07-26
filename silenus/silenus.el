@@ -91,19 +91,7 @@
     (read-string
      "Compile command: "
      (concat
-      "docker/run.sh "
-      "--sudoless "
-      "--env GOOGLE_APPLICATION_CREDENTIALS=/workspace/home/.config/gcloud/application_default_credentials.json "
-      "--privileged=true "
-      "--tty "
-      "-- "
-      "/workspace/src/silenus/docker/fix_permissions.sh "
-      "--user $(id -u):$(id -g) "
-      "-- "
-      "/workspace/src/silenus/docker/build_and_upload.sh "
-      "--kokoro-job-type=manual "
-      "--arch=x64 "
-      "--host=ggp "
+      "docker/build_glinux.sh --no-color"
     )
      'silenus-compile-docker-history)))
   (compile sh-script))
