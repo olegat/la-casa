@@ -31,6 +31,7 @@ fi
 
 export EMACSCLIENT="emacsclient -t -a ''"
 alias ec=$EMACSCLIENT
+alias gclfmt="/google/data/ro/projects/borg/gclfmt"
 
 
 
