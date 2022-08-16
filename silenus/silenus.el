@@ -115,3 +115,7 @@
       " -S src/vapor"
       " -B out-vapor/"
       " && ninja -C out-vapor/"))))
+
+(defun silenus-cs (cs-query)
+  (interactive (list (read-string "cs query: " nil 'silenus-cs-query-history)))
+  (cs (concat "trait:citc add_workspace:olegat/306 " cs-query)))
