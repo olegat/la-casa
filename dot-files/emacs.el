@@ -94,11 +94,14 @@
 
 ;; Use Dark mode in GUIs (w32, x, ns...)
 (when window-system
-  (set-background-color "gray10")
-  (set-face-foreground 'default "white")
-  (tool-bar-mode -1)
   (scroll-bar-mode -1)
-  (setq frame-background-mode 'dark))
+  (tool-bar-mode -1)
+  (setq default-frame-alist
+        '((background-color . "gray10")
+          (foreground-color . "white")
+          (ns-appearance . dark)
+          (ns-transparent-titlebar . nil)
+          (frame-background-mode . 'dark))))
 
 
 ;;-----------------------------------------------------------------------------
