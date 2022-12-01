@@ -46,6 +46,10 @@
 (global-set-key (kbd "§ <down>")  'windmove-down)
 (global-set-key (kbd "§ <up>")    'windmove-up)
 
+;; Buffer selection
+(global-set-key (kbd "§ x <right>") 'previous-buffer)
+(global-set-key (kbd "§ x <left>")  'next-buffer)
+
 ;; Misc
 (global-set-key (kbd "§ TAB") 'imenu)
 (global-set-key (kbd "§ e r") 'eval-region)
@@ -140,7 +144,8 @@
  indent-tabs-mode nil
  require-final-newline nil  ; Don't mess with final newlines in files.
  js-indent-level 2
- mode-require-final-newline nil)
+ mode-require-final-newline nil
+ rust-indent-offset 2)
 
 ;; R mode
 (add-hook
@@ -320,6 +325,13 @@
     (interactive)
     (message "Stoping sshd...")
     (shell-command "~/la-casa/scripts/ssh/stop-all.sh")))
+
+;;-----------------------------------------------------------------------------
+;; Face customization
+;;-----------------------------------------------------------------------------
+(when (string-equal window-system "ns")
+  (require 'term)
+  (set-face-foreground 'term-color-blue "systemBlueColor"))
 
 ;; Make the faces visible in a term without x256 colors (e.g. CMD on Windows)
 ;;
