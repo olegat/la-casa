@@ -145,7 +145,8 @@
  require-final-newline nil  ; Don't mess with final newlines in files.
  js-indent-level 2
  mode-require-final-newline nil
- rust-indent-offset 2)
+ fill-column 80 ; this is the value in Google-Emacs on gLinux
+ rust-indent-offset 4)
 
 ;; R mode
 (add-hook
@@ -170,6 +171,9 @@
 ;; Add this to ~/.emacs as needed.
 ;; Courtesy of Stackoverflow: https://stackoverflow.com/questions/4821984/emacs-osx-default-font-setting-does-not-persist/4822066#4822066
 ;;(custom-set-faces '(default ((t (:height 110 :family "Consolas")))))
+
+;; Markdown
+(setq-default markdown-command "pandoc")
 
 
 
