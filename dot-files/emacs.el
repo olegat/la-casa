@@ -85,7 +85,7 @@
 (when (string-equal system-type "darwin")
   (unless (boundp 'olegat-cmake-mode-path)
     (setq olegat-cmake-mode-path
-          "/Users/olegat/homebrew/Cellar/cmake/3.18.2/share/emacs/site-lisp/cmake")))
+          "/Users/olegat/homebrew/Cellar/cmake/3.25.1/share/emacs/site-lisp/cmake")))
 
 (when (string-equal system-type "cygwin")
   ;; Use the same CMake as windows-nt (with cygdrive Unix path)
