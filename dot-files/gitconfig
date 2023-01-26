@@ -14,3 +14,12 @@
 	ig = status --ignored
 	fetchout = !git fetch origin $1 && git checkout
 	pending = log --graph --oneline --decorate '^HEAD'
+  # This istatus (Interactive Status) is kinda hacky:
+  # -   The `color.status` setting forces `git` to output ANSI color escape
+  #     sequences when stdout is not a tty.
+  # -   The `-R` flag tells `less` to process these ANSI escape sequences to
+  #     display the color in the terminal.
+  # -   Git automatically appends $@ to this line, which we do not want.
+  #     Therefore, the `exit` commands forces the subshell to exit and ignore
+  #     $@ values appended by git.
+  istatus = !git -c color.status=always status $@ | less -R && exit 0 || exit 1 ;
