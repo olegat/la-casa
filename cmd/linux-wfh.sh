@@ -1,1 +1,0 @@
-TERM=xterm-256color ssh -p 2323 olegat@192.168.1.88
