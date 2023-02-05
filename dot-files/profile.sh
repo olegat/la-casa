@@ -1,5 +1,7 @@
 
-if  [ -f "$(dirname ${BASH_SOURCE[0]})/profile-$(uname).sh" ] ; then
+if [[ $(uname -r) =~ rodete ]] ; then
+  source "$(dirname ${BASH_SOURCE[0]})/profile-Rodete.sh"
+elif  [ -f "$(dirname ${BASH_SOURCE[0]})/profile-$(uname).sh" ] ; then
   source "$(dirname ${BASH_SOURCE[0]})/profile-$(uname).sh"
 fi
 
