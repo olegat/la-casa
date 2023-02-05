@@ -9,9 +9,6 @@ if  [ -f "${HOME}/.cargo/env" ] ; then
   source "${HOME}/.cargo/env"
 fi
 
-#------------------------------------------------------------------------------
-# GGP CLI (Unix)
-#------------------------------------------------------------------------------
-export GGP_SDK_PATH=${HOME}/YetiSDK
-export PATH=${PATH}:${GGP_SDK_PATH}/dev/bin
-export SILENUS_TOOLCHAIN=${HOME}/silenus-toolchain/usr
+export EMACSCLIENT="emacsclient -t -a ''"
+export EDITOR="vim"
+alias ec=$EMACSCLIENT

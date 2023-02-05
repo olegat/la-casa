@@ -12,9 +12,6 @@ export P4DIFF="diff --color -up"
 #------------------------------------------------------------------------------
 # Local tools
 #------------------------------------------------------------------------------
-# Yeti toolchain (clang, llvm, etc...)
-#export PATH="${PATH}:/usr/local/google/home/olegat/yeti/tools/bin"
-
 # Vulkan SDK
 export VULKAN_SDK="/usr/local/google/home/olegat/VulkanSDK/1.2.141.2/x86_64"
 
@@ -29,15 +26,4 @@ if [ -f /google/bin/releases/copybara/public/copybara/copybara ] ; then
   alias copybara='/google/bin/releases/copybara/public/copybara/copybara'
 fi
 
-export EMACSCLIENT="emacsclient -t -a ''"
-alias ec=$EMACSCLIENT
 alias gclfmt="/google/data/ro/projects/borg/gclfmt"
-
-
-
-
-#------------------------------------------------------------------------------
-# Git Commit Editor
-#------------------------------------------------------------------------------
-export EDITOR="vim"
-
