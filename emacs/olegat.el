@@ -26,11 +26,16 @@
     ("b"     . recompile)
     ("s l"   . sort-lines)
     ("f n d" . find-name-dired)
+    ("3"     . olegat-insert-pound-sign)
     ))
 
 (defun olegat-insert-keychar ()
   (interactive)
   (insert olegat-keychar))
+
+(defun olegat-insert-pound-sign ()
+  (interactive)
+  (insert "£"))
 
 (defun olegat-set-key (keys function)
   (global-set-key
