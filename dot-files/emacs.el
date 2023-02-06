@@ -1,6 +1,3 @@
-;; Add this to ~/.emacs where necessary.
-;; (setq frame-background-mode 'dark)
-
 
 ;;-----------------------------------------------------------------------------
 ;;  Key bindings
@@ -152,7 +149,6 @@
 ;;(custom-set-faces '(default ((t (:height 110 :family "Consolas")))))
 
 
-
 ;;-----------------------------------------------------------------------------
 ;; Mode hooks
 ;;-----------------------------------------------------------------------------
@@ -187,7 +183,6 @@
    (remove-hook 'before-save-hook 'google3-build-try-cleanup t)))
 
 
-
 ;;-----------------------------------------------------------------------------
 ;; MELPA
 ;;-----------------------------------------------------------------------------
@@ -219,7 +214,6 @@
     (require 'cmake-mode)))
 
 
-
 ;;-----------------------------------------------------------------------------
 ;; PowerShell mode
 ;;-----------------------------------------------------------------------------
@@ -239,23 +233,6 @@
    '("BUILD\\.gn\\'" . gn-mode)
    '("\\.gni\\'" . gn-mode)))
 
-
-
-;;-----------------------------------------------------------------------------
-;; Silenus
-;;-----------------------------------------------------------------------------
-(defvar olegat-silenus-el-file nil)
-(let ((paths
-       (list
-        "~/la-casa/silenus/silenus.el"
-        "C:/Users/olegat/la-casa/silenus/silenus.el"
-        )))
-  (while (and paths (not olegat-silenus-el-file))
-    (when (file-exists-p (car paths))
-      (setq olegat-silenus-el-file (car paths)))
-    (setq paths (cdr paths))))
-(when olegat-silenus-el-file
-  (load-file olegat-silenus-el-file))
 
 
 ;;-----------------------------------------------------------------------------
@@ -292,6 +269,8 @@
     (unless known-window-system
       (message (concat "Unsupported window system: " window-system)))))
 
+
+
 ;;-----------------------------------------------------------------------------
 ;; Ediff
 ;;-----------------------------------------------------------------------------
@@ -300,24 +279,7 @@
 (custom-set-variables
  '(ediff-split-window-function (quote split-window-horizontally)))
 
-;;-----------------------------------------------------------------------------
-;; SSH (WFH) hacks
-;;-----------------------------------------------------------------------------
-(when (string-equal system-name "olegat")
-  (defun olegat-sshd-open ()
-    (interactive)
-    (message "Starting sshd...")
-    (shell-command "~/la-casa/scripts/ssh/start-sshd.sh"))
 
-  (defun olegat-sshd-close ()
-    (interactive)
-    (message "Stopping sshd...")
-    (shell-command "~/la-casa/scripts/ssh/stop-sshd.sh"))
-
-  (defun olegat-sshd-stop-all ()
-    (interactive)
-    (message "Stoping sshd...")
-    (shell-command "~/la-casa/scripts/ssh/stop-all.sh")))
 
 ;;-----------------------------------------------------------------------------
 ;; Face customization
@@ -325,46 +287,6 @@
 (when (string-equal window-system "ns")
   (require 'term)
   (set-face-foreground 'term-color-blue "systemBlueColor"))
-
-;; Make the faces visible in a term without x256 colors (e.g. CMD on Windows)
-;;
-;; In a nutshell:
-;;   current A = black on green
-;;   current B = black on red
-;;   current C = black on blue
-;;   everything else = nil on gray
-
-;; (when (string-equal system-type "windows-nt")
-;;   ;; Current
-;;   (set-face-foreground 'ediff-current-diff-A "black")
-;;   (set-face-background 'ediff-current-diff-A "green")
-;;   (set-face-foreground 'ediff-current-diff-B "black")
-;;   (set-face-background 'ediff-current-diff-B "red")
-;;   (set-face-foreground 'ediff-current-diff-C "black")
-;;   (set-face-background 'ediff-current-diff-C "cyan")
-
-;;   ;; Fine
-;;   (set-face-foreground 'ediff-fine-diff-A "black")
-;;   (set-face-background 'ediff-fine-diff-A "lightgreen")
-;;   (set-face-foreground 'ediff-fine-diff-B "black")
-;;   (set-face-background 'ediff-fine-diff-B "lightred")
-;;   (set-face-foreground 'ediff-fine-diff-C "black")
-;;   (set-face-background 'ediff-fine-diff-C "lightcyan")
-
-;;   ;; Unselected
-;;   (set-face-foreground 'ediff-even-diff-A nil)
-;;   (set-face-background 'ediff-even-diff-A "darkgray")
-;;   (set-face-foreground 'ediff-even-diff-B nil)
-;;   (set-face-background 'ediff-even-diff-B "darkgray")
-;;   (set-face-foreground 'ediff-even-diff-C nil)
-;;   (set-face-background 'ediff-even-diff-C "darkgray")
-;;   (set-face-foreground 'ediff-odd-diff-A nil)
-;;   (set-face-background 'ediff-odd-diff-A "darkgray")
-;;   (set-face-foreground 'ediff-odd-diff-B nil)
-;;   (set-face-background 'ediff-odd-diff-B "darkgray")
-;;   (set-face-foreground 'ediff-odd-diff-C nil)
-;;   (set-face-background 'ediff-odd-diff-C "darkgray")
-;; )
 
 
 
