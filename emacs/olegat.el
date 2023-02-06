@@ -1,3 +1,5 @@
+(require 'ansi-color)
+
 ;;-----------------------------------------------------------------------------
 ;;  Key bindings
 ;;-----------------------------------------------------------------------------
@@ -110,6 +112,25 @@
       (unless result
         (when (file-exists-p (concat elem "/cmake-mode.el"))
           (setq result elem))))))
+
+
+;;-----------------------------------------------------------------------------
+;; Enable -fdiagnostics-color=always in Compilation mode
+;;-----------------------------------------------------------------------------
+;; https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
+(defvar olegat-colorize-compilation-buffer-enabled nil)
+
+(defun olegat-colorize-compilation-buffer ()
+  (when (eq major-mode 'compilation-mode)
+    (ansi-color-apply-on-region compilation-filter-start (point-max))))
+
+(defun olegat-toggle-compilation-color (&optional enable)
+  (interactive (list (not olegat-colorize-compilation-buffer-enabled)))
+  (setq olegat-colorize-compilation-buffer-enabled enable)
+  (if enable
+    (add-hook    'compilation-filter-hook 'olegat-colorize-compilation-buffer)
+    (remove-hook 'compilation-filter-hook 'olegat-colorize-compilation-buffer)))
+
 
 
 (provide 'olegat)
