@@ -61,14 +61,11 @@
 (defun olegat-chrome-mode (enabled)
   (interactive (list (not olegat-chrome-mode-on)))
   (setq olegat-chrome-mode-on enabled)
-  (when olegat-chrome-mode-on
-    (tool-bar-mode nil)
-    (scroll-bar-mode nil)
-    (menu-bar-mode nil))
-  (unless olegat-chrome-mode-on
-    (tool-bar-mode -1)
-    (scroll-bar-mode -1)
-    (menu-bar-mode -1)))
+  (let ((val (if enabled nil -1)))
+    (tool-bar-mode val)
+    (scroll-bar-mode val)
+    (unless (string-equal window-system "ns")
+      (menu-bar-mode val))))
 
 (defvar olegat-vc-handled-backends nil)
 (defun olegat-toggle-vc ()

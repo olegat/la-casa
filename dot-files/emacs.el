@@ -53,8 +53,7 @@
 
 ;; Use Dark mode in GUIs (w32, x, ns...)
 (when window-system
-  (scroll-bar-mode -1)
-  (tool-bar-mode -1)
+  (olegat-chrome-mode nil)
   (setq default-frame-alist
         '((background-color . "gray10")
           (foreground-color . "white")
