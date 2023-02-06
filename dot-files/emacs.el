@@ -31,23 +31,6 @@
                     (getenv "GIT_ROOT") "\\usr\\bin"))
     (setq find-program "gfind.bat"))
 
-  ;; Use CMake 3.16 by default (if it exists, and if version isn't specified)
-  (unless (boundp 'olegat-cmake-mode-path)
-    (setq olegat-cmake-mode-path
-          "C:/Program Files/CMake/share/emacs/site-lisp")))
-
-
-(when (string-equal system-type "darwin")
-  (unless (boundp 'olegat-cmake-mode-path)
-    (setq olegat-cmake-mode-path
-          "/Users/olegat/homebrew/Cellar/cmake/3.25.1/share/emacs/site-lisp/cmake")))
-
-(when (string-equal system-type "cygwin")
-  ;; Use the same CMake as windows-nt (with cygdrive Unix path)
-  (unless (boundp 'olegat-cmake-mode-path)
-  (setq olegat-cmake-mode-path
-        "/cygdrive/c/Program Files/CMake/share/emacs/site-lisp")))
-
 ;; Use Dark mode in GUIs (w32, x, ns...)
 (when window-system
   (olegat-chrome-mode nil)

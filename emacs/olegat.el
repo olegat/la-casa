@@ -85,4 +85,32 @@
     (unless known-window-system
       (message (concat "Unsupported window system: " window-system)))))
 
+
+;;-----------------------------------------------------------------------------
+;;  Find 'cmake-mode.el'
+;;-----------------------------------------------------------------------------
+(defvar olegat-cmake-mode-search-paths
+  (append
+   (when (string-equal system-type "windows-nt")
+     '("C:/Program Files/CMake/share/emacs/site-lisp"
+       "D:/CMake/share/emacs/sitp-lisp"))
+
+   (when (string-equal system-type "cygwin")
+     '("/cygdrive/c/Program Files/CMake/share/emacs/site-lisp"
+       "/cygdrive/d/CMake/share/emacs/site-lisp"))
+
+   (unless (string-equal system-type "windows-nt")
+     '("/usr/local/share/emacs/site-lisp/cmake"
+       "~/homebrew/share/emacs/site-lisp/cmake"
+       "/mnt/c/Program Files/CMake/share/emacs/site-lisp"
+       "/mnt/d/CMake/share/emacs/site-lisp"))))
+
+(defun olegat-find-cmake-mode-path ()
+  (let (result)
+    (dolist (elem olegat-cmake-mode-search-paths result)
+      (unless result
+        (when (file-exists-p (concat elem "/cmake-mode.el"))
+          (setq result elem))))))
+
+
 (provide 'olegat)
