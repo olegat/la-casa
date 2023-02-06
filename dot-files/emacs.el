@@ -28,7 +28,7 @@
     (setenv "PATH"
             (concat (getenv "PATH") ";"
                     (getenv "GIT_ROOT") "\\usr\\bin"))
-    (setq find-program "gfind.bat"))
+    (setq find-program "gfind.bat")))
 
 
 ;;-----------------------------------------------------------------------------
