@@ -7,6 +7,11 @@
 
 (require 'olegat)
 
+(require 'ediff)
+(require 'powershell-mode)
+(require 'term)
+
+
 
 ;;-----------------------------------------------------------------------------
 ;;  Platform-specific config
@@ -100,6 +105,9 @@
 ;; Add this to ~/.emacs as needed.
 ;; Courtesy of Stackoverflow: https://stackoverflow.com/questions/4821984/emacs-osx-default-font-setting-does-not-persist/4822066#4822066
 ;;(custom-set-faces '(default ((t (:height 110 :family "Consolas")))))
+(custom-set-variables
+ '(ediff-split-window-function (quote split-window-horizontally))
+ '(speedbar-show-unknown-files t))
 
 
 ;;-----------------------------------------------------------------------------
@@ -153,24 +161,12 @@
 
 
 ;;-----------------------------------------------------------------------------
-;; Speedbar
-;;-----------------------------------------------------------------------------
-(custom-set-variables '(speedbar-show-unknown-files t))
-
-
-;;-----------------------------------------------------------------------------
 ;; CMake
 ;;-----------------------------------------------------------------------------
 (when (boundp 'olegat-cmake-mode-path)
   (when (file-directory-p olegat-cmake-mode-path)
     (setq load-path (cons olegat-cmake-mode-path load-path))
     (require 'cmake-mode)))
-
-
-;;-----------------------------------------------------------------------------
-;; PowerShell mode
-;;-----------------------------------------------------------------------------
-(require 'powershell-mode)
 
 
 ;;-----------------------------------------------------------------------------
@@ -185,20 +181,9 @@
 
 
 ;;-----------------------------------------------------------------------------
-;; Ediff
-;;-----------------------------------------------------------------------------
-(require 'ediff)
-
-(custom-set-variables
- '(ediff-split-window-function (quote split-window-horizontally)))
-
-
-
-;;-----------------------------------------------------------------------------
 ;; Face customization
 ;;-----------------------------------------------------------------------------
 (when (string-equal window-system "ns")
-  (require 'term)
   (set-face-foreground 'term-color-blue "systemBlueColor"))
 
 
