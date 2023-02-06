@@ -129,7 +129,8 @@
   (setq olegat-colorize-compilation-buffer-enabled enable)
   (if enable
     (add-hook    'compilation-filter-hook 'olegat-colorize-compilation-buffer)
-    (remove-hook 'compilation-filter-hook 'olegat-colorize-compilation-buffer)))
+    (remove-hook 'compilation-filter-hook 'olegat-colorize-compilation-buffer))
+  (message (concat "Compilation color " (if enable "enabled" "disabled"))))
 
 
 
