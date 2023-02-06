@@ -3,7 +3,8 @@
 ;;-----------------------------------------------------------------------------
 ;;  Key bindings
 ;;-----------------------------------------------------------------------------
-(defvar olegat-keychar "§")
+(defvar olegat-keychar "§"
+  "Prefix character of custom keybindings (olegat-keybindings).")
 
 (defvar olegat-keybindings
   '(;; Opening files
@@ -29,21 +30,26 @@
     ("s l"   . sort-lines)
     ("f n d" . find-name-dired)
     ("3"     . olegat-insert-pound-sign)
-    ))
+    )
+  "An alist of key-sequences and function names")
 
 (defun olegat-insert-keychar ()
+  "Internal use. Insert the prefix olegat-keychar."
   (interactive)
   (insert olegat-keychar))
 
 (defun olegat-insert-pound-sign ()
+  "Internal use. Insert a £ character (Sterling Pound Sign)."
   (interactive)
   (insert "£"))
 
 (defun olegat-set-key (keys function)
+  "Internal use."
   (global-set-key
    (kbd (concat olegat-keychar " " keys)) function))
 
 (defun olegat-apply-keybindings ()
+  "Internal use."
   ;; Escape the § symbol
   (global-set-key (kbd olegat-keychar) nil)
   (olegat-set-key olegat-keychar 'olegat-insert-keychar)
@@ -51,6 +57,7 @@
     (olegat-set-key (car elem) (cdr elem))))
 
 (defun olegat-select-speedbar-frame ()
+  "Internal use."
   (interactive)
   (select-frame-by-name "Speedbar"))
 
@@ -58,8 +65,9 @@
 ;;-----------------------------------------------------------------------------
 ;; Custom
 ;;-----------------------------------------------------------------------------
-(defvar olegat-chrome-mode-on t)
+(defvar olegat-chrome-mode-on t "Internal use.")
 (defun olegat-chrome-mode (enabled)
+  "Toggle toolbar, scrollbars and menubar. The menubar on macOS is always on."
   (interactive (list (not olegat-chrome-mode-on)))
   (setq olegat-chrome-mode-on enabled)
   (let ((val (if enabled nil -1)))
@@ -68,8 +76,9 @@
     (unless (string-equal window-system "ns")
       (menu-bar-mode val))))
 
-(defvar olegat-vc-handled-backends nil)
+(defvar olegat-vc-handled-backends nil "Internal use.")
 (defun olegat-toggle-vc ()
+  "Set/Unset vc-handled-backends to nil. Disabling vc can improve performance."
   (interactive)
   ;; Swap "vc-handled-backends" and "olegat-vc-handled-backends"
   (let ((tmp vc-handled-backends))
@@ -77,6 +86,7 @@
     (setq olegat-vc-handled-backends tmp)))
 
 (defun copy-filepath-to-clipboard ()
+  "Copy the path of current buffer to the clipboard."
   (interactive)
   (kill-new buffer-file-name)
   (let ((known-window-system nil))
@@ -104,9 +114,13 @@
      '("/usr/local/share/emacs/site-lisp/cmake"
        "~/homebrew/share/emacs/site-lisp/cmake"
        "/mnt/c/Program Files/CMake/share/emacs/site-lisp"
-       "/mnt/d/CMake/share/emacs/site-lisp"))))
+       "/mnt/d/CMake/share/emacs/site-lisp")))
+
+  "A list of directories to search through to find 'cmake-mode.el")
 
 (defun olegat-find-cmake-mode-path ()
+  "Loop through olegat-cmake-mode-search-paths and return the first
+directory that exists and contains a 'cmake-mode.el'"
   (let (result)
     (dolist (elem olegat-cmake-mode-search-paths result)
       (unless result
@@ -118,13 +132,17 @@
 ;; Enable -fdiagnostics-color=always in Compilation mode
 ;;-----------------------------------------------------------------------------
 ;; https://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
-(defvar olegat-colorize-compilation-buffer-enabled nil)
+(defvar olegat-colorize-compilation-buffer-enabled nil "Internal use.")
 
-(defun olegat-colorize-compilation-buffer ()
+(defun olegat-colorize-compilation-buffer () "Internal use."
   (when (eq major-mode 'compilation-mode)
     (ansi-color-apply-on-region compilation-filter-start (point-max))))
 
 (defun olegat-toggle-compilation-color (&optional enable)
+  "Toggle SGR ANSI color code parsing in the compile buffer.
+
+Enabling ANSI colors can make the compile output more readable,
+whereas disabling drastically improves performance."
   (interactive (list (not olegat-colorize-compilation-buffer-enabled)))
   (setq olegat-colorize-compilation-buffer-enabled enable)
   (if enable
