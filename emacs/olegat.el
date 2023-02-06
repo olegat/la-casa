@@ -4,19 +4,13 @@
 (defvar olegat-keychar "§")
 
 (defvar olegat-keybindings
-  '(;; Frame selection
-    ("/" . olegat-select-speedbar-frame)
-    ("1" . olegat-select-frame-F1)
-    ("2" . olegat-select-frame-F2)
-    ("3" . olegat-select-frame-F3)
-    ("4" . olegat-select-frame-F4)
-
-     ;; Opening files
+  '(;; Opening files
     ("t t" . toggle-truncate-lines)
     ("f f" . find-file-at-point)
     ("j o" . ff-find-other-file)
 
      ;; Window navigation
+    ("/"       . olegat-select-speedbar-frame)
     ("<right>" . windmove-right)
     ("<left>"  . windmove-left)
     ("<down>"  . windmove-down)
@@ -52,22 +46,6 @@
 (defun olegat-select-speedbar-frame ()
   (interactive)
   (select-frame-by-name "Speedbar"))
-
-(defun olegat-select-frame-F1 ()
-  (interactive)
-  (select-frame-by-name "F1"))
-
-(defun olegat-select-frame-F2 ()
-  (interactive)
-  (select-frame-by-name "F2"))
-
-(defun olegat-select-frame-F3 ()
-  (interactive)
-  (select-frame-by-name "F3"))
-
-(defun olegat-select-frame-F4 ()
-  (interactive)
-  (select-frame-by-name "F4"))
 
 
 ;;-----------------------------------------------------------------------------
