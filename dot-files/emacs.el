@@ -111,11 +111,10 @@
 ;;-----------------------------------------------------------------------------
 ;; Defaults
 ;;-----------------------------------------------------------------------------
-;; Filesystem I/O Config
 (setq
  backup-by-copying t   ; don't clobber symlinks
- backup-directory-alist
- '(("." . "~/.emacs.saves/"))   ; don't litter my fs tree
+ backup-directory-alist '(("." . "~/.emacs.saves/")) ; don't litter my fs tree
+ column-number-mode t ; show column numbers
  delete-old-versions t
  ;; Don't use C/C++ syntax highlighting in diff mode.
  ;; https://github.com/magit/magit/issues/2942
@@ -127,27 +126,36 @@
  diff-refine nil
  kept-new-versions 6
  kept-old-versions 2
- version-control t)   ; use versioned backups
+ version-control t   ; use versioned backups
+ ;; OUCH!! MY EARS!!!!
+ ;; https://tldp.org/HOWTO/Visual-Bell-8.html#:~:text=To%20disable%20the%20visible%20bell,visible%2Dbell%20nil)%20%22.
+ visible-bell t)
 
 (setq-default
  buffer-file-coding-system 'utf-8-unix
- show-trailing-whitespace t)
-
-;; OUCH!! MY EARS!!!!
-;; https://tldp.org/HOWTO/Visual-Bell-8.html#:~:text=To%20disable%20the%20visible%20bell,visible%2Dbell%20nil)%20%22.
-(setq visible-bell t)
-
-;; Code Styling
-(setq-default
  c-basic-offset 2
- tab-width 2
- indent-tabs-mode nil
- require-final-newline nil  ; Don't mess with final newlines in files.
- js-indent-level 2
- mode-require-final-newline nil
  fill-column 80 ; this is the value in Google-Emacs on gLinux
- rust-indent-offset 4)
+ indent-tabs-mode nil
+ js-indent-level 2
+ markdown-command "pandoc"
+ mode-require-final-newline nil
+ ;; Don't add multiple newlines when scrolling past the end of the file.
+ next-line-add-newlines nil
+ require-final-newline nil  ; Don't mess with final newlines in files.
+ rust-indent-offset 4
+ show-trailing-whitespace t
+ tab-width 2)
 
+;; The default face on Windows GUI is Courier New which is so thin and unreadable.
+;; Add this to ~/.emacs as needed.
+;; Courtesy of Stackoverflow: https://stackoverflow.com/questions/4821984/emacs-osx-default-font-setting-does-not-persist/4822066#4822066
+;;(custom-set-faces '(default ((t (:height 110 :family "Consolas")))))
+
+
+
+;;-----------------------------------------------------------------------------
+;; Mode hooks
+;;-----------------------------------------------------------------------------
 ;; R mode
 (add-hook
  'ess-mode-hook
@@ -162,18 +170,21 @@
  (lambda ()
    (setq show-trailing-whitespace nil)))
 
-;; Don't add multiple newlines when scrolling past the end of the file.
-(setq-default next-line-add-newlines nil)
+;; C mode
+;; Don't indent `extern "C" { ... }`
+;; https://www.linuxquestions.org/questions/programming-9/calling-emacs-experts-can-indentation-ignore-extern-c-%7B-%7D-887812/
+(add-hook 'c-mode-common-hook
+	        (lambda()
+	          (c-set-offset 'inextern-lang 0)))
 
-(setq column-number-mode t) ; show column numbers
-
-;; The default face on Windows GUI is Courier New which is so thin and unreadable.
-;; Add this to ~/.emacs as needed.
-;; Courtesy of Stackoverflow: https://stackoverflow.com/questions/4821984/emacs-osx-default-font-setting-does-not-persist/4822066#4822066
-;;(custom-set-faces '(default ((t (:height 110 :family "Consolas")))))
-
-;; Markdown
-(setq-default markdown-command "pandoc")
+;; Python mode
+;; Google3 : The automatic formatting hook is a literal pain the ass.
+;; Code formatting is an art not a science goddammit; piss off.
+;; remove google3-build-try-cleanup from python-mode
+(add-hook
+ 'python-mode-hook
+ (lambda () "" nil
+   (remove-hook 'before-save-hook 'google3-build-try-cleanup t)))
 
 
 
@@ -197,16 +208,6 @@
 ;; Speedbar
 ;;-----------------------------------------------------------------------------
 (custom-set-variables '(speedbar-show-unknown-files t))
-
-
-;;-----------------------------------------------------------------------------
-;; C
-;;-----------------------------------------------------------------------------
-;; Don't indent `extern "C" { ... }`
-;; https://www.linuxquestions.org/questions/programming-9/calling-emacs-experts-can-indentation-ignore-extern-c-%7B-%7D-887812/
-(add-hook 'c-mode-common-hook
-	        (lambda()
-	          (c-set-offset 'inextern-lang 0)))
 
 
 ;;-----------------------------------------------------------------------------
@@ -238,18 +239,6 @@
    '("BUILD\\.gn\\'" . gn-mode)
    '("\\.gni\\'" . gn-mode)))
 
-
-
-;;-----------------------------------------------------------------------------
-;; Google3
-;;-----------------------------------------------------------------------------
-;; The automatic formatting hook is a literal pain the ass.
-;; Code formatting is an art not a science goddammit; piss off.
-;; remove google3-build-try-cleanup from python-mode
-(add-hook
- 'python-mode-hook
- (lambda () "" nil
-   (remove-hook 'before-save-hook 'google3-build-try-cleanup t)))
 
 
 ;;-----------------------------------------------------------------------------
