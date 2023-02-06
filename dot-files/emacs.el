@@ -12,7 +12,6 @@
 (require 'term)
 
 
-
 ;;-----------------------------------------------------------------------------
 ;;  Platform-specific config
 ;;-----------------------------------------------------------------------------
@@ -30,16 +29,6 @@
             (concat (getenv "PATH") ";"
                     (getenv "GIT_ROOT") "\\usr\\bin"))
     (setq find-program "gfind.bat"))
-
-;; Use Dark mode in GUIs (w32, x, ns...)
-(when window-system
-  (olegat-chrome-mode nil)
-  (setq default-frame-alist
-        '((background-color . "gray10")
-          (foreground-color . "white")
-          (ns-appearance . dark)
-          (ns-transparent-titlebar . nil)
-          (frame-background-mode . 'dark))))
 
 
 ;;-----------------------------------------------------------------------------
@@ -87,6 +76,17 @@
 (custom-set-variables
  '(ediff-split-window-function (quote split-window-horizontally))
  '(speedbar-show-unknown-files t))
+
+;; Use Dark mode in GUIs (w32, x, ns...)
+(when window-system
+  (olegat-chrome-mode nil)
+  (set-face-foreground 'term-color-blue "systemBlueColor")
+  (setq default-frame-alist
+        '((background-color . "gray10")
+          (foreground-color . "white")
+          (ns-appearance . dark)
+          (ns-transparent-titlebar . nil)
+          (frame-background-mode . 'dark))))
 
 
 ;;-----------------------------------------------------------------------------
@@ -156,15 +156,6 @@
    'auto-mode-alist
    '("BUILD\\.gn\\'" . gn-mode)
    '("\\.gni\\'" . gn-mode)))
-
-
-
-;;-----------------------------------------------------------------------------
-;; Face customization
-;;-----------------------------------------------------------------------------
-(when (string-equal window-system "ns")
-  (set-face-foreground 'term-color-blue "systemBlueColor"))
-
 
 
 ;;-----------------------------------------------------------------------------
