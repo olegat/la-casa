@@ -1,57 +1,73 @@
 ;;-----------------------------------------------------------------------------
 ;;  Key bindings
 ;;-----------------------------------------------------------------------------
-(defun olegat-insert-§ ()
+(defvar olegat-keychar "§")
+
+(defvar olegat-keybindings
+  '(;; Frame selection
+    ("/" . olegat-select-speedbar-frame)
+    ("1" . olegat-select-frame-F1)
+    ("2" . olegat-select-frame-F2)
+    ("3" . olegat-select-frame-F3)
+    ("4" . olegat-select-frame-F4)
+
+     ;; Opening files
+    ("t t" . toggle-truncate-lines)
+    ("f f" . find-file-at-point)
+    ("j o" . ff-find-other-file)
+
+     ;; Window navigation
+    ("<right>" . windmove-right)
+    ("<left>"  . windmove-left)
+    ("<down>"  . windmove-down)
+    ("<up>"    . windmove-up)
+
+     ;; Buffer selection
+    ("x <right>" . previous-buffer)
+    ("x <left>"  . next-buffer)
+
+     ;; Misc
+    ("TAB"   . imenu)
+    ("e r"   . eval-region)
+    ("b"     . recompile)
+    ("s l"   . sort-lines)
+    ("f n d" . find-name-dired)
+    ))
+
+(defun olegat-insert-keychar ()
   (interactive)
-  (insert "§"))
+  (insert olegat-keychar))
+
+(defun olegat-set-key (keys function)
+  (global-set-key
+   (kbd (concat olegat-keychar " " keys)) function))
+
+(defun olegat-apply-keybindings ()
+  ;; Escape the § symbol
+  (global-set-key (kbd olegat-keychar) nil)
+  (olegat-set-key olegat-keychar 'olegat-insert-keychar)
+  (dolist (elem olegat-keybindings)
+    (olegat-set-key (car elem) (cdr elem))))
+
 (defun olegat-select-speedbar-frame ()
   (interactive)
   (select-frame-by-name "Speedbar"))
+
 (defun olegat-select-frame-F1 ()
   (interactive)
   (select-frame-by-name "F1"))
+
 (defun olegat-select-frame-F2 ()
   (interactive)
   (select-frame-by-name "F2"))
+
 (defun olegat-select-frame-F3 ()
   (interactive)
   (select-frame-by-name "F3"))
+
 (defun olegat-select-frame-F4 ()
   (interactive)
   (select-frame-by-name "F4"))
-
-;; Escape the § symbol
-(global-set-key (kbd "§") nil)
-(global-set-key (kbd "§ §") 'olegat-insert-§)
-
-;; Frame selection
-(global-set-key (kbd "§ /") 'olegat-select-speedbar-frame)
-(global-set-key (kbd "§ 1") 'olegat-select-frame-F1)
-(global-set-key (kbd "§ 2") 'olegat-select-frame-F2)
-(global-set-key (kbd "§ 3") 'olegat-select-frame-F3)
-(global-set-key (kbd "§ 4") 'olegat-select-frame-F4)
-
-;; Opening files
-(global-set-key (kbd "§ t t") 'toggle-truncate-lines)
-(global-set-key (kbd "§ f f") 'find-file-at-point)
-(global-set-key (kbd "§ j o") 'ff-find-other-file)
-
-;; Window navigation
-(global-set-key (kbd "§ <right>") 'windmove-right)
-(global-set-key (kbd "§ <left>")  'windmove-left)
-(global-set-key (kbd "§ <down>")  'windmove-down)
-(global-set-key (kbd "§ <up>")    'windmove-up)
-
-;; Buffer selection
-(global-set-key (kbd "§ x <right>") 'previous-buffer)
-(global-set-key (kbd "§ x <left>")  'next-buffer)
-
-;; Misc
-(global-set-key (kbd "§ TAB") 'imenu)
-(global-set-key (kbd "§ e r") 'eval-region)
-(global-set-key (kbd "§ b")   'recompile)
-(global-set-key (kbd "§ s l") 'sort-lines)
-(global-set-key (kbd "§ f n d") 'find-name-dired)
 
 
 ;;-----------------------------------------------------------------------------

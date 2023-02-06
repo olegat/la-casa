@@ -6,6 +6,7 @@
   load-path))
 
 (require 'olegat)
+(olegat-apply-keybindings)
 
 (require 'ediff)
 (require 'powershell-mode)
