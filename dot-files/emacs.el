@@ -48,9 +48,6 @@
   (setq olegat-cmake-mode-path
         "/cygdrive/c/Program Files/CMake/share/emacs/site-lisp")))
 
-(when (string-equal system-name "silenus-docker")
-  (setq shell-file-name "bash")) ; change default from 'sh' to 'bash'
-
 ;; Use Dark mode in GUIs (w32, x, ns...)
 (when window-system
   (olegat-chrome-mode nil)
