@@ -82,7 +82,7 @@
 
 
 ;;-----------------------------------------------------------------------------
-;; Mode hooks
+;; Modes
 ;;-----------------------------------------------------------------------------
 (defun olegat-init-hooks ()
   "Internal use."
@@ -115,6 +115,25 @@
    'python-mode-hook
    (lambda () "" nil
      (remove-hook 'before-save-hook 'google3-build-try-cleanup t))))
+
+(defun olegat-init-modes ()
+  (when (fboundp 'editorconfig-mode)
+    ;; EditorConfig
+    ;; TODO(olegat) - use use-package: https://www.emacswiki.org/emacs/UsePackage
+    (editorconfig-mode 1))
+
+  ;; CMake
+  (when (boundp 'olegat-cmake-mode-path)
+    (when (file-directory-p olegat-cmake-mode-path)
+      (setq load-path (cons olegat-cmake-mode-path load-path))
+      (require 'cmake-mode)))
+
+  ;; GN (Generate Ninja)
+  (when (fboundp 'gn-mode)
+    (add-to-list
+     'auto-mode-alist
+     '("BUILD\\.gn\\'" . gn-mode)
+     '("\\.gni\\'" . gn-mode))))
 
 
 ;;-----------------------------------------------------------------------------
