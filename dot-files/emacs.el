@@ -15,40 +15,7 @@
 
 (olegat-init-platform)
 (olegat-init-defaults)
-
-
-;;-----------------------------------------------------------------------------
-;; Mode hooks
-;;-----------------------------------------------------------------------------
-;; R mode
-(add-hook
- 'ess-mode-hook
- (lambda ()
-   (setq ess-indent-offset 2)
-   (ess-toggle-underscore nil) ;leave underscore key alone!
-   (setq ess-fancy-comments nil)))
-
-;; term-mode
-(add-hook
- 'term-mode-hook
- (lambda ()
-   (setq show-trailing-whitespace nil)))
-
-;; C mode
-;; Don't indent `extern "C" { ... }`
-;; https://www.linuxquestions.org/questions/programming-9/calling-emacs-experts-can-indentation-ignore-extern-c-%7B-%7D-887812/
-(add-hook 'c-mode-common-hook
-	        (lambda()
-	          (c-set-offset 'inextern-lang 0)))
-
-;; Python mode
-;; Google3 : The automatic formatting hook is a literal pain the ass.
-;; Code formatting is an art not a science goddammit; piss off.
-;; remove google3-build-try-cleanup from python-mode
-(add-hook
- 'python-mode-hook
- (lambda () "" nil
-   (remove-hook 'before-save-hook 'google3-build-try-cleanup t)))
+(olegat-init-hooks)
 
 
 ;;-----------------------------------------------------------------------------
