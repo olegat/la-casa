@@ -1,4 +1,6 @@
 (require 'ansi-color)
+(require 'ediff)
+(require 'term)
 
 
 ;;-----------------------------------------------------------------------------
@@ -293,5 +295,14 @@ whereas disabling drastically improves performance."
   (message (concat "Compilation color " (if enable "enabled" "disabled"))))
 
 
+;;-----------------------------------------------------------------------------
+;; Main (entry point)
+;;-----------------------------------------------------------------------------
+(defun olegat-init ()
+  "Main entry point for 'olegat.el'"
+  (olegat-init-platform)
+  (olegat-init-defaults)
+  (olegat-init-hooks)
+  (olegat-init-modes))
 
 (provide 'olegat)
