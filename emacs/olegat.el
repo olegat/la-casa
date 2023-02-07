@@ -6,6 +6,12 @@
 ;;-----------------------------------------------------------------------------
 (defun olegat-init-platform ()
   "Internal use."
+
+  ;; MELPA
+  (package-initialize)
+  (add-to-list 'package-archives
+               '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
   (when (string-equal system-type "windows-nt")
     (let (olegat-msys)
       ;; Check if this subsystem is MSYS
