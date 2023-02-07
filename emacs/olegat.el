@@ -1,6 +1,66 @@
 (require 'ansi-color)
 
 ;;-----------------------------------------------------------------------------
+;; Defaults
+;;-----------------------------------------------------------------------------
+(defun olegat-init-defaults ()
+  "Internal use."
+  (setq
+   backup-by-copying t   ; don't clobber symlinks
+   backup-directory-alist '(("." . "~/.emacs.saves/")) ; don't litter my fs tree
+   column-number-mode t ; show column numbers
+   delete-old-versions t
+   ;; Don't use C/C++ syntax highlighting in diff mode.
+   ;; https://github.com/magit/magit/issues/2942
+   ;; See Week 10 & 27 (2021)
+   diff-font-lock-syntax nil
+   ;; Don't highlight which part of the diffs have changed, just color the +lines
+   ;; in green and the -lines in red. This speed things up.
+   ;; See Week 39 (2021)
+   diff-refine nil
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t   ; use versioned backups
+   ;; OUCH!! MY EARS!!!!
+   ;; https://tldp.org/HOWTO/Visual-Bell-8.html#:~:text=To%20disable%20the%20visible%20bell,visible%2Dbell%20nil)%20%22.
+   visible-bell t)
+
+  (setq-default
+   buffer-file-coding-system 'utf-8-unix
+   c-basic-offset 2
+   fill-column 80 ; this is the value in Google-Emacs on gLinux
+   indent-tabs-mode nil
+   js-indent-level 2
+   markdown-command "pandoc"
+   mode-require-final-newline nil
+   ;; Don't add multiple newlines when scrolling past the end of the file.
+   next-line-add-newlines nil
+   require-final-newline nil  ; Don't mess with final newlines in files.
+   rust-indent-offset 4
+   show-trailing-whitespace t
+   tab-width 2)
+
+  ;; The default face on Windows GUI is Courier New which is so thin and unreadable.
+  ;; Add this to ~/.emacs as needed.
+  ;; Courtesy of Stackoverflow: https://stackoverflow.com/questions/4821984/emacs-osx-default-font-setting-does-not-persist/4822066#4822066
+  ;;(custom-set-faces '(default ((t (:height 110 :family "Consolas")))))
+  (custom-set-variables
+   '(ediff-split-window-function (quote split-window-horizontally))
+   '(speedbar-show-unknown-files t))
+
+  ;; Use Dark mode in GUIs (w32, x, ns...)
+  (when window-system
+    (olegat-chrome-mode nil)
+    (set-face-foreground 'term-color-blue "systemBlueColor")
+    (setq default-frame-alist
+          '((background-color . "gray10")
+            (foreground-color . "white")
+            (ns-appearance . dark)
+            (ns-transparent-titlebar . nil)
+            (frame-background-mode . 'dark)))))
+
+
+;;-----------------------------------------------------------------------------
 ;;  Key bindings
 ;;-----------------------------------------------------------------------------
 (defvar olegat-keychar "§"
