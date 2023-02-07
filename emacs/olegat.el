@@ -108,7 +108,7 @@
   (global-set-key
    (kbd (concat olegat-keychar " " keys)) function))
 
-(defun olegat-apply-keybindings ()
+(defun olegat-init-keybindings ()
   "Internal use."
   ;; Escape the § symbol
   (global-set-key (kbd olegat-keychar) nil)
