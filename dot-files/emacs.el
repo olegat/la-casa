@@ -13,26 +13,9 @@
 (require 'term)
 
 
-;;-----------------------------------------------------------------------------
-;;  Platform-specific config
-;;-----------------------------------------------------------------------------
-(setq olegat-msys nil)
-
-(when (string-equal system-type "windows-nt")
-  ;; Check if this subsystem is MSYS
-  (when (string-match-p (regexp-quote "/usr/bin/bash") (getenv "SHELL"))
-    (setq olegat-msys t))
-
-  ;; Hacks to make Windows Emacs now Unix-like
-  (unless olegat-msys
-    ;; Use git-bash Unix environment
-    (setenv "PATH"
-            (concat (getenv "PATH") ";"
-                    (getenv "GIT_ROOT") "\\usr\\bin"))
-    (setq find-program "gfind.bat")))
-
-
+(olegat-init-platform)
 (olegat-init-defaults)
+
 
 ;;-----------------------------------------------------------------------------
 ;; Mode hooks
