@@ -13,7 +13,6 @@ class Pos(enum.Flag):
 
 class Kind(enum.Enum):
   VOWEL     = enum.auto()
-  DIPHONG   = enum.auto()
   CONSONANT = enum.auto()
 
 
@@ -28,10 +27,10 @@ class Sym:
 
 
 class SymList:
-  def __init__(self, symbolist=None):
-    if symbolist == None:
-      symbolist = default_symbolist()
-    self._iter = symbolist;
+  def __init__(self, syms=None):
+    if syms == None:
+      syms = default_symbolist()
+    self._iter = syms;
 
   def _maybe_expand(self):
     if isinstance(self._iter, filter):
@@ -71,18 +70,34 @@ class SymList:
     return self._iter[i]
 
 
-
 class WordGenerator:
-  def __init__(self, symbols:SymList=None, minm=1, maxm=3):
-    if symbols == None:
-      symbols = SymList()
+  def __init__(self, symlist:SymList=None, minm=1, maxm=3):
+    if symlist == None:
+      symlist = SymList()
     self.symlist = symlist
     self.minm = minm
     self.maxm = maxm
+    # Precompute filtered lists:
+    self._mids = [None, None]
+    self._ends = [None, None]
+    self._starts = symlist.filter(position=Pos.START)
+    self._mids[0] = symlist.filter(kind=Kind.VOWEL,     position=Pos.MID)
+    self._mids[1] = symlist.filter(kind=Kind.CONSONANT, position=Pos.MID)
+    self._ends[0] = symlist.filter(kind=Kind.VOWEL,     position=Pos.END)
+    self._ends[1] = symlist.filter(kind=Kind.CONSONANT, position=Pos.END)
+
+  def gen_symbols_sequence(self):
+    result = [self._starts.randelem()]
+    i = 0 if result[0].kind == Kind.CONSONANT else 1
+    for _ in range( random.randint(self.minm, self.maxm) ):
+      result.append( self._mids[i].randelem() )
+      i = (i + 1) % 2
+    result.append(self._ends[i].randelem())
+    return result
 
 
 def default_symbolist():
-  vowl, diph, cons = (Kind.VOWEL, Kind.DIPHONG, Kind.CONSONANT)
+  vowl, cons = (Kind.VOWEL, Kind.CONSONANT)
   start, mid, end = (Pos.START, Pos.MID, Pos.END)
   anywhere = start | mid | end
   return [
@@ -92,39 +107,39 @@ def default_symbolist():
     Sym(  'o', vowl, start | mid | end),
     Sym(  'u', vowl, start | mid | end),
     Sym(  'y', vowl, mid | end),
-    Sym( 'aa', diph, mid),
-    Sym( 'ae', diph, mid),
-    Sym( 'ai', diph, start | mid | end),
-    Sym( 'ao', diph, mid),
-    Sym( 'au', diph, start | mid),
-    Sym( 'ay', diph, mid | end),
-    Sym( 'ea', diph, mid | end),
-    Sym( 'ee', diph, mid | end),
-    Sym( 'ei', diph, start | mid | end),
-    Sym( 'eo', diph, mid),
-    Sym( 'eu', diph, mid),
-    Sym( 'ey', diph, mid | end),
-    Sym( 'er', diph, end),
-    Sym('eau', diph, end),
-    Sym('eei', diph, mid),
-    Sym( 'ia', diph, mid | end),
-    Sym( 'ie', diph, mid | end),
-    #Sym( 'ii', diph, mid),
-    Sym( 'io', diph, mid | end),
-    Sym( 'iu', diph, mid),
-    Sym( 'oa', diph, mid),
-    Sym( 'oe', diph, mid),
-    Sym( 'oi', diph, mid),
-    Sym( 'oo', diph, mid),
-    Sym( 'ou', diph, mid | end),
-    Sym('ooi', diph, mid),
-    Sym('oui', diph, mid),
-    Sym('oei', diph, mid),
-    Sym( 'ua', diph, mid),
-    Sym( 'ue', diph, mid),
-    Sym( 'ui', diph, mid),
-    Sym( 'uo', diph, mid),
-    Sym( 'uu', diph, mid),
+    Sym( 'aa', vowl, mid),
+    Sym( 'ae', vowl, mid),
+    Sym( 'ai', vowl, start | mid | end),
+    Sym( 'ao', vowl, mid),
+    Sym( 'au', vowl, start | mid),
+    Sym( 'ay', vowl, mid | end),
+    Sym( 'ea', vowl, mid | end),
+    Sym( 'ee', vowl, mid | end),
+    Sym( 'ei', vowl, start | mid | end),
+    Sym( 'eo', vowl, mid),
+    Sym( 'eu', vowl, mid),
+    Sym( 'ey', vowl, mid | end),
+    Sym( 'er', vowl, end),
+    Sym('eau', vowl, end),
+    Sym('eei', vowl, mid),
+    Sym( 'ia', vowl, mid | end),
+    Sym( 'ie', vowl, mid | end),
+    #Sym( 'ii', vowl, mid),
+    Sym( 'io', vowl, mid | end),
+    Sym( 'iu', vowl, mid),
+    Sym( 'oa', vowl, mid),
+    Sym( 'oe', vowl, mid),
+    Sym( 'oi', vowl, mid),
+    Sym( 'oo', vowl, mid),
+    Sym( 'ou', vowl, mid | end),
+    Sym('ooi', vowl, mid),
+    Sym('oui', vowl, mid),
+    Sym('oei', vowl, mid),
+    Sym( 'ua', vowl, mid),
+    Sym( 'ue', vowl, mid),
+    Sym( 'ui', vowl, mid),
+    Sym( 'uo', vowl, mid),
+    Sym( 'uu', vowl, mid),
     Sym(  "'", cons, mid), # glottal stop
     Sym(  'b', cons, start | mid | end),
     Sym(  'c', cons, start | mid | end),
@@ -207,30 +222,10 @@ def default_symbolist():
     Sym( 'zz', cons, mid),
   ]
 
-def gen_word_symbols(symbols, minm=1, maxm=3):
-
-  def inverse( kind ):
-    if kind != Kind.CONSONANT:
-      return Kind.CONSONANT
-    else:
-      return [Kind.VOWEL, Kind.DIPHONG]
-
-  start = symbols.filter(position=Pos.START).randelem()
-  mids = [None, None]
-  mids[0] = symbols.filter(kind=inverse(Kind.CONSONANT), position=Pos.MID)
-  mids[1] = symbols.filter(kind=Kind.CONSONANT, position=Pos.MID)
-  i = 0 if start.kind == Kind.CONSONANT else 1
-  result = [start];
-  for _ in range(random.randint( minm, maxm )):
-    result.append( mids[i].randelem() )
-    i = (i + 1) % 2
-  result.append( symbols.filter(kind=mids[i][0].kind, position=Pos.END).randelem() )
-  return result
-
 def main(argv):
-  syms = SymList()
+  wg = WordGenerator()
   for _ in range(100):
-    slist = [x.text for x in gen_word_symbols( syms )]
+    slist = [x.text for x in wg.gen_symbols_sequence()]
     print( f'{"".join(slist)}  ({", ".join(slist)})')
   return 0
 
