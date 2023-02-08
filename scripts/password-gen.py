@@ -96,6 +96,23 @@ class WordGenerator:
     return result
 
 
+# Many backend require at least one number and one capital letter.
+# This special generator generates exactly of each.
+class TagGenerator:
+  def __init__(self):
+
+    def _syms(texts:list, kind:Kind):
+      return [Sym(str(text), kind, Pos.START|Pos.END) for text in texts]
+
+    # Exclude [1, I] and [0, O] which are easily confused.
+    nums  = _syms([2, 3, 4, 5, 6, 7, 8, 9], Kind.VOWEL)
+    chars = _syms(list('ABCDEFGHJKLMNPQRSTUVWXYZ'), Kind.CONSONANT)
+    self._wg = WordGenerator(SymList(nums+chars), minm=0, maxm=0)
+
+  def gen_symbols_sequence(self):
+    return self._wg.gen_symbols_sequence();
+
+
 def default_symbolist():
   vowl, cons = (Kind.VOWEL, Kind.CONSONANT)
   start, mid, end = (Pos.START, Pos.MID, Pos.END)
@@ -223,7 +240,7 @@ def default_symbolist():
   ]
 
 def main(argv):
-  wg = WordGenerator()
+  wg = TagGenerator()#WordGenerator()
   for _ in range(100):
     slist = [x.text for x in wg.gen_symbols_sequence()]
     print( f'{"".join(slist)}  ({", ".join(slist)})')
