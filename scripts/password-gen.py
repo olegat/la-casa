@@ -71,7 +71,7 @@ class SymList:
 
 
 class WordGenerator:
-  def __init__(self, symlist:SymList=None, minm=1, maxm=3):
+  def __init__(self, symlist:SymList=None, minm=1, maxm=2):
     if symlist == None:
       symlist = SymList()
     self.symlist = symlist
@@ -111,6 +111,18 @@ class TagGenerator:
 
   def gen_symbols_sequence(self):
     return self._wg.gen_symbols_sequence();
+
+
+class PasswordGenerator:
+  def __init__(self, symlist:SymList=None):
+    self._wg = WordGenerator(symlist)
+    self._tg = TagGenerator();
+
+  def gen_password(self):
+    gs = [self._wg] * 3
+    gs.insert( random.randint(0,2), self._tg )
+    words = [''.join([s.text for s in g.gen_symbols_sequence()]) for g in gs]
+    return '-'.join(words)
 
 
 def default_symbolist():
@@ -240,10 +252,13 @@ def default_symbolist():
   ]
 
 def main(argv):
-  wg = TagGenerator()#WordGenerator()
+  pwg = PasswordGenerator()
   for _ in range(100):
-    slist = [x.text for x in wg.gen_symbols_sequence()]
-    print( f'{"".join(slist)}  ({", ".join(slist)})')
+    print(pwg.gen_password())
+  # wg = WordGenerator()
+  # for _ in range(100):
+  #   slist = [x.text for x in wg.gen_symbols_sequence()]
+  #   print( f'{"".join(slist)}  ({", ".join(slist)})')
   return 0
 
 if __name__ == '__main__':
