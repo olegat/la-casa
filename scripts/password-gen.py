@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
+
 import collections.abc
 import enum
 import random
+import sys
 
 class Pos(enum.Flag):
   START = enum.auto()
@@ -191,31 +193,12 @@ def gen_word_symbols(symbols, minm=1, maxm=3):
                                position=Pos.END )))
   return result
 
-syms = symbols()
-#print(list(filter_symbols(syms, kind=Kind.VOWEL)))
-#print(list(filter_symbols(syms, position=Pos.MID | Pos.END)))
-#print(list(filter_symbols(syms, position=Pos.START | Pos.MID | Pos.END)))
-for _ in range(100):
-  slist = [x.text for x in gen_word_symbols( syms )]
-  print( f'{"".join(slist)}  ({", ".join(slist)})')
+def main(argv):
+  syms = symbols()
+  # for _ in range(100):
+  #   slist = [x.text for x in gen_word_symbols( syms )]
+  #   print( f'{"".join(slist)}  ({", ".join(slist)})')
+  return 0
 
-# VOWELS = [
-#   'a',  'e',  'i',  'o',  'u',  'y',
-# ]
-
-# DIPHONGS = [
-#   'aa', 'ae', 'ai', 'ao', 'au', 'ay',
-#   'ea', 'ee', 'ei', 'eo', 'eu', 'ey', 'eau', 'eei',
-#   'ia', 'ie', 'ii', 'io', 'iu',
-#   'oa', 'oe', 'oi', 'oo', 'ou', 'ooi', 'oui', 'oei',
-#   'ua', 'ue', 'ui', 'uo', 'uu'
-# ]
-
-# CONSONANTS = [
-#   'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n',
-#   'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z',
-#   'bl', 'br', 'ch', 'ck', 'cl', 'cr', 'dr',
-# ]
-
-#print(random.randint(0, 3))
-
+if __name__ == '__main__':
+  exit(main(sys.argv))
