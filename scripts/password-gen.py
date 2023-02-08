@@ -10,10 +10,12 @@ class Pos(enum.Flag):
   MID   = enum.auto()
   END   = enum.auto()
 
+
 class Kind(enum.Enum):
   VOWEL     = enum.auto()
   DIPHONG   = enum.auto()
   CONSONANT = enum.auto()
+
 
 class Sym:
   def __init__(self, text:str, kind:Kind, position:Pos):
@@ -24,7 +26,62 @@ class Sym:
   def __repr__(self):
     return f'{{"{self.text}", {self.kind}, {self.position}}}'
 
-def symbols():
+
+class SymList:
+  def __init__(self, symbolist=None):
+    if symbolist == None:
+      symbolist = default_symbolist()
+    self._iter = symbolist;
+
+  def _maybe_expand(self):
+    if isinstance(self._iter, filter):
+      self._iter = list(self._iter)
+
+  def __repr__(self):
+    return str(self._iter)
+
+  def __len__(self):
+    self._maybe_expand()
+    return len(self._iter)
+
+  def __getitem__(self, key):
+    self._maybe_expand()
+    return self._iter.__getitem__(key)
+
+  def __setitem__(self, key, value):
+    self._maybe_expand()
+    return self._iter.__setitem__(key, value)
+
+  def filter(self, kind=None, position=None):
+
+    def maybe_in( value, maybe_iter ):
+      if isinstance( maybe_iter, collections.abc.Iterable ):
+        return value in maybe_iter;
+      return False
+
+    def fn(sym):
+      return \
+        (kind == None or sym.kind == kind or maybe_in(sym.kind, kind)) and \
+        (position == None or (sym.position & position) == position)
+
+    return SymList(filter( fn, self._iter ))
+
+  def randelem(self):
+    i = random.randint(0, len(self)-1)
+    return self._iter[i]
+
+
+
+class WordGenerator:
+  def __init__(self, symbols:SymList=None, minm=1, maxm=3):
+    if symbols == None:
+      symbols = SymList()
+    self.symlist = symlist
+    self.minm = minm
+    self.maxm = maxm
+
+
+def default_symbolist():
   vowl, diph, cons = (Kind.VOWEL, Kind.DIPHONG, Kind.CONSONANT)
   start, mid, end = (Pos.START, Pos.MID, Pos.END)
   anywhere = start | mid | end
@@ -150,25 +207,6 @@ def symbols():
     Sym( 'zz', cons, mid),
   ]
 
-def filter_symbols(symbols, kind=None, position=None):
-
-  def maybe_in( value, maybe_iter ):
-    if isinstance( maybe_iter, collections.abc.Iterable ):
-      return value in maybe_iter;
-    return False
-
-  def fn(s):
-    return \
-      (kind == None or s.kind == kind or maybe_in(s.kind, kind)) and \
-      (position == None or (s.position & position) == position)
-
-  return filter( fn, symbols )
-
-def rand_elem(ls:list):
-  if isinstance(ls, filter):
-    ls = list(ls)
-  return ls [ random.randint(0, len(ls)-1) ]
-
 def gen_word_symbols(symbols, minm=1, maxm=3):
 
   def inverse( kind ):
@@ -177,27 +215,23 @@ def gen_word_symbols(symbols, minm=1, maxm=3):
     else:
       return [Kind.VOWEL, Kind.DIPHONG]
 
-  start = rand_elem( filter_symbols( symbols, position=Pos.START ))
+  start = symbols.filter(position=Pos.START).randelem()
   mids = [None, None]
-  mids[0] = list(filter_symbols( symbols, kind=inverse(Kind.CONSONANT),
-                                 position=Pos.MID ))
-  mids[1] = list(filter_symbols( symbols, kind=Kind.CONSONANT,
-                                 position=Pos.MID ))
+  mids[0] = symbols.filter(kind=inverse(Kind.CONSONANT), position=Pos.MID)
+  mids[1] = symbols.filter(kind=Kind.CONSONANT, position=Pos.MID)
   i = 0 if start.kind == Kind.CONSONANT else 1
   result = [start];
   for _ in range(random.randint( minm, maxm )):
-    result.append( rand_elem(mids[i]) )
+    result.append( mids[i].randelem() )
     i = (i + 1) % 2
-  result.append(
-    rand_elem( filter_symbols( symbols, kind=mids[i][0].kind,
-                               position=Pos.END )))
+  result.append( symbols.filter(kind=mids[i][0].kind, position=Pos.END).randelem() )
   return result
 
 def main(argv):
-  syms = symbols()
-  # for _ in range(100):
-  #   slist = [x.text for x in gen_word_symbols( syms )]
-  #   print( f'{"".join(slist)}  ({", ".join(slist)})')
+  syms = SymList()
+  for _ in range(100):
+    slist = [x.text for x in gen_word_symbols( syms )]
+    print( f'{"".join(slist)}  ({", ".join(slist)})')
   return 0
 
 if __name__ == '__main__':
