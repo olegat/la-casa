@@ -63,13 +63,14 @@ kk     consonant  mid
 ll     consonant  mid
 mm     consonant  mid
 nn     consonant  mid
+nt     consonant  end|mid
 ph     consonant  start|mid|end
 pl     consonant  start|mid
 pr     consonant  start|mid
 rh     consonant  start
+sch    consonant  start|mid|end
 sh     consonant  start|mid|end
 sk     consonant  start|mid|end
-sch    consonant  start|mid|end
 th     consonant  start|mid|end
 tr     consonant  start
 tw     consonant  start
@@ -80,12 +81,18 @@ de     vowel      start
 deo    vowel      start
 edo    vowel      start
 entro  vowel      start
+exce   vowel      start
+exo    vowel      start
 extra  vowel      start
 geo    vowel      start
 giga   vowel      start
 hydro  vowel      start
 insta  vowel      start
 kilo   vowel      start
+kne    vowel      start
+knee   vowel      start
+kni    vowel      start
+kno    vowel      start
 maxi   vowel      start
 mega   vowel      start
 micro  vowel      start
@@ -109,6 +116,12 @@ rea    vowel      start
 tera   vowel      start
 ultra  vowel      start
 uni    vowel      start
+wha    vowel      start
+whe    vowel      start
+whea   vowel      start
+whee   vowel      start
+whi    vowel      start
+who    vowel      start
 # Common word prefixes (ending in consonants):
 add    consonant  start
 adr    consonant  start
@@ -116,7 +129,6 @@ air    consonant  start
 amp    consonant  start
 app    consonant  start
 appl   consonant  start
-as     consonant  start
 ass    consonant  start
 assim  consonant  start
 ath    consonant  start
@@ -128,7 +140,6 @@ eigh   consonant  start
 eph    consonant  start
 ess    consonant  start
 eth    consonant  start
-ex     consonant  start
 exc    consonant  start
 excr   consonant  start
 ill    consonant  start
@@ -140,6 +151,8 @@ instit consonant  start
 int    consonant  start
 inter  consonant  start
 irr    consonant  start
+scr    consonant  start
+str    consonant  start
 thr    consonant  start
 un     consonant  start
 
@@ -156,6 +169,8 @@ arm    vowel      end
 arms   vowel      end
 arn    vowel      end
 arns   vowel      end
+as     vowel      end
+ass    vowel      end
 aw     vowel      end
 awl    vowel      end
 awls   vowel      end
@@ -164,6 +179,8 @@ awns   vowel      end
 aws    vowel      end
 ay     vowel      end
 eau    vowel      end
+ed     vowel      end
+eds    vowel      end
 ell    vowel      end
 ells   vowel      end
 elm    vowel      end
@@ -177,7 +194,7 @@ erms   vowel      end
 ern    vowel      end
 erns   vowel      end
 ers    vowel      end
-es     vowel      end
+ess    vowel      end
 ey     vowel      end
 ia     vowel      end
 ial    vowel      end
@@ -196,6 +213,7 @@ irn    vowel      end
 irns   vowel      end
 irt    vowel      end
 irts   vowel      end
+iss    vowel      end
 oll    vowel      end
 olls   vowel      end
 omp    vowel      end
@@ -206,6 +224,7 @@ orn    vowel      end
 orns   vowel      end
 ort    vowel      end
 orts   vowel      end
+oss    vowel      end
 ow     vowel      end
 owl    vowel      end
 owls   vowel      end
@@ -220,11 +239,14 @@ urn    vowel      end
 urns   vowel      end
 urt    vowel      end
 urts   vowel      end
+uss    vowel      end
 y      vowel      end
 
 # Common word suffixes (starting with a consonants):
 ck     consonant  end
 cks    consonant  end
+ction  consonant  end
+ctions consonant  end
 ffirm  consonant  end
 ffirms consonant  end
 firm   consonant  end
@@ -249,18 +271,19 @@ ng     consonant  end
 ngs    consonant  end
 nk     consonant  end
 nks    consonant  end
-nt     consonant  end
 nts    consonant  end
 ny     consonant  end
 nys    consonant  end
 pt     consonant  end
 ject   consonant  end
 jects  consonant  end
+jected consonant  end
 jer    consonant  end
 jers   consonant  end
 jet    consonant  end
 jets   consonant  end
 joist  consonant  end
+joists consonant  end
 pts    consonant  end
 rs     consonant  end
 se     consonant  end
