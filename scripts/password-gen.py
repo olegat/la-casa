@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import argparse
 import collections.abc
 import enum
 import os
@@ -39,9 +40,7 @@ class Sym:
 
 
 class SymList:
-  def __init__(self, syms=None):
-    if syms == None:
-      syms = default_symbolist()
+  def __init__(self, syms):
     self._iter = syms;
 
   def _maybe_expand(self):
@@ -160,20 +159,24 @@ def parse_symbolist(path:str):
     pos = Pos.parse_tablerow(row)
     symbol = Sym( row['text'], kind, pos )
     result.append( symbol )
-  return result
+  return SymList(result)
 
-def load_symbolist(filename:str):
-  return parse_symbolist(
-    os.path.join(os.path.dirname(__file__), 'symbols-englishy.txt'))
+def rebase_path(filename:str):
+  return os.path.join(os.path.dirname(__file__), filename)
 
-def default_symbolist():
-  return englishy_symbolist();
-
-def englishy_symbolist():
-  return load_symbolist('symbols-englishy.txt')
+def parse_argv(argv):
+  parser = argparse.ArgumentParser(
+    description="generate passwords using made up words "
+    "(that look like real words)")
+  parser.add_argument(
+    '-f', '--symbolist-file', nargs=1,
+    default=rebase_path('symbols-englishy.txt'))
+  return parser.parse_args(argv)
 
 def main(argv):
-  pwg = PasswordGenerator()
+  args = parse_argv(argv[1:])
+  print(args)
+  pwg = PasswordGenerator( parse_symbolist(args.symbolist_file) )
   passwords = [pwg.gen_password() for _ in range(10)]
   print("Here are some suggested passwords:")
   print('\n  '.join(['']+passwords))
