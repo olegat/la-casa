@@ -300,6 +300,7 @@ whereas disabling drastically improves performance."
 ;;-----------------------------------------------------------------------------
 (defun olegat-init ()
   "Main entry point for 'olegat.el'"
+  (olegat-init-keybindings)
   (olegat-init-platform)
   (olegat-init-defaults)
   (olegat-init-hooks)
