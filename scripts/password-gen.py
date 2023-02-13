@@ -129,7 +129,7 @@ class PasswordGenerator:
 
   def gen_password(self):
     gs = [self._wg] * 3
-    gs.insert( random.randint(0,2), self._tg )
+    gs.insert( random.randint(0,3), self._tg )
     words = [''.join([s.text for s in g.gen_symbols_sequence()]) for g in gs]
     return '-'.join(words)
 
