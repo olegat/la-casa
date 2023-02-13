@@ -82,9 +82,7 @@ class SymList:
 
 
 class WordGenerator:
-  def __init__(self, symlist:SymList=None, minm=1, maxm=2):
-    if symlist == None:
-      symlist = SymList()
+  def __init__(self, symlist:SymList, minm, maxm):
     self.symlist = symlist
     self.minm = minm
     self.maxm = maxm
@@ -125,9 +123,9 @@ class TagGenerator:
 
 
 class PasswordGenerator:
-  def __init__(self, symlist:SymList=None):
-    self._wg = WordGenerator(symlist)
-    self._tg = TagGenerator();
+  def __init__(self, wordgen:WordGenerator):
+    self._wg = wordgen
+    self._tg = TagGenerator()
 
   def gen_password(self):
     gs = [self._wg] * 3
@@ -169,21 +167,35 @@ def parse_argv(argv):
     description="generate passwords using made up words "
     "(that look like real words)")
   parser.add_argument(
-    '-f', '--symbolist-file', nargs=1,
-    default=rebase_path('symbols-englishy.txt'))
+    '--midmin', type=int, nargs=1, metavar='X', default=[1],
+    help='minimum number of middle symbols')
+  parser.add_argument(
+    '--midmax', type=int, nargs=1, metavar='Y', default=[2],
+    help='maximum number of middle symbols')
+  parser.add_argument(
+    '-w', '--gen-words', type=int, nargs=1, metavar='N',
+    help='generate N words')
+  parser.add_argument(
+    '-f', '--symbols', nargs=1, metavar='FILE',
+    default=[rebase_path('symbols-englishy.txt')],
+    help='path to the symbolist text file')
   return parser.parse_args(argv)
 
 def main(argv):
   args = parse_argv(argv[1:])
-  print(args)
-  pwg = PasswordGenerator( parse_symbolist(args.symbolist_file) )
-  passwords = [pwg.gen_password() for _ in range(10)]
-  print("Here are some suggested passwords:")
-  print('\n  '.join(['']+passwords))
-  # wg = WordGenerator()
-  # for _ in range(1000):
-  #   slist = [x.text for x in wg.gen_symbols_sequence()]
-  #   print( f'{"".join(slist)}  ({", ".join(slist)})')
+  wg = WordGenerator(
+    symlist = parse_symbolist(args.symbols[0]),
+    minm = args.midmin[0],
+    maxm = args.midmax[0])
+  if args.gen_words:
+    for _ in range(args.gen_words[0]):
+      slist = [x.text for x in wg.gen_symbols_sequence()]
+      print( f'{"".join(slist)}  ({", ".join(slist)})')
+  else:
+    pwg = PasswordGenerator(wg)
+    passwords = [pwg.gen_password() for _ in range(10)]
+    print("Here are some suggested passwords:")
+    print('\n  '.join(['']+passwords))
   return 0
 
 if __name__ == '__main__':
