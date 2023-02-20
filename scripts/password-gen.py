@@ -104,6 +104,19 @@ class WordGenerator:
     result.append(self._ends[i].randelem())
     return result
 
+  def permutation_stats(self):
+    return {
+      'expr' : 'WORDS_V + WORDS_C',
+      'help' : 'The total number of permutations is the sum of: all the '
+               'permutations starting with "vowel"-kind symbols, and all the '
+               'the permutations starting with "consonant"-kind symbols.',
+      'vars' :
+      {
+        'WORDS_V' : self._permutation_subset('vowel'),
+        'WORDS_C' : self._permutation_subset('consonant'),
+      },
+    }
+
 
 # Many backend require at least one number and one capital letter.
 # This special generator generates exactly of each.
@@ -121,6 +134,32 @@ class TagGenerator:
   def gen_symbols_sequence(self):
     return self._wg.gen_symbols_sequence();
 
+  def permutation_stats(self):
+    return {
+      'expr' : '2 * TAG_PAIRS',
+      'help' : 'Each letter/number pair has two permutations: it either start '
+               'with the number, or starts the letter',
+      'vars' :
+      {
+        'expr' : 'TAG_NUMS * TAG_ALPHAS',
+        'vars' :
+        {
+          'TAG_NUMS':
+          {
+            'expr', '8' # FIXME: hardcoded TAG_NUMS
+            'help', 'There are 8 possible numbers (0 and 1 are not used '
+                    'because they can easily be misinterpretted as letters)'
+          },
+          'TAG_ALPHAS':
+          {
+            'expr', '24' # FIXME: hardcoded TAG_ALPHAS
+            'help', 'There are 24 possible letter (O and I are not used '
+                    'because they can easily be misinterpretted as numbers)'
+          },
+        }
+      }
+    }
+
 
 class PasswordGenerator:
   def __init__(self, wordgen:WordGenerator):
@@ -129,9 +168,31 @@ class PasswordGenerator:
 
   def gen_password(self):
     gs = [self._wg] * 3
-    gs.insert( random.randint(0,2), self._tg )
+    gs.insert( random.randint(0,3), self._tg )
     words = [''.join([s.text for s in g.gen_symbols_sequence()]) for g in gs]
     return '-'.join(words)
+
+  def permutation_stats(self):
+    return {
+      'expr' : 'ALL_WORDS * ALL_TAGS',
+      'help' : 'The total permutations is the products of all the word '
+               'permutations and all the tag permutations.',
+      'vars' :
+      {
+        'ALL_TAGS' :
+        {
+          'expr' : '4 * TAGS', # FIXME: hardcoded TAGS_PLACES=4.
+          'help' : 'Each tag permutation can appear in 4 different places.',
+          'vars' : { 'TAGS' : self._tg.permutation_stats() }
+        },
+        'ALL_WORDS' :
+        {
+          'expr' : 'WORDS ^ 3', # FIXME: hardcoded WORD_COUNT=3.
+          'help' : 'There are three words.',
+          'vars' : { 'WORDS' : self._wg.permutation_stats() },
+        },
+      },
+    }
 
 
 class SymbolParser(TableParser):
@@ -179,6 +240,10 @@ def parse_argv(argv):
     '-f', '--symbols', nargs=1, metavar='FILE',
     default=[rebase_path('symbols-englishy.txt')],
     help='path to the symbolist text file')
+  parser.add_argument(
+    '--stats', action='store_true',
+    default=False,
+    help='print stats report for a symbolist file')
   return parser.parse_args(argv)
 
 def main(argv):
@@ -191,6 +256,8 @@ def main(argv):
     for _ in range(args.gen_words[0]):
       slist = [x.text for x in wg.gen_symbols_sequence()]
       print( f'{"".join(slist)}  ({", ".join(slist)})')
+  elif args.stats:
+    pass
   else:
     pwg = PasswordGenerator(wg)
     passwords = [pwg.gen_password() for _ in range(10)]
