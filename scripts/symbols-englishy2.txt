@@ -1,6 +1,6 @@
 # Hello Emacs, use -*- Mode: conf -*- for this file.
 #
-# use --minmax=1
+# use --midmax=1
 
 abbre  vowel      start
 able   vowel      start

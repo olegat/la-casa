@@ -3,11 +3,13 @@
 import argparse
 import collections.abc
 import enum
+import math
 import os
 import random
 import sys
 
 from table_parser import TableException, TableParser, TableParserContext
+import json
 
 class Pos(enum.Flag):
   START = enum.auto()
@@ -27,6 +29,12 @@ class Kind(enum.Enum):
 
   def parse_tablerow(row:dict):
     return getattr(Kind, row['kind'].upper())
+
+  def inverse(self):
+    if self == Kind.VOWEL:
+      return Kind.CONSONANT
+    else:
+      return Kind.VOWEL
 
 
 class Sym:
@@ -104,6 +112,37 @@ class WordGenerator:
     result.append(self._ends[i].randelem())
     return result
 
+  def _count_map(self):
+    counts = {}
+    for position in [Pos.START, Pos.MID, Pos.END]:
+      counts[position] = {}
+      for kind in [Kind.CONSONANT, Kind.VOWEL]:
+        ls = self.symlist.filter(kind=kind, position=position)
+        counts[position][kind] = len(ls)
+    return counts
+
+  def _permutation_count(self, start_kind):
+    # TODO: check for "duplicate" permutations
+    # TODO: break down the math into a permutation_stats dict.
+    (total, counts) = (0, self._count_map())
+    # Zero times something is zero. No point looping if there's no starting
+    # symbols of kind `start_kind`:
+    if counts[Pos.START][start_kind] == 0:
+      return 0
+    for midcount in range(self.minm, self.maxm+1):
+      # The number of Pos.START symbols
+      (subtotal, kind) = (counts[Pos.START][start_kind], start_kind.inverse())
+      # The number of permutations of Pos.MID symbols
+      for _ in range(midcount):
+        subtotal = subtotal * counts[Pos.MID][kind]
+        kind = kind.inverse()
+      # The number of Pos.END symbols
+      total += (subtotal * counts[Pos.END][kind])
+    return total
+
+  def _permutation_subset(self, start_kind):
+    return { 'expr' : str(self._permutation_count(start_kind)) }
+
   def permutation_stats(self):
     return {
       'expr' : 'WORDS_V + WORDS_C',
@@ -112,8 +151,8 @@ class WordGenerator:
                'the permutations starting with "consonant"-kind symbols.',
       'vars' :
       {
-        'WORDS_V' : self._permutation_subset('vowel'),
-        'WORDS_C' : self._permutation_subset('consonant'),
+        'WORDS_V' : self._permutation_subset(Kind.VOWEL),
+        'WORDS_C' : self._permutation_subset(Kind.CONSONANT),
       },
     }
 
@@ -141,21 +180,26 @@ class TagGenerator:
                'with the number, or starts the letter',
       'vars' :
       {
-        'expr' : 'TAG_NUMS * TAG_ALPHAS',
-        'vars' :
+        'TAG_PAIRS':
         {
-          'TAG_NUMS':
+          'expr' : 'TAG_NUMS * TAG_ALPHAS',
+          'help' : "The number of possible letter/numbers pair (ordering "
+                   "ignored) is equal to the product of each set's size.",
+          'vars' :
           {
-            'expr', '8' # FIXME: hardcoded TAG_NUMS
-            'help', 'There are 8 possible numbers (0 and 1 are not used '
-                    'because they can easily be misinterpretted as letters)'
-          },
-          'TAG_ALPHAS':
-          {
-            'expr', '24' # FIXME: hardcoded TAG_ALPHAS
-            'help', 'There are 24 possible letter (O and I are not used '
-                    'because they can easily be misinterpretted as numbers)'
-          },
+            'TAG_NUMS':
+            {
+              'expr' : '8', # FIXME: hardcoded TAG_NUMS
+              'help' : 'There are 8 possible numbers (0 and 1 are not used '
+                       'because they can easily be misinterpretted as letters)'
+            },
+            'TAG_ALPHAS':
+            {
+              'expr' : '24', # FIXME: hardcoded TAG_ALPHAS
+              'help' : 'There are 24 possible letter (O and I are not used '
+                       'because they can easily be misinterpretted as numbers)'
+            },
+          }
         }
       }
     }
@@ -210,6 +254,64 @@ class SymbolParser(TableParser):
     return success
 
 
+class ExpressionValue:
+  def __init__(self, value):
+    self.value = int(value)
+
+  def expand(self):
+    return self.value
+
+
+class ExpressionVariable:
+  def __init__(self, name, expr):
+    self.name = name
+    self.expr = expr
+
+  def expand(self):
+    return self.expr.expand()
+
+
+class ExpressionOperator:
+  def __init__(self, operator, operand1, operand2):
+    self.operator = ExpressionOperator.operators()[operator]
+    self.operand1 = operand1
+    self.operand2 = operand2
+
+  @classmethod
+  def operators(cls):
+    return { '^': lambda x,y: math.pow(x,y),
+             '*': lambda x,y: x * y,
+             '+': lambda x,y: x + y }
+
+  def expand(self):
+    return self.operator( self.operand1.expand(), self.operand2.expand() )
+
+
+def parse_permutation_stats_expr(stats:dict):
+  # print('')
+  # print(f'{stats=}')
+  variables = {
+    name: parse_permutation_stats_expr(stats['vars'][name])
+    for name in stats.get('vars', [])
+  }
+  # Parse token in postfix notation:
+  tokens = stats['expr'].split()
+  if len(tokens) == 3:
+    (tokens[1], tokens[2]) = (tokens[2], tokens[1])
+  # Parse tokens into expressions:
+  exprs = []
+  for token in tokens:
+    if token in variables:
+      exprs.append( ExpressionVariable(token, variables[token]) )
+    elif token in ExpressionOperator.operators():
+      op2 = exprs.pop()
+      op1 = exprs.pop()
+      exprs.append( ExpressionOperator(token, op1, op2) )
+    else:
+      exprs.append( ExpressionValue(token) )
+  assert len(exprs) == 1
+  return exprs[0]
+
 def parse_symbolist(path:str):
   tp = SymbolParser( 3, ['text', 'kind', 'pos'] )
   result = []
@@ -252,12 +354,17 @@ def main(argv):
     symlist = parse_symbolist(args.symbols[0]),
     minm = args.midmin[0],
     maxm = args.midmax[0])
+  pwg = PasswordGenerator(wg)
   if args.gen_words:
     for _ in range(args.gen_words[0]):
       slist = [x.text for x in wg.gen_symbols_sequence()]
       print( f'{"".join(slist)}  ({", ".join(slist)})')
   elif args.stats:
-    pass
+    stats = pwg.permutation_stats()
+    print(json.dumps(stats, indent=2))
+    expr = parse_permutation_stats_expr( stats )
+    print(expr)
+    print(expr.expand())
   else:
     pwg = PasswordGenerator(wg)
     passwords = [pwg.gen_password() for _ in range(10)]
