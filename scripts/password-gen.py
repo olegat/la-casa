@@ -273,7 +273,8 @@ class ExpressionVariable:
 
 class ExpressionOperator:
   def __init__(self, operator, operand1, operand2):
-    self.operator = ExpressionOperator.operators()[operator]
+    self.operator = operator
+    ExpressionOperator.operators()[operator] # check that key exists
     self.operand1 = operand1
     self.operand2 = operand2
 
@@ -284,12 +285,11 @@ class ExpressionOperator:
              '+': lambda x,y: x + y }
 
   def expand(self):
-    return self.operator( self.operand1.expand(), self.operand2.expand() )
+    opfn = ExpressionOperator.operators()[self.operator]
+    return opfn( self.operand1.expand(), self.operand2.expand() )
 
 
 def parse_permutation_stats_expr(stats:dict):
-  # print('')
-  # print(f'{stats=}')
   variables = {
     name: parse_permutation_stats_expr(stats['vars'][name])
     for name in stats.get('vars', [])
@@ -361,10 +361,9 @@ def main(argv):
       print( f'{"".join(slist)}  ({", ".join(slist)})')
   elif args.stats:
     stats = pwg.permutation_stats()
-    print(json.dumps(stats, indent=2))
+    print(f'Permutations breakdown:\n{json.dumps(stats, indent=2)}')
     expr = parse_permutation_stats_expr( stats )
-    print(expr)
-    print(expr.expand())
+    print(f'Total permutations: {expr.expand()}')
   else:
     pwg = PasswordGenerator(wg)
     passwords = [pwg.gen_password() for _ in range(10)]
