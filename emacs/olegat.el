@@ -77,16 +77,16 @@
    '(ediff-split-window-function (quote split-window-horizontally))
    '(speedbar-show-unknown-files t))
 
-  ;; Use Dark mode in GUIs (w32, x, ns...)
-  (when window-system
+  ;; Always use dark mode
+  (setq frame-background-mode 'dark) ; for terminals
+  (when window-system ; for GUIs (w32, x, ns...)
     (olegat-chrome-mode nil)
     (set-face-foreground 'term-color-blue "systemBlueColor")
     (setq default-frame-alist
           '((background-color . "gray10")
             (foreground-color . "white")
             (ns-appearance . dark)
-            (ns-transparent-titlebar . nil)
-            (frame-background-mode . 'dark)))))
+            (ns-transparent-titlebar . nil)))))
 
 
 ;;-----------------------------------------------------------------------------
