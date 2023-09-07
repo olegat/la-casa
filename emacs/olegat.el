@@ -174,6 +174,10 @@
     ("s l"   . sort-lines)
     ("f n d" . find-name-dired)
     ("3"     . olegat-insert-pound-sign)
+
+     ;; Prettier
+    ("p p"   . prettier-prettify)
+    ("p r"   . prettier-prettify-region)
     )
   "An alist of key-sequences and function names")
 
