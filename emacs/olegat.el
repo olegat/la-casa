@@ -296,6 +296,25 @@ whereas disabling drastically improves performance."
 
 
 ;;-----------------------------------------------------------------------------
+;; TypeScript
+;;-----------------------------------------------------------------------------
+(defun olegat-init-typescript ()
+  (use-package company
+    :ensure t
+    :hook ((typescript-mode . company-mode)))
+
+  (use-package flycheck
+    :ensure t
+    :hook ((typescript-mode . flycheck-mode)))
+
+  (use-package tide
+    :ensure t
+    :after (typescript-mode company flycheck)
+    :hook ((typescript-mode . tide-setup)
+           (typescript-mode . tide-hl-identifier-mode))))
+
+
+;;-----------------------------------------------------------------------------
 ;; Main (entry point)
 ;;-----------------------------------------------------------------------------
 (defun olegat-init ()
@@ -303,6 +322,7 @@ whereas disabling drastically improves performance."
   (olegat-init-keybindings)
   (olegat-init-platform)
   (olegat-init-defaults)
+  (olegat-init-typescript)
   (olegat-init-hooks)
   (olegat-init-modes))
 
