@@ -6,6 +6,7 @@
 	email = olivier.legat@ag-grid.com
 
 [alias]
+	detach = checkout -d
 	arbol = log --graph --oneline --decorate
 	ramas = log --graph --oneline --decorate --branches HEAD
 	boom = log --graph '--date=format:%b %d' '--format=%C(auto,yellow)%h %C(auto,cyan)%cd %C(auto,magenta)%an%C(auto)%d %Creset%s' --graph
