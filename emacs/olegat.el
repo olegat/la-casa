@@ -175,9 +175,15 @@
     ("f n d" . find-name-dired)
     ("3"     . olegat-insert-pound-sign)
 
+     ;; hs-minor-mode
+    ("["     . olegat-hs-show-block)
+    ("]"     . olegat-hs-hide-block)
+
      ;; Prettier
     ("p p"   . prettier-prettify)
     ("p r"   . prettier-prettify-region)
+
+    ("SPC"   . company-complete)
     )
   "An alist of key-sequences and function names")
 
@@ -208,6 +214,18 @@
   "Internal use."
   (interactive)
   (select-frame-by-name "Speedbar"))
+
+(defun olegat-hs-show-block ()
+  "Internal use."
+  (interactive)
+  (unless hs-minor-mode (hs-minor-mode t))
+  (hs-show-block))
+
+(defun olegat-hs-hide-block ()
+  "Internal use."
+  (interactive)
+  (unless hs-minor-mode (hs-minor-mode t))
+  (hs-hide-block))
 
 
 ;;-----------------------------------------------------------------------------
