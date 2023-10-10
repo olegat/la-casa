@@ -136,6 +136,10 @@
       (setq load-path (cons olegat-cmake-mode-path load-path))
       (require 'cmake-mode)))
 
+  ;; Makedown mode
+  (when (fboundp 'markdown-mode)
+    (add-to-list 'auto-mode-alist '("\\.mdoc\\'" . markdown-mode)))
+
   ;; GN (Generate Ninja)
   (when (fboundp 'gn-mode)
     (add-to-list
