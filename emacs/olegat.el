@@ -327,6 +327,8 @@ whereas disabling drastically improves performance."
 ;; TypeScript
 ;;-----------------------------------------------------------------------------
 (defun olegat-init-typescript ()
+  (use-package typescript-mode :ensure t)
+
   (use-package company
     :ensure t
     :hook ((typescript-mode . company-mode)))
