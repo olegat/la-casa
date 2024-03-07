@@ -47,6 +47,8 @@
    ;; in green and the -lines in red. This speed things up.
    ;; See Week 39 (2021)
    diff-refine nil
+   ;; Use a window instead of a frame for ediff GUI mode (like on a terminal)
+   ediff-window-setup-function 'ediff-setup-windows-plain
    kept-new-versions 6
    kept-old-versions 2
    version-control t   ; use versioned backups
@@ -338,6 +340,16 @@ whereas disabling drastically improves performance."
     :after (typescript-mode company flycheck)
     :hook ((typescript-mode . tide-setup)
            (typescript-mode . tide-hl-identifier-mode))))
+
+(defun olegat-ag-charts-options ()
+  (olegat-toggle-compilation-color t)
+  (setq compile-command
+        "~/la-casa/scripts/nx-emacs-adapter.bash build --skip-nx-cache")
+  (setq ag-arguments
+        '("--smart-case"
+          "--stats"
+          "--ignore-dir=node_modules"
+          "--ignore-dir=dist")))
 
 
 ;;-----------------------------------------------------------------------------
