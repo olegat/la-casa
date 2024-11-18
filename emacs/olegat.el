@@ -147,7 +147,11 @@
     (add-to-list
      'auto-mode-alist
      '("BUILD\\.gn\\'" . gn-mode)
-     '("\\.gni\\'" . gn-mode))))
+     '("\\.gni\\'" . gn-mode)))
+
+  ;; Magit
+  (setq-default magit-auto-revert-mode nil)
+  (use-package magit))
 
 
 ;;-----------------------------------------------------------------------------
