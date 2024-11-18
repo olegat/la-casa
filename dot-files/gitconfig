@@ -10,7 +10,7 @@
 	arbol = log --graph --oneline --decorate
 	ramas = log --graph --oneline --decorate --branches HEAD
 	boom = log --graph '--date=format:%b %d' '--format=%C(auto,yellow)%h %C(auto,cyan)%cd %C(auto,magenta)%an%C(auto)%d %Creset%s' --graph
-	madera = log '--format=%C(auto,yellow)%h %C(auto,cyan)%ci %C(auto,magenta)%ae%C(auto)%d %Creset%s' --graph
+	madera = log '--format=%C(auto,yellow)%h %C(auto,cyan)%ai %C(auto,magenta)%ae%C(auto)%d %Creset%s' --graph
 	oak = log '--date=format:%Y-%m-%d %H:%M' '--format=%C(auto,yellow)%h %cd %Creset%C(auto,magenta)% %ad %ae%Creset%C(auto)%d %s' --graph
 	ff = merge --ff-only
 	puff = pull --ff-only
