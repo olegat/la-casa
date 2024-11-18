@@ -7,5 +7,6 @@
 
 (eval-when-compile (require 'use-package))
 (require 'powershell-mode)
+(require 'jira-link-mode)
 (require 'olegat)
 (olegat-init)

@@ -51,6 +51,8 @@
    ediff-window-setup-function 'ediff-setup-windows-plain
    kept-new-versions 6
    kept-old-versions 2
+   jira-link-prefixes '("AG" "CRT")
+   jira-link-base-url "https://ag-grid.example.com/browse/"
    version-control t   ; use versioned backups
    ;; OUCH!! MY EARS!!!!
    ;; https://tldp.org/HOWTO/Visual-Bell-8.html#:~:text=To%20disable%20the%20visible%20bell,visible%2Dbell%20nil)%20%22.
