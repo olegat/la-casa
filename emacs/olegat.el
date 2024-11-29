@@ -347,7 +347,8 @@ whereas disabling drastically improves performance."
     :ensure t
     :after (typescript-mode company flycheck)
     :hook ((typescript-mode . tide-setup)
-           (typescript-mode . tide-hl-identifier-mode))))
+           (typescript-mode . tide-hl-identifier-mode)
+           (typescript-mode . (lambda () (setq-local fill-column 120))))))
 
 (defun olegat-ag-charts-options ()
   (olegat-toggle-compilation-color t)
