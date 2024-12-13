@@ -186,6 +186,7 @@
     ("s l"   . sort-lines)
     ("f n d" . find-name-dired)
     ("3"     . olegat-insert-pound-sign)
+    ("l l"   . olegat-toggle-line-numbers)
 
      ;; hs-minor-mode
     ("["     . olegat-hs-show-block)
@@ -208,6 +209,22 @@
   "Internal use. Insert a £ character (Sterling Pound Sign)."
   (interactive)
   (insert "£"))
+
+(defun olegat-toggle-line-numbers (&optional ARG)
+  "Toggle display-line-number-mode and display-fill-column-indicator-mode.
+If ARG is non-nil, enable both modes if ARG is positive, disable both modes otherwise.
+Without ARG, toggle both modes based on their current state."
+  (interactive "P")
+  (let ((enable (if ARG
+                    (> (prefix-numeric-value ARG) 0)
+                  (not display-line-numbers-mode))))
+    (if enable
+        (progn
+          (display-line-numbers-mode 1)
+          (display-fill-column-indicator-mode 1))
+      (progn
+        (display-line-numbers-mode -1)
+        (display-fill-column-indicator-mode -1)))))
 
 (defun olegat-set-key (keys function)
   "Internal use."
