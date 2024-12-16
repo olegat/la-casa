@@ -215,6 +215,8 @@
 If ARG is non-nil, enable both modes if ARG is positive, disable both modes otherwise.
 Without ARG, toggle both modes based on their current state."
   (interactive "P")
+  (require 'display-line-numbers)
+  (require 'display-fill-column-indicator)
   (let ((enable (if ARG
                     (> (prefix-numeric-value ARG) 0)
                   (not display-line-numbers-mode))))
