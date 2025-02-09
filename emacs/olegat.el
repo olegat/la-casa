@@ -47,8 +47,12 @@
    ;; in green and the -lines in red. This speed things up.
    ;; See Week 39 (2021)
    diff-refine nil
+   ;; Use a window instead of a frame for ediff GUI mode (like on a terminal)
+   ediff-window-setup-function 'ediff-setup-windows-plain
    kept-new-versions 6
    kept-old-versions 2
+   jira-link-prefixes '("AG" "CRT")
+   jira-link-base-url "https://ag-grid.example.com/browse/"
    version-control t   ; use versioned backups
    ;; OUCH!! MY EARS!!!!
    ;; https://tldp.org/HOWTO/Visual-Bell-8.html#:~:text=To%20disable%20the%20visible%20bell,visible%2Dbell%20nil)%20%22.
@@ -77,16 +81,16 @@
    '(ediff-split-window-function (quote split-window-horizontally))
    '(speedbar-show-unknown-files t))
 
-  ;; Use Dark mode in GUIs (w32, x, ns...)
-  (when window-system
+  ;; Always use dark mode
+  (setq frame-background-mode 'dark) ; for terminals
+  (when window-system ; for GUIs (w32, x, ns...)
     (olegat-chrome-mode nil)
     (set-face-foreground 'term-color-blue "systemBlueColor")
     (setq default-frame-alist
           '((background-color . "gray10")
             (foreground-color . "white")
             (ns-appearance . dark)
-            (ns-transparent-titlebar . nil)
-            (frame-background-mode . 'dark)))))
+            (ns-transparent-titlebar . nil)))))
 
 
 ;;-----------------------------------------------------------------------------
@@ -136,12 +140,20 @@
       (setq load-path (cons olegat-cmake-mode-path load-path))
       (require 'cmake-mode)))
 
+  ;; Makedown mode
+  (when (fboundp 'markdown-mode)
+    (add-to-list 'auto-mode-alist '("\\.mdoc\\'" . markdown-mode)))
+
   ;; GN (Generate Ninja)
   (when (fboundp 'gn-mode)
     (add-to-list
      'auto-mode-alist
      '("BUILD\\.gn\\'" . gn-mode)
-     '("\\.gni\\'" . gn-mode))))
+     '("\\.gni\\'" . gn-mode)))
+
+  ;; Magit
+  (setq-default magit-auto-revert-mode nil)
+  (use-package magit))
 
 
 ;;-----------------------------------------------------------------------------
@@ -174,6 +186,17 @@
     ("s l"   . sort-lines)
     ("f n d" . find-name-dired)
     ("3"     . olegat-insert-pound-sign)
+    ("l l"   . olegat-toggle-line-numbers)
+
+     ;; hs-minor-mode
+    ("["     . olegat-hs-show-block)
+    ("]"     . olegat-hs-hide-block)
+
+     ;; Prettier
+    ("p p"   . prettier-prettify)
+    ("p r"   . prettier-prettify-region)
+
+    ("SPC"   . company-complete)
     )
   "An alist of key-sequences and function names")
 
@@ -186,6 +209,24 @@
   "Internal use. Insert a £ character (Sterling Pound Sign)."
   (interactive)
   (insert "£"))
+
+(defun olegat-toggle-line-numbers (&optional ARG)
+  "Toggle display-line-number-mode and display-fill-column-indicator-mode.
+If ARG is non-nil, enable both modes if ARG is positive, disable both modes otherwise.
+Without ARG, toggle both modes based on their current state."
+  (interactive "P")
+  (require 'display-line-numbers)
+  (require 'display-fill-column-indicator)
+  (let ((enable (if ARG
+                    (> (prefix-numeric-value ARG) 0)
+                  (not display-line-numbers-mode))))
+    (if enable
+        (progn
+          (display-line-numbers-mode 1)
+          (display-fill-column-indicator-mode 1))
+      (progn
+        (display-line-numbers-mode -1)
+        (display-fill-column-indicator-mode -1)))))
 
 (defun olegat-set-key (keys function)
   "Internal use."
@@ -204,6 +245,18 @@
   "Internal use."
   (interactive)
   (select-frame-by-name "Speedbar"))
+
+(defun olegat-hs-show-block ()
+  "Internal use."
+  (interactive)
+  (unless hs-minor-mode (hs-minor-mode t))
+  (hs-show-block))
+
+(defun olegat-hs-hide-block ()
+  "Internal use."
+  (interactive)
+  (unless hs-minor-mode (hs-minor-mode t))
+  (hs-hide-block))
 
 
 ;;-----------------------------------------------------------------------------
@@ -296,6 +349,38 @@ whereas disabling drastically improves performance."
 
 
 ;;-----------------------------------------------------------------------------
+;; TypeScript
+;;-----------------------------------------------------------------------------
+(defun olegat-init-typescript ()
+  (use-package typescript-mode :ensure t)
+
+  (use-package company
+    :ensure t
+    :hook ((typescript-mode . company-mode)))
+
+  (use-package flycheck
+    :ensure t
+    :hook ((typescript-mode . flycheck-mode)))
+
+  (use-package tide
+    :ensure t
+    :after (typescript-mode company flycheck)
+    :hook ((typescript-mode . tide-setup)
+           (typescript-mode . tide-hl-identifier-mode)
+           (typescript-mode . (lambda () (setq-local fill-column 120))))))
+
+(defun olegat-ag-charts-options ()
+  (olegat-toggle-compilation-color t)
+  (setq compile-command
+        "~/la-casa/scripts/nx-emacs-adapter.bash build --skip-nx-cache")
+  (setq ag-arguments
+        '("--smart-case"
+          "--stats"
+          "--ignore-dir=node_modules"
+          "--ignore-dir=dist")))
+
+
+;;-----------------------------------------------------------------------------
 ;; Main (entry point)
 ;;-----------------------------------------------------------------------------
 (defun olegat-init ()
@@ -303,6 +388,7 @@ whereas disabling drastically improves performance."
   (olegat-init-keybindings)
   (olegat-init-platform)
   (olegat-init-defaults)
+  (olegat-init-typescript)
   (olegat-init-hooks)
   (olegat-init-modes))
 

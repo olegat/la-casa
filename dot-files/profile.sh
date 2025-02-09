@@ -12,3 +12,4 @@ fi
 export EMACSCLIENT="emacsclient -t -a ''"
 export EDITOR="vim"
 alias ec=$EMACSCLIENT
+alias github="~/la-casa/scripts/github.bash"
