@@ -1,10 +1,6 @@
 [core]
 	pager = less -S
 
-[user]
-	name = Oli Legat
-	email = olegat@google.com
-
 [alias]
 	arbol = log --graph --oneline --decorate
 	ramas = log --graph --oneline --decorate --branches HEAD
