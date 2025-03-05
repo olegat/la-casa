@@ -15,6 +15,7 @@
 \setlength{\fboxsep}{10pt}
 
 \begin{document}
+\vbox to \paperheight{% Force all content into one box exactly as tall as the paper
 \noindent
 % Left Column: Header and Work Experience (approx. 65% width)
 \begin{minipage}[t]{0.65\textwidth}
@@ -54,9 +55,8 @@
         \item Optimized database queries, reducing response times by 50\%.
         \item Mentored junior engineers, fostering a strong technical culture.
     \end{itemize}
-
-\end{minipage}
-\hfill
+\end{minipage}%
+\hfill%
 % Right Column: Contact, Skills, Education (approx. 32% width) with dark background
 \begin{minipage}[t]{0.32\textwidth}
     \colorbox{darkbg}{%
@@ -87,6 +87,7 @@
         \vfill % Forces background to extend to the bottom
     \end{minipage}%
     }
-\end{minipage}
-
+\end{minipage}%
+\vfill % Ensure the box stretches to the bottom
+}% End of vbox to \paperheight
 \end{document}
