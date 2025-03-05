@@ -1,0 +1,92 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[left=1cm, right=0cm, top=0cm, bottom=0cm]{geometry}
+\usepackage{xcolor, fontawesome5, enumitem, hyperref}
+\renewcommand{\familydefault}{\sfdefault} % Use sans-serif font
+\pagestyle{empty} % No page numbers
+
+% Define colour scheme
+\definecolor{navy}{RGB}{15,30,132}        % Dark navy for headings
+\definecolor{lightblue}{RGB}{100,149,237}  % Lighter blue for section accents
+\definecolor{darkbg}{RGB}{30,30,30}        % Dark background for right column
+\definecolor{headerbg}{RGB}{240,240,255}
+
+% Set padding for colorbox
+\setlength{\fboxsep}{10pt}
+
+\begin{document}
+\noindent
+% Left Column: Header and Work Experience (approx. 65% width)
+\begin{minipage}[t]{0.65\textwidth}
+    % Header Section with light sky-blue background
+    \hspace{-1.05cm}
+    \colorbox{headerbg}{%
+    \begin{minipage}[t]{\dimexpr\textwidth + 0.9cm} 
+        \vspace{0.5cm} % Adjusted top spacing
+        {\color{navy} \LARGE \textbf{Oli Legat}}{\Large, Staff Software Engineer}\\[0.5em]
+        \textit{Engineering leader with 15+ years of experience in building high-performing teams and scalable technology solutions. Passionate about innovation, DevOps, and cloud-native architecture.}\\[0.5em]
+    \end{minipage}%
+    }
+    
+    % Work Experience Section
+    \section*{\color{navy} Work Experience}
+    \textbf{TechCorp Inc.}, \textit{Director of Engineering} \hfill 2020 -- Present\\
+    \begin{itemize}[leftmargin=1.5em, nosep]
+        \item Led a team of 50+ engineers, driving product innovation and scalability.
+        \item Spearheaded cloud migration, reducing infrastructure costs by 30\%.
+        \item Implemented Agile \& DevOps culture, improving release cycles by 40\%.
+    \end{itemize}
+    
+    \vspace{0.5em}
+    \textbf{StartupX} \hfill 2015 -- 2020\\
+    \textit{Engineering Manager}\\
+    \begin{itemize}[leftmargin=1.5em, nosep]
+        \item Scaled the engineering team from 5 to 25 developers.
+        \item Launched a SaaS platform serving 1M+ users globally.
+        \item Built CI/CD pipelines that reduced deployment time from hours to minutes.
+    \end{itemize}
+    
+    \vspace{0.5em}
+    \textbf{InnovateIT} \hfill 2010 -- 2015\\
+    \textit{Senior Software Engineer}\\
+    \begin{itemize}[leftmargin=1.5em, nosep]
+        \item Designed and developed microservices architecture for enterprise clients.
+        \item Optimized database queries, reducing response times by 50\%.
+        \item Mentored junior engineers, fostering a strong technical culture.
+    \end{itemize}
+
+\end{minipage}
+\hfill
+% Right Column: Contact, Skills, Education (approx. 32% width) with dark background
+\begin{minipage}[t]{0.32\textwidth}
+    \colorbox{darkbg}{%
+    \begin{minipage}[t][\textheight]{\dimexpr\textwidth-10pt}
+        \raggedright
+        \vspace{0.5cm} % Adjusted top spacing
+        
+        \color{white} % Ensure all text here is white
+        \section*{\color{lightblue} Contact}
+        \faIcon{map-marker-alt} London, UK \\
+        \faIcon{envelope} \href{mailto:olivierleg@gmail.com}{olivierleg@gmail.com} \\
+        \faIcon{phone} +44 1227 390 872 \\
+        \faIcon{linkedin} \href{https://www.linkedin.com/in/olivier-legat}{linkedin.com/in/olivier-legat} \\
+        
+        \section*{\color{lightblue} Skills}
+        \begin{itemize}[leftmargin=1em, nosep]
+            \item Leadership \& Strategy
+            \item Cloud (AWS, GCP, Azure)
+            \item Microservices Architecture
+            \item DevOps \& CI/CD
+            \item Agile Methodologies
+            \item Machine Learning
+        \end{itemize}
+        
+        \section*{\color{lightblue} Education}
+        \textbf{MSc in Computer Science} \\
+        University of East Anglia, 2012
+        
+        \vfill % Forces background to extend to the bottom
+    \end{minipage}%
+    }
+\end{minipage}
+
+\end{document}
