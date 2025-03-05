@@ -1,3 +1,4 @@
+% -*- Mode: LaTeX; compile-command: "pdflatex cv.tex && open cv.pdf" -*-
 \documentclass[a4paper,10pt]{article}
 \usepackage[left=1cm, right=0cm, top=0cm, bottom=0cm]{geometry}
 \usepackage{xcolor, fontawesome5, enumitem, hyperref}
@@ -5,10 +6,10 @@
 \pagestyle{empty} % No page numbers
 
 % Define colour scheme
-\definecolor{navy}{RGB}{15,30,132}        % Dark navy for headings
+\definecolor{navy}{RGB}{15,30,132}         % Dark navy for headings
 \definecolor{lightblue}{RGB}{100,149,237}  % Lighter blue for section accents
 \definecolor{darkbg}{RGB}{30,30,30}        % Dark background for right column
-\definecolor{headerbg}{RGB}{240,240,255}
+\definecolor{headerbg}{RGB}{240,240,255}   % Skyblue for the header
 
 % Set padding for colorbox
 \setlength{\fboxsep}{10pt}
@@ -20,13 +21,13 @@
     % Header Section with light sky-blue background
     \hspace{-1.05cm}
     \colorbox{headerbg}{%
-    \begin{minipage}[t]{\dimexpr\textwidth + 0.9cm} 
+    \begin{minipage}[t]{\dimexpr\textwidth + 0.9cm}
         \vspace{0.5cm} % Adjusted top spacing
         {\color{navy} \LARGE \textbf{Oli Legat}}{\Large, Staff Software Engineer}\\[0.5em]
         \textit{Engineering leader with 15+ years of experience in building high-performing teams and scalable technology solutions. Passionate about innovation, DevOps, and cloud-native architecture.}\\[0.5em]
     \end{minipage}%
     }
-    
+
     % Work Experience Section
     \section*{\color{navy} Work Experience}
     \textbf{TechCorp Inc.}, \textit{Director of Engineering} \hfill 2020 -- Present\\
@@ -35,7 +36,7 @@
         \item Spearheaded cloud migration, reducing infrastructure costs by 30\%.
         \item Implemented Agile \& DevOps culture, improving release cycles by 40\%.
     \end{itemize}
-    
+
     \vspace{0.5em}
     \textbf{StartupX} \hfill 2015 -- 2020\\
     \textit{Engineering Manager}\\
@@ -44,7 +45,7 @@
         \item Launched a SaaS platform serving 1M+ users globally.
         \item Built CI/CD pipelines that reduced deployment time from hours to minutes.
     \end{itemize}
-    
+
     \vspace{0.5em}
     \textbf{InnovateIT} \hfill 2010 -- 2015\\
     \textit{Senior Software Engineer}\\
@@ -62,14 +63,14 @@
     \begin{minipage}[t][\textheight]{\dimexpr\textwidth-10pt}
         \raggedright
         \vspace{0.5cm} % Adjusted top spacing
-        
+
         \color{white} % Ensure all text here is white
         \section*{\color{lightblue} Contact}
         \faIcon{map-marker-alt} London, UK \\
         \faIcon{envelope} \href{mailto:olivierleg@gmail.com}{olivierleg@gmail.com} \\
         \faIcon{phone} +44 1227 390 872 \\
         \faIcon{linkedin} \href{https://www.linkedin.com/in/olivier-legat}{linkedin.com/in/olivier-legat} \\
-        
+
         \section*{\color{lightblue} Skills}
         \begin{itemize}[leftmargin=1em, nosep]
             \item Leadership \& Strategy
@@ -79,11 +80,10 @@
             \item Agile Methodologies
             \item Machine Learning
         \end{itemize}
-        
+
         \section*{\color{lightblue} Education}
         \textbf{MSc in Computer Science} \\
         University of East Anglia, 2012
-        
         \vfill % Forces background to extend to the bottom
     \end{minipage}%
     }
