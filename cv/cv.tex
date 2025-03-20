@@ -9,8 +9,12 @@
 % Define colour scheme
 \definecolor{navy}{RGB}{15,30,132}         % Dark navy for headings
 \definecolor{lightblue}{RGB}{100,149,237}  % Lighter blue for section accents
+\definecolor{vlightblue}{RGB}{185,215,255} % Very lighter blue for softer accents
 \definecolor{darkbg}{RGB}{30,30,30}        % Dark background for left column
 \definecolor{headerbg}{RGB}{240,240,255}   % Skyblue for the header
+
+\newcommand{\subskill}[1]{{\color{vlightblue} #1}}
+\newcommand{\coreskills}[1]{\item \textit{Core Skills}: #1}
 
 % Set padding for colorbox
 \setlength{\fboxsep}{10pt}
@@ -35,11 +39,107 @@
         \faIcon{github} \href{https://github.com/olegat}{github.com/olegat} \\
 
         \section*{\color{lightblue} Skills}
-        \begin{itemize}[leftmargin=1em, nosep]
-            \item TODO
-        \end{itemize}
 
-        \section*{\color{lightblue} Spoken Languages}
+        \subskill{Leadership \& Management}
+        \begin{itemize}[leftmargin=1em, nosep]
+            \item Roadmap Planning
+            \item XFN Team Collaboration
+            \item Mentoring
+            \item Hiring, onboarding \& retention
+            \item DEI advocacy
+            \item Inclusive a11y \& i18n design
+            \item Performance reviews \& career progression planning
+        \end{itemize}
+        \vspace{0.5em}
+
+        %% \subskill{Leadership \& Strategy}
+        %% \begin{itemize}[leftmargin=1em, nosep]
+        %%     \item Engineering strategy development \& execution
+        %%     \item Technical vision \& roadmap planning
+        %%     \item Cross-functional collaboration with product \& design teams
+        %%     \item Architectural decision-making \& trade-offs
+        %%     \item Budgeting \& resource allocation for engineering teams
+        %% \end{itemize}
+        %% \vspace{0.5em}
+
+        %% \subskill{People \& Team Management}
+        %% \begin{itemize}[leftmargin=1em, nosep]
+        %%     \item Leading, mentoring \& coaching engineering managers and ICs
+        %%     \item Scaling engineering teams (hiring, onboarding, retention)
+        %%     \item Performance reviews \& career progression planning
+        %%     \item Fostering high-performance \& engineering culture
+        %%     \item Diversity, Equity \& Inclusion (DEI) advocacy in tech teams
+        %% \end{itemize}
+        %% \vspace{0.5em}
+
+        %% \subskill{Software Engineering \& Architecture}
+        %% \begin{itemize}[leftmargin=1em, nosep]
+        %%     \item Scalable distributed systems design
+        %%     \item High-performance computing \& low-latency optimization
+        %%     \item Microservices, event-driven architecture \& service-oriented design
+        %%     \item API design (REST, GraphQL, gRPC)
+        %%     \item Cloud-native architecture (AWS, GCP, Azure)
+        %%     \item Edge computing \& real-time data processing
+        %% \end{itemize}
+        %% \vspace{0.5em}
+
+        %% \subskill{Infrastructure \& DevOps}
+        %% \begin{itemize}[leftmargin=1em, nosep]
+        %%     \item Cloud platforms: AWS, GCP, Azure
+        %%     \item Infrastructure as Code (Terraform, Pulumi, CloudFormation)
+        %%     \item CI/CD pipelines \& automation (GitHub Actions, Jenkins, CircleCI)
+        %%     \item Containerization \& orchestration (Docker, Kubernetes)
+        %%     \item Observability \& monitoring (Prometheus, Grafana, OpenTelemetry)
+        %% \end{itemize}
+        %% \vspace{0.5em}
+
+        %% \subskill{Security \& Compliance}
+        %% \begin{itemize}[leftmargin=1em, nosep]
+        %%     \item Secure software development lifecycle (SSDLC)
+        %%     \item Identity \& access management (OAuth, OIDC, SAML)
+        %%     \item Threat modeling \& security audits
+        %%     \item Compliance frameworks (ISO 27001, SOC 2, GDPR)
+        %% \end{itemize}
+        %% \vspace{0.5em}
+
+        %% \subskill{Product \& Business Alignment}
+        %% \begin{itemize}[leftmargin=1em, nosep]
+        %%     \item Bridging technical execution with business objectives
+        %%     \item Working with stakeholders (C-suite, investors, board members)
+        %%     \item Data-driven decision-making \& OKRs/KPIs
+        %%     \item Technical due diligence for mergers \& acquisitions
+        %% \end{itemize}
+        %% \vspace{0.5em}
+
+        %% \subskill{Open Source \& Community Engagement}
+        %% \begin{itemize}[leftmargin=1em, nosep]
+        %%     \item Contributions to major open-source projects (Mozilla Firefox, WineHQ, etc.)
+        %%     \item Speaking at conferences \& technical writing
+        %%     \item Developer advocacy \& community building
+        %%     \item Running internal/external tech talks \& workshops
+        %% \end{itemize}
+        %% \vspace{0.5em}
+
+        \subskill{Team Engagment}
+        \begin{itemize}[leftmargin=1em, nosep]
+            \item Fostering high-performance \& engineering culture
+            \item Running tech talks \& workshops
+        \end{itemize}
+        \vspace{0.5em}
+
+        \subskill{Software Engineering}
+        \begin{itemize}[leftmargin=1em, nosep]
+            \item C, C++, CMake
+            \item Rust, Go
+            \item Python, TypeScript, R
+            \item Java, SQL, NoSQL
+            \item Multi-threading, Networking
+            \item Visual Studio, Xcode
+            \item macOS, Windows, Linux, Android
+        \end{itemize}
+        \vspace{0.5em}
+
+        \subskill{Spoken Languages}
         \begin{itemize}[leftmargin=1em, nosep]
             \item English, French (native)
             \item Spanish, Portuguese (fluent)
@@ -67,29 +167,48 @@
     }
     % Work Experience Section
     \section*{\color{navy} Work Experience}
+
     \textbf{AG Charts}, \textit{Staff Software Engineer} \hfill 2023 -- Present
     \begin{itemize}[leftmargin=1.5em, nosep]
-        \item TODO
-        \item TODO
+        \item Developed and maintained a TypeScript-based charting library, improving data visualization capabilities for enterprise clients.
+        \item Engineered high-performance canvas rendering techniques, optimizing interactive charting features.
+        \item Led an initiative to eliminate technical debt, improving performance and long-term maintainability.
+        \item Integrated accessibility features, securing deals with new customers and broadening market reach.
     \end{itemize}
     \vspace{0.5em}
+
     \textbf{Google Inc.}, \textit{Senior Technical Solutions Engineering Manager} \hfill 2018 -- 2023
     \begin{itemize}[leftmargin=1.5em, nosep]
-        \item TODO
-        \item TODO
+        \item Partnered with AAA game studios to ensure timely porting of Windows-based games to Stadia’s Linux-based cloud platform.
+        \item Developed binary translation technology, enabling unmodified Windows binaries to run efficiently on Stadia’s Linux VMs.
+        \item Spearheaded integration of Wine and API translation layers to streamline compatibility with Steamworks and DirectX.
+        \item Led high-stakes partnerships, ensuring multimillion-dollar investments yielded successful game launches.
+        \item Managed technical teams working on developer tooling, boosting engineering efficiency and team satisfaction.
+        \item Recognized with multiple Peer Bonuses and received a ladder transfer from TSE L4 to SWE L4 for outstanding technical contributions.
     \end{itemize}
+
     \vspace{0.5em}
+
     \textbf{Garrison Technology (now part of Everfox)}, \textit{Software Engineer} \hfill 2017 -- 2018
     \begin{itemize}[leftmargin=1.5em, nosep]
-        \item TODO
-        \item TODO
+        \item Optimized Firefox for Android’s rendering engine, improving performance for remote browser isolation technology.
+        \item Migrated build infrastructure to CMake, reducing Qt/C++ build times and increasing developer efficiency.
+        \item Developed a cross-platform video client application using Qt, enabling secure remote browsing across Windows, Linux, and macOS.
+        \item Implemented feature requests from sales teams, contributing to major client acquisitions and revenue growth.
     \end{itemize}
     \vspace{0.5em}
+
     \textbf{Feral Interactive Ltd.}, \textit{Game Developer} \hfill 2012 -- 2017
     \begin{itemize}[leftmargin=1.5em, nosep]
-        \item TODO
-        \item TODO
+        \coreskills{C, C++, Perl, Python}
+        \item Ported high-profile Windows video games to macOS, Linux, and Android
+        \item Adapted DirectX APIs to Metal, OpenGL, and Vulkan.
+        \item Led a team of up to 10 engineers, mentoring developers and ensuring successful project deliveries.
+        \item Overhauled and re-architected a legacy I/O system, significantly reducing recurring bugs and improving long-term stability.
+        \item Engineered performance optimizations in memory management and rendering, enhancing game performance across platforms.
+        \item Developed a cross-platform networking library and integrated support for Steamworks and other game APIs.
     \end{itemize}
+
     \section*{\color{navy} Publications}
     \textbf{OpenABM-Covid19—An agent-based model for non-pharmaceutical interventions against COVID-19 including contact tracing}\\
     Institutions: \textit{Google Research}, \textit{Oxford University} \hfill 2020 -- 2021\\[1.0em]
