@@ -10,9 +10,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 { nx "$@" \
-     2> >(sed -e 's/ag-charts-community: \(.*\)/\1/g' -e 's/ag-charts-enterprise: \(.*\)/\1/g') \
-      | (sed -e 's/ag-charts-community: \(.*\)/\1/g' -e 's/ag-charts-enterprise: \(.*\)/\1/g'); }
-
+     2> >(sed -e 's/ag-charts-types: \(.*\)/\1/g' \
+              -e 's/ag-charts-community: \(.*\)/\1/g' \
+              -e 's/ag-charts-enterprise: \(.*\)/\1/g') \
+      | (sed -e 's/ag-charts-types: \(.*\)/\1/g' \
+             -e 's/ag-charts-community: \(.*\)/\1/g' \
+             -e 's/ag-charts-enterprise: \(.*\)/\1/g'); }
 
 exit "${PIPESTATUS[0]}"
 
