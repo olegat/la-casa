@@ -13,8 +13,17 @@
 \definecolor{darkbg}{RGB}{30,30,30}        % Dark background for left column
 \definecolor{headerbg}{RGB}{240,240,255}   % Skyblue for the header
 
-\newcommand{\subskill}[1]{{\color{vlightblue} #1}}
 \newcommand{\coreskills}[1]{\item Core Skills: #1}
+\newcommand{\subskill}[1]{
+  \vspace{0.8em}
+  {\color{vlightblue} #1}
+  \vspace{0.3em}
+}
+\newcommand{\xp}[3]{
+  \vspace{1.0em}
+  \textbf{#1}, \textit{#2} \hfill #3
+  \vspace{0.3em}
+}
 
 % Set padding for colorbox
 \setlength{\fboxsep}{10pt}
@@ -40,6 +49,7 @@
 
         \section*{\color{lightblue} Skills}
 
+        \vspace{-0.8em} % compensate for \xp \vspace at the start
         \subskill{Leadership \& Management}
         \begin{itemize}[leftmargin=1em, nosep]
             \item Roadmap Planning
@@ -168,7 +178,8 @@
     % Work Experience Section
     \section*{\color{navy} Work Experience}
 
-    \textbf{AG Charts}, \textit{Staff Software Engineer} \hfill 2023 -- Present
+    \vspace{-1.0em} % compensate for \xp \vspace at the start
+    \xp{AG Charts}{Staff Software Engineer}{2023 -- Present}
     \begin{itemize}[leftmargin=1.5em, nosep]
         \coreskills{TypeScript, WAI-ARIA / WCAG Compliance}
         \item Developed and maintained a frontend charting library.
@@ -177,9 +188,8 @@
         \item Led an initiative to eliminate technical debt, improving performance and long-term maintainability.
         \item Improved stability by expanding test coverage through automated image-based tests.
     \end{itemize}
-    \vspace{0.5em}
 
-    \textbf{Google Inc.}, \textit{Senior Technical Solutions Engineering Manager} \hfill 2018 -- 2023
+    \xp{Google Inc.}{Senior Technical Solutions Engineering Manager}{2018 -- 2023}
     \begin{itemize}[leftmargin=1.5em, nosep]
         \coreskills{Management, DevRel, C++, C\#, Vulkan}
         \item Ensured the success of high-stakes multimillion-dollar partnerships with AAA game studios.
@@ -193,9 +203,8 @@
         \item Spearheaded the development of binary translation technology, enabling unmodified Windows games to run efficiently on Cloud-native Linux VMs.
         \item Managed technical teams working on developer tools, boosting the team's productivity and job satisfaction.
     \end{itemize}
-    \vspace{0.5em}
 
-    \textbf{Garrison Technology (now part of Everfox)}, \textit{Software Engineer} \hfill 2017 -- 2018
+    \xp{Garrison Technology (now part of Everfox)}{Software Engineer}{2017 -- 2018}
     \begin{itemize}[leftmargin=1.5em, nosep]
         \coreskills{C++, C\#, Qt, Android}
         \item Promptly implemented feature requests from sales teams to acquire \& retain clients.
@@ -205,9 +214,8 @@
         \item Optimised YUV422 to RGB888 pixel format conversion using HLSL/GLSL shader programs.
         \item Customised Mozilla Firefox for in-house endpoint security technology.
     \end{itemize}
-    \vspace{0.5em}
 
-    \textbf{Feral Interactive Ltd.}, \textit{Game Developer} \hfill 2012 -- 2017
+    \xp{Feral Interactive Ltd.}{Game Developer}{2012 -- 2017}
     \begin{itemize}[leftmargin=1.5em, nosep]
         \coreskills{C, C++, Perl, Python}
         \item Ported high-profile Windows video games to macOS, Linux, and Android
