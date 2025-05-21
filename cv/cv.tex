@@ -13,8 +13,17 @@
 \definecolor{darkbg}{RGB}{30,30,30}        % Dark background for left column
 \definecolor{headerbg}{RGB}{240,240,255}   % Skyblue for the header
 
-\newcommand{\subskill}[1]{{\color{vlightblue} #1}}
 \newcommand{\coreskills}[1]{\item Core Skills: #1}
+\newcommand{\subskill}[1]{
+  \vspace{0.8em}
+  {\color{vlightblue} #1}
+  \vspace{0.3em}
+}
+\newcommand{\xp}[3]{
+  \vspace{1.0em}
+  \textbf{#1}, \textit{#2} \hfill #3
+  \vspace{0.3em}
+}
 
 % Set padding for colorbox
 \setlength{\fboxsep}{10pt}
@@ -40,6 +49,7 @@
 
         \section*{\color{lightblue} Skills}
 
+        \vspace{-0.8em} % compensate for \xp \vspace at the start
         \subskill{Leadership \& Management}
         \begin{itemize}[leftmargin=1em, nosep]
             \item Roadmap Planning
@@ -51,74 +61,6 @@
             \item Performance reviews \& career progression planning
         \end{itemize}
         \vspace{0.5em}
-
-        %% \subskill{Leadership \& Strategy}
-        %% \begin{itemize}[leftmargin=1em, nosep]
-        %%     \item Engineering strategy development \& execution
-        %%     \item Technical vision \& roadmap planning
-        %%     \item Cross-functional collaboration with product \& design teams
-        %%     \item Architectural decision-making \& trade-offs
-        %%     \item Budgeting \& resource allocation for engineering teams
-        %% \end{itemize}
-        %% \vspace{0.5em}
-
-        %% \subskill{People \& Team Management}
-        %% \begin{itemize}[leftmargin=1em, nosep]
-        %%     \item Leading, mentoring \& coaching engineering managers and ICs
-        %%     \item Scaling engineering teams (hiring, onboarding, retention)
-        %%     \item Performance reviews \& career progression planning
-        %%     \item Fostering high-performance \& engineering culture
-        %%     \item Diversity, Equity \& Inclusion (DEI) advocacy in tech teams
-        %% \end{itemize}
-        %% \vspace{0.5em}
-
-        %% \subskill{Software Engineering \& Architecture}
-        %% \begin{itemize}[leftmargin=1em, nosep]
-        %%     \item Scalable distributed systems design
-        %%     \item High-performance computing \& low-latency optimization
-        %%     \item Microservices, event-driven architecture \& service-oriented design
-        %%     \item API design (REST, GraphQL, gRPC)
-        %%     \item Cloud-native architecture (AWS, GCP, Azure)
-        %%     \item Edge computing \& real-time data processing
-        %% \end{itemize}
-        %% \vspace{0.5em}
-
-        %% \subskill{Infrastructure \& DevOps}
-        %% \begin{itemize}[leftmargin=1em, nosep]
-        %%     \item Cloud platforms: AWS, GCP, Azure
-        %%     \item Infrastructure as Code (Terraform, Pulumi, CloudFormation)
-        %%     \item CI/CD pipelines \& automation (GitHub Actions, Jenkins, CircleCI)
-        %%     \item Containerization \& orchestration (Docker, Kubernetes)
-        %%     \item Observability \& monitoring (Prometheus, Grafana, OpenTelemetry)
-        %% \end{itemize}
-        %% \vspace{0.5em}
-
-        %% \subskill{Security \& Compliance}
-        %% \begin{itemize}[leftmargin=1em, nosep]
-        %%     \item Secure software development lifecycle (SSDLC)
-        %%     \item Identity \& access management (OAuth, OIDC, SAML)
-        %%     \item Threat modeling \& security audits
-        %%     \item Compliance frameworks (ISO 27001, SOC 2, GDPR)
-        %% \end{itemize}
-        %% \vspace{0.5em}
-
-        %% \subskill{Product \& Business Alignment}
-        %% \begin{itemize}[leftmargin=1em, nosep]
-        %%     \item Bridging technical execution with business objectives
-        %%     \item Working with stakeholders (C-suite, investors, board members)
-        %%     \item Data-driven decision-making \& OKRs/KPIs
-        %%     \item Technical due diligence for mergers \& acquisitions
-        %% \end{itemize}
-        %% \vspace{0.5em}
-
-        %% \subskill{Open Source \& Community Engagement}
-        %% \begin{itemize}[leftmargin=1em, nosep]
-        %%     \item Contributions to major open-source projects (Mozilla Firefox, WineHQ, etc.)
-        %%     \item Speaking at conferences \& technical writing
-        %%     \item Developer advocacy \& community building
-        %%     \item Running internal/external tech talks \& workshops
-        %% \end{itemize}
-        %% \vspace{0.5em}
 
         \subskill{Team Engagment}
         \begin{itemize}[leftmargin=1em, nosep]
@@ -168,7 +110,8 @@
     % Work Experience Section
     \section*{\color{navy} Work Experience}
 
-    \textbf{AG Charts}, \textit{Staff Software Engineer} \hfill 2023 -- Present
+    \vspace{-1.0em} % compensate for \xp \vspace at the start
+    \xp{AG Charts}{Staff Software Engineer}{2023 -- Present}
     \begin{itemize}[leftmargin=1.5em, nosep]
         \coreskills{TypeScript, WAI-ARIA / WCAG Compliance}
         \item Developed and maintained a frontend charting library.
@@ -177,31 +120,34 @@
         \item Led an initiative to eliminate technical debt, improving performance and long-term maintainability.
         \item Improved stability by expanding test coverage through automated image-based tests.
     \end{itemize}
-    \vspace{0.5em}
 
-    \textbf{Google Inc.}, \textit{Senior Technical Solutions Engineering Manager} \hfill 2018 -- 2023
+    \xp{Google Inc.}{Senior Technical Solutions Engineering Manager}{2018 -- 2023}
     \begin{itemize}[leftmargin=1.5em, nosep]
-        \coreskills{DevRel, C++, C\#, Vulkan}
-        \item Partnered with AAA game studios to ensure timely porting of Windows-based games to Stadia's Linux-based cloud platform.
-        \item Developed binary translation technology, enabling unmodified Windows binaries to run efficiently on Stadia's Linux VMs.
-        \item Spearheaded integration of Wine and API translation layers to streamline compatibility with Steamworks and DirectX.
-        \item Led high-stakes partnerships, ensuring multimillion-dollar investments yielded successful game launches.
-        \item Managed technical teams working on developer tooling, boosting engineering efficiency and team satisfaction.
-        \item Recognized with multiple Peer Bonuses and received a ladder transfer from TSE L4 to SWE L4 for outstanding technical contributions.
+        \coreskills{Management, DevRel, C++, C\#, Vulkan}
+        \item Ensured the success of high-stakes multimillion-dollar partnerships with AAA game studios.
+        \item Received Spot Bonus from Google VP for outstanding technical contributions.
+        \item Travelled onsite to partners to troubleshoot \& pitch upcoming platform features.
+        \item Attended developer conferences such as GDC to foster business relations.
+        \item Contributed to the development of a Visual Studio Extension and C/C++ Developer SDK.
+        \item Scaled-up workforce by interviewing candidates and onboarding new hires.
+        \item Leveraged my proficiency in Spanish to aid Google's DEI hiring initiative.
+        \item Mentored \& trained team members by presenting internal Tech Talks.
+        \item Spearheaded the development of binary translation technology, enabling unmodified Windows games to run efficiently on Cloud-native Linux VMs.
+        \item Managed technical teams working on developer tools, boosting the team's productivity and job satisfaction.
     \end{itemize}
-    \vspace{0.5em}
 
-    \textbf{Garrison Technology (now part of Everfox)}, \textit{Software Engineer} \hfill 2017 -- 2018
+    \xp{Garrison Technology (now part of Everfox)}{Software Engineer}{2017 -- 2018}
     \begin{itemize}[leftmargin=1.5em, nosep]
         \coreskills{C++, C\#, Qt, Android}
-        \item Customised Mozilla Firefox for in-house endpoint security technology.
+        \item Promptly implemented feature requests from sales teams to acquire \& retain clients.
         \item Migrated build system to CMake, drastically improving build times and developer efficiency.
         \item Developed a cross-platform video client desktop application for  Windows, Linux, and macOS.
-        \item Promptly implemented feature requests from sales teams to acquire \& retain clients.
+        \item Ported hardware-accelerated DirectX renderer to OpenGL.
+        \item Optimised YUV422 to RGB888 pixel format conversion using HLSL/GLSL shader programs.
+        \item Customised Mozilla Firefox for in-house endpoint security technology.
     \end{itemize}
-    \vspace{0.5em}
 
-    \textbf{Feral Interactive Ltd.}, \textit{Game Developer} \hfill 2012 -- 2017
+    \xp{Feral Interactive Ltd.}{Game Developer}{2012 -- 2017}
     \begin{itemize}[leftmargin=1.5em, nosep]
         \coreskills{C, C++, Perl, Python}
         \item Ported high-profile Windows video games to macOS, Linux, and Android
