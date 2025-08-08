@@ -373,7 +373,7 @@ whereas disabling drastically improves performance."
 (defun olegat-ag-charts-options ()
   (olegat-toggle-compilation-color t)
   (setq compile-command
-        "~/la-casa/scripts/nx-emacs-adapter.bash build --skip-nx-cache")
+        "~/la-casa/scripts/nx-emacs-adapter.bash build --output-style=static --skip-nx-cache")
   (setq ag-arguments
         '("--smart-case"
           "--stats"
