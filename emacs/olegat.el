@@ -356,6 +356,12 @@ whereas disabling drastically improves performance."
 ;;-----------------------------------------------------------------------------
 ;; TypeScript
 ;;-----------------------------------------------------------------------------
+(defun olegat-tide-setup ()
+  (tide-setup)
+  (tide-hl-identifier-mode)
+  (setq-local fill-column 120)
+  (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))
+
 (defun olegat-init-typescript ()
   (use-package typescript-mode
     :ensure t)
@@ -375,18 +381,9 @@ whereas disabling drastically improves performance."
   (use-package tide
     :ensure t
     :after (typescript-mode company flycheck)
-    :hook ((typescript-mode    . tide-setup)
-           (typescript-ts-mode . tide-setup)
-           (tsx-ts-mode        . tide-setup)
-           (typescript-mode    . tide-hl-identifier-mode)
-           (typescript-ts-mode . tide-hl-identifier-mode)
-           (tsx-ts-mode        . tide-hl-identifier-mode)
-           (typescript-mode    . (lambda () (setq-local fill-column 120)))
-           (typescript-ts-mode . (lambda () (setq-local fill-column 120)))
-           (tsx-ts-mode        . (lambda () (setq-local fill-column 120)))
-           (typescript-mode    . (lambda () (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)))
-           (typescript-ts-mode . (lambda () (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)))
-           (tsx-ts-mode        . (lambda () (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))))))
+    :hook ((typescript-mode    . olegat-tide-setup)
+           (typescript-ts-mode . olegat-tide-setup)
+           (tsx-ts-mode        . olegat-tide-setup))))
 
 (defun olegat-ag-charts-options ()
   (olegat-toggle-compilation-color t)
