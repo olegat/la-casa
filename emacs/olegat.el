@@ -1,6 +1,7 @@
 (require 'ansi-color)
 (require 'ediff)
 (require 'term)
+(require 'treesit)
 
 
 ;;-----------------------------------------------------------------------------
@@ -150,6 +151,10 @@
      'auto-mode-alist
      '("BUILD\\.gn\\'" . gn-mode)
      '("\\.gni\\'" . gn-mode)))
+
+  ;; React-TS mode
+  (when (fboundp 'tsx-ts-mode)
+    (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode)))
 
   ;; Magit
   (setq-default magit-auto-revert-mode nil)
@@ -352,23 +357,36 @@ whereas disabling drastically improves performance."
 ;; TypeScript
 ;;-----------------------------------------------------------------------------
 (defun olegat-init-typescript ()
-  (use-package typescript-mode :ensure t)
+  (use-package typescript-mode
+    :ensure t)
 
   (use-package company
     :ensure t
-    :hook ((typescript-mode . company-mode)))
+    :hook ((typescript-mode    . company-mode)
+           (typescript-ts-mode . company-mode)
+           (tsx-ts-mode        . company-mode)))
 
   (use-package flycheck
     :ensure t
-    :hook ((typescript-mode . flycheck-mode)))
+    :hook ((typescript-mode    . flycheck-mode)
+           (typescript-ts-mode . flycheck-mode)
+           (tsx-ts-mode        . flycheck-mode)))
 
   (use-package tide
     :ensure t
     :after (typescript-mode company flycheck)
-    :hook ((typescript-mode . tide-setup)
-           (typescript-mode . tide-hl-identifier-mode)
-           (typescript-mode . (lambda () (setq-local fill-column 120)))
-           (typescript-mode . (lambda () (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))))))
+    :hook ((typescript-mode    . tide-setup)
+           (typescript-ts-mode . tide-setup)
+           (tsx-ts-mode        . tide-setup)
+           (typescript-mode    . tide-hl-identifier-mode)
+           (typescript-ts-mode . tide-hl-identifier-mode)
+           (tsx-ts-mode        . tide-hl-identifier-mode)
+           (typescript-mode    . (lambda () (setq-local fill-column 120)))
+           (typescript-ts-mode . (lambda () (setq-local fill-column 120)))
+           (tsx-ts-mode        . (lambda () (setq-local fill-column 120)))
+           (typescript-mode    . (lambda () (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)))
+           (typescript-ts-mode . (lambda () (flycheck-add-next-checker 'typescript-tide 'javascript-eslint)))
+           (tsx-ts-mode        . (lambda () (flycheck-add-next-checker 'typescript-tide 'javascript-eslint))))))
 
 (defun olegat-ag-charts-options ()
   (olegat-toggle-compilation-color t)
