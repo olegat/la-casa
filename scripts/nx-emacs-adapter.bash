@@ -17,6 +17,7 @@ export NVM_DIR="$HOME/.nvm"
               -e 's/ag-charts-enterprise: \(.*\)/\1/g' \
               -e 's/ag-charts-angular: \(.*\)/\1/g' \
               -e 's/ag-charts-vue3: \(.*\)/\1/g' \
+              -e 's/ag-charts-website: \(.*\)/\1/g' \
               -e 's/ag-charts-react: \(.*\)/\1/g') \
       | (sed -e 's/ag-charts-types: \(.*\)/\1/g' \
              -e 's/ag-charts-generate-code-reference-files: \(.*\)/\1/g' \
@@ -25,6 +26,7 @@ export NVM_DIR="$HOME/.nvm"
              -e 's/ag-charts-enterprise: \(.*\)/\1/g' \
              -e 's/ag-charts-angular: \(.*\)/\1/g' \
              -e 's/ag-charts-vue3: \(.*\)/\1/g' \
+             -e 's/ag-charts-website: \(.*\)/\1/g' \
              -e 's/ag-charts-react: \(.*\)/\1/g'); }
 
 exit "${PIPESTATUS[0]}"
