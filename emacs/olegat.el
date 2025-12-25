@@ -244,7 +244,11 @@ Without ARG, toggle both modes based on their current state."
   (global-set-key (kbd olegat-keychar) nil)
   (olegat-set-key olegat-keychar 'olegat-insert-keychar)
   (dolist (elem olegat-keybindings)
-    (olegat-set-key (car elem) (cdr elem))))
+    (olegat-set-key (car elem) (cdr elem)))
+
+  ;; macOS GUI only: bind "⌘ \" to other-window
+  (when (and (eq system-type 'darwin) (display-graphic-p))
+    (global-set-key (kbd "s-\\") 'other-window))))
 
 (defun olegat-select-speedbar-frame ()
   "Internal use."
