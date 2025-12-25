@@ -248,7 +248,7 @@ Without ARG, toggle both modes based on their current state."
 
   ;; macOS GUI only: bind "⌘ \" to other-window
   (when (and (eq system-type 'darwin) (display-graphic-p))
-    (global-set-key (kbd "s-\\") 'other-window))))
+    (global-set-key (kbd "s-\\") 'other-window)))
 
 (defun olegat-select-speedbar-frame ()
   "Internal use."
