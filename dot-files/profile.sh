@@ -10,6 +10,5 @@ if  [ -f "${HOME}/.cargo/env" ] ; then
 fi
 
 export EMACSCLIENT="emacsclient -t -a ''"
-export EDITOR="vim"
 alias ec=$EMACSCLIENT
 alias github="~/la-casa/scripts/github.bash"
