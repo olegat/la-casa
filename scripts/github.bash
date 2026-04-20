@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 open() {
-    nohup open "https://github.com/ag-grid/ag-charts/commit/$1" 2>/tmp/nohup.out
+    nohup open "https://github.com/ag-grid/ag-charts/commit/$1" 2>&1 >/tmp/nohup.out
     cat /tmp/nohup.out
     rm /tmp/nohup.out
 }
