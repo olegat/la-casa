@@ -13,5 +13,6 @@ Requirements for the message:
   sign-posts this as an AI-generated commit, e.g. `CRT-1125 [CLAUDE] ...`. Keep the subject concise.
 - Base the body on the ACTUAL diff (`git status` / `git diff`): what changed and why. Do not invent changes.
 - Follow this repo's commit conventions if any are documented.
-- End the file with exactly this trailer as the final line:
+- End the file with this final line:
   Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
+  (adjust to the correct model-name when applicable)
