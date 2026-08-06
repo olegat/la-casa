@@ -6,6 +6,47 @@ allowed for general-purpose utilities that implement formal mathematical
 operations or standards (e.g. some internally `lerp` function or an ISO-8601
 parser).
 
+Introspection is permitted (within reason) to help with black-box assertions,
+but introspection itself should not be asserted.
+
+Bad Example:
+```
+test('my example', async () => {
+  chart = await createChart();
+  expect((chart as any).ctx.someInternalThing.x).toBe(10);
+});
+```
+
+Acceptable Example:
+```
+test('my example', async () => {
+  chart = await createChart();
+  await clickAtX((chart as any).ctx.someInternalThing.x);
+  expect(chart.getState()).toBe(something);
+});
+```
+
+Introspecting the internals through public APIs is also permitted. The criterion
+is how the value was obtained, not how internal it looks. Anything delivered
+through the public API — a callback argument, an event payload, a getter — may
+be asserted as precisely as you like, even when the value itself is generated or
+undocumented.
+
+Acceptable Example:
+```
+test('should generate default ID', async () => {
+  chart = await createChart(); // init 1 bar series with a click listener mock
+  await clickSomething();
+  expect(clickMock).toHaveBeenCalledWith(expect.objectContaining({ seriesId: 'BarSeries-1' }));
+});
+```
+
+Bad Example:
+``
+  // Same value, but reached by introspection rather than delivered by the API.
+  expect((deproxy(chart) as any).series[0].id).toBe('BarSeries-1');
+``
+
 Use DAMP-not-DRY when writing tests. Clearly separate computational logic from
 reproduction steps. Keeps `expect` calls in test cases as much as possible
 (exceptions: initialisation).
