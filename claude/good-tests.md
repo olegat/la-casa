@@ -3,7 +3,7 @@ generally do not have formal invariants and therefore assumptions of internals
 should be avoided. Favour black-box testing of the public AG Charts API instead
 (i.e. good tests use the public API like a real end-user). Exceptions are
 allowed for general-purpose utilities that implement formal mathematical
-operations or standards (e.g. some internally `lerp` function or an ISO-8601
+operations or standards (e.g. some internal `lerp` function or an ISO-8601
 parser).
 
 Introspection is permitted (within reason) to help with black-box assertions,
@@ -49,7 +49,7 @@ Bad Example:
 
 Use DAMP-not-DRY when writing tests. Clearly separate computational logic from
 reproduction steps. Keeps `expect` calls in test cases as much as possible
-(exceptions: initialisation).
+Exceptions: initialisation, utility/helpers.
 
 Bad Example:
 ```
@@ -80,6 +80,8 @@ for (const t of someList) {
 Good Example:
 ```
 function popChartState() {
+  expect(chart).toHaveProperty('foobar'); // OKAY for verifying helper's assumptions
+                                          // to perform the required logic here.
   return chart.foobar(); // imagine this is many lines long.
 }
 
@@ -106,4 +108,39 @@ describe('my collection', () => {
     expect(popChartState()).toBe(somethingElse);
   });
 });
+```
+
+Using TypeScript assertion like `as` or `noNull!` is permitted (within reason),
+but using the `Caster` utility is preferrable when applicable. Where practical,
+assumptions about typing must be verified.
+
+Acceptable Example:
+```
+function getNodePoint(datumIndex: number) => {
+  const series = (chart as any).series[0]; // `as any` permitted, but not ideal.
+  const node = series.getNodeData()[datumIndex]!; // `!` permitted, but not ideal.
+  return node.point;
+}
+```
+
+Good Example:
+```
+function getNodePoint(datumIndex: number) => {
+  // All assumptions regarding the typing of `chart` are explicitly declared:
+  const series = new Caster(chart)
+    .cast(Chart)
+    .accessProperty('series')
+    .cast(Array)
+    .accessArrayElement(0)
+    .cast(BarSeries)
+    .value;
+
+  // Ideal: The `node!` assumption is verified immediately after usage.
+  // Using `!` during initialision means that we no longer to type `!` for each
+  // follow `node` usage.
+  const node = series.getNodeData()[datumIndex]!;
+  expect(node).toBeDefined();
+
+  return node.point;
+}
 ```
