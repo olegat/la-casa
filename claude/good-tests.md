@@ -3,8 +3,8 @@ generally do not have formal invariants and therefore assumptions of internals
 should be avoided. Favour black-box testing of the public AG Charts API instead
 (i.e. good tests use the public API like a real end-user). Exceptions are
 allowed for general-purpose utilities that implement formal mathematical
-operations or standards (e.g. some internal `lerp` function or an ISO-8601
-parser).
+operations, core utilities or standards (e.g. an internal `lerp` function, a
+custom string `join()` utility, or an ISO-8601 date parser).
 
 Introspection is permitted (within reason) to help with black-box assertions,
 but introspection itself should not be asserted.
@@ -48,7 +48,7 @@ Bad Example:
 ``
 
 Use DAMP-not-DRY when writing tests. Clearly separate computational logic from
-reproduction steps. Keeps `expect` calls in test cases as much as possible
+reproduction steps. Keep `expect` calls in test cases as much as possible
 Exceptions: initialisation, utility/helpers.
 
 Bad Example:
@@ -127,7 +127,7 @@ Good Example:
 ```
 function getNodePoint(datumIndex: number) => {
   // All assumptions regarding the typing of `chart` are explicitly declared:
-  const series = new Caster(chart)
+  const series: BarSeries = new Caster(chart)
     .cast(Chart)
     .accessProperty('series')
     .cast(Array)
@@ -136,8 +136,8 @@ function getNodePoint(datumIndex: number) => {
     .value;
 
   // Ideal: The `node!` assumption is verified immediately after usage.
-  // Using `!` during initialision means that we no longer to type `!` for each
-  // follow `node` usage.
+  // Using `!` during initialision means that we no longer need to type `!`
+  // for each follow-up `node` usage.
   const node = series.getNodeData()[datumIndex]!;
   expect(node).toBeDefined();
 
