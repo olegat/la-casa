@@ -1,0 +1,113 @@
+<!-- Status board template (chief-of-staff skill).
+     Two audiences: a 5-second reader (headline + banner + table) and an incident investigator (decision and event logs).
+     Fill the {{PLACEHOLDERS}}; keep exactly ONE banner: "banner calm" when nothing needs the human, "banner act" when it does.
+     Pills: p-act (human action), p-run (in progress), p-wait (blocked / waiting), p-ok (done), p-idle (queued).
+     Logs are newest first. Append corrections; never rewrite past entries. Update the stamp on every publish. -->
+<title>{{PROJECT}} Status</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: status board. Headline + "needs you" banner first (5-second read), then one table, then logs for incident work. */
+  :root {
+    --bg: #F6F7F9; --surface: #FFFFFF; --sunk: #EEF0F4; --ink: #161A22; --soft: #444C5C; --mute: #6A7284;
+    --rule: #DCE0E7; --accent: #2A4FA8;
+    --act: #B42318; --act-soft: #FDECEA; --run: #2A4FA8; --run-soft: #E6ECF9; --ok: #2F6B3B; --ok-soft: #E5F1E7; --wait: #7A5A12; --wait-soft: #FAF1DE;
+    --body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif; --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #0F1218; --surface: #161B24; --sunk: #12161E; --ink: #E6E9F0; --soft: #BFC6D4; --mute: #8D95A7; --rule: #283040; --accent: #8FA9EC;
+    --act: #F2877C; --act-soft: #3A1C1A; --run: #8FA9EC; --run-soft: #1C2742; --ok: #8CC497; --ok-soft: #1A2B1E; --wait: #DDB45E; --wait-soft: #2E2716; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #0F1218; --surface: #161B24; --sunk: #12161E; --ink: #E6E9F0; --soft: #BFC6D4; --mute: #8D95A7; --rule: #283040; --accent: #8FA9EC;
+    --act: #F2877C; --act-soft: #3A1C1A; --run: #8FA9EC; --run-soft: #1C2742; --ok: #8CC497; --ok-soft: #1A2B1E; --wait: #DDB45E; --wait-soft: #2E2716; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 var(--body); }
+  .wrap { max-width: 56rem; margin: 0 auto; padding-block: 2rem 4rem; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: flex; flex-direction: column; gap: 2rem; }
+  h1 { font-size: 1.35rem; margin: 0; font-weight: 600; }
+  h2 { font-size: .78rem; letter-spacing: .09em; text-transform: uppercase; color: var(--mute); margin: 0 0 .6rem; font-weight: 600; }
+  p { margin: 0; }
+  a { color: var(--accent); }
+  code { font-family: var(--mono); font-size: .86em; background: var(--sunk); padding: .05em .3em; border-radius: 3px; word-break: break-word; }
+  .head { display: flex; flex-direction: column; gap: .35rem; }
+  .headline { font-size: 1.05rem; color: var(--soft); }
+  .stamp { font-size: .8rem; color: var(--mute); }
+  .banner { border-radius: 6px; padding: .9rem 1.1rem; display: flex; flex-direction: column; gap: .3rem; }
+  .banner.act { background: var(--act-soft); border: 1px solid var(--act); }
+  .banner.act strong { color: var(--act); }
+  .banner.calm { background: var(--ok-soft); border: 1px solid var(--rule); color: var(--soft); }
+  .banner ul { margin: .2rem 0 0; padding-left: 1.1rem; }
+  .scroller { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+  table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: .9rem; }
+  th, td { text-align: left; padding: .5rem .75rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); background: var(--sunk); font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  td.id { font-family: var(--mono); color: var(--accent); white-space: nowrap; }
+  td.m { font-family: var(--mono); font-size: .8rem; color: var(--soft); white-space: nowrap; }
+  .pill { display: inline-block; font-size: .7rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: .12rem .45rem; border-radius: 3px; white-space: nowrap; }
+  .p-act { background: var(--act-soft); color: var(--act); } .p-run { background: var(--run-soft); color: var(--run); }
+  .p-ok { background: var(--ok-soft); color: var(--ok); } .p-wait { background: var(--wait-soft); color: var(--wait); }
+  .p-idle { background: var(--sunk); color: var(--mute); }
+  details { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; }
+  summary { cursor: pointer; padding: .7rem 1rem; font-weight: 600; font-size: .92rem; }
+  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .log { list-style: none; margin: 0; padding: 0 1rem 1rem; display: flex; flex-direction: column; gap: .45rem; }
+  .log li { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: .75rem; font-size: .88rem; color: var(--soft); }
+  .log time { font-family: var(--mono); font-size: .78rem; color: var(--mute); white-space: nowrap; }
+  @media (max-width: 34rem) { .log li { grid-template-columns: 1fr; gap: 0; } }
+  .links { font-size: .85rem; color: var(--mute); display: flex; flex-wrap: wrap; gap: .3rem 1.2rem; }
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <h1>{{PROJECT}} &middot; {{PHASE}}</h1>
+    <p class="headline">{{N}} of {{M}} merged. {{ONE-SENTENCE STATE: what is moving and what comes next.}}</p>
+    <p class="stamp">Updated {{DATE TIME TZ}}</p>
+  </header>
+
+  <!-- Nothing needed from the human: -->
+  <div class="banner calm">
+    <p><strong>Nothing needs you right now.</strong> {{What is running; what the next human action will be.}}</p>
+  </div>
+  <!-- Human action needed (replace the calm banner; remove it as soon as it's done):
+  <div class="banner act">
+    <p><strong>Action needed: {{verb}} {{what}} in {{where}}.</strong> {{One line on how; commands in the session's needs-input message or a linked README.}}</p>
+    <ul><li>{{second action, if batched}}</li></ul>
+  </div>
+  -->
+
+  <section>
+    <h2>Sub-phases</h2>
+    <div class="scroller">
+      <table>
+        <thead><tr><th>ID</th><th>Work</th><th>State</th><th>Waiting on</th><th>Desk &middot; branch</th></tr></thead>
+        <tbody>
+          <tr><td class="id">{{x.a}}</td><td>{{short name}}</td><td><span class="pill p-ok">Merged</span> {{#PR}}</td><td>&mdash;</td><td class="m">freed</td></tr>
+          <tr><td class="id">{{x.b}}</td><td>{{short name}}</td><td><span class="pill p-act">Sign (you)</span></td><td>{{your signature}}</td><td class="m">{{wtN}} &middot; {{branch}}</td></tr>
+          <tr><td class="id">{{x.c}}</td><td>{{short name}}</td><td><span class="pill p-run">In progress</span></td><td>{{gate / review}}</td><td class="m">{{wtN}} &middot; {{branch}}</td></tr>
+          <tr><td class="id">{{x.d}}</td><td>{{short name}}</td><td><span class="pill p-wait">Blocked</span></td><td>{{x.b}}</td><td class="m">&mdash;</td></tr>
+          <tr><td class="id">{{x.z}}</td><td>Postmortem report</td><td><span class="pill p-idle">Queued</span></td><td>all</td><td class="m">&mdash;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <details>
+    <summary>Decisions made by the Chief of Staff (L2)</summary>
+    <ul class="log">
+      <li><time>{{MM-DD HH:MM}}</time><span>{{The call, and why. Mark reversals as "<strong>Reversed decision N</strong>" and keep the original.}}</span></li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Event log (newest first)</summary>
+    <ul class="log">
+      <li><time>{{MM-DD HH:MM}}</time><span>{{What happened, with SHAs, PR numbers and desks. Tag "Postmortem item." where relevant.}}</span></li>
+    </ul>
+  </details>
+
+  <div class="links">
+    <a href="{{PLAN ARTIFACT URL}}">Plan</a>
+    <span>Ticket {{KEY}}</span>
+    <span>Hand-off notes: <code>{{handoff dir}}</code></span>
+  </div>
+</div>
