@@ -115,9 +115,18 @@ Log every decision with a time, the call, and *why*. If you're wrong, say so pla
 
 ## 7. Postmortem sub-phase
 
-The last sub-phase produces a report artifact:
-- A brief summary (what shipped, PR list, timeline).
-- Detailed findings, each graded **Nit / Warning / Error / Fatal**. Include process failures (yours too),
-  stalls, policy breaches and near-misses, tooling gaps, and refinements to any guideline documents the ICs
-  gave feedback on.
-- Collect candidates as you go: tag event-log entries "postmortem item" so nothing is lost.
+The last sub-phase produces a report artifact, built from `templates/postmortem/` (fill a copy of
+`data.example.py`, then run `python3 -I build.py data.py postmortem.html`; see its README). Section order:
+1. **Outcome:** what is now true, with a few headline numbers.
+2. **What went well** and **What went wrong:** the top-level story, each item linking to finding IDs.
+3. **Summary by sub-phase:** what each delivered, its PR(s), and anything descoped, deferred or parked, with
+   who owns it next (e.g. "by the next phase at the latest").
+4. **Findings:** each with ONE grade (**Nit:** low priority, can be ignored; **Warning:** worth considering;
+   **Error:** needs a follow-up; **Fatal:** stop and fix now), evidence (file:line, PR, test or status-log
+   timestamp) and a next step. List your own (L2) mistakes first. Include process failures, stalls, policy
+   breaches and near-misses, tooling gaps, pre-existing bugs found on the way, and items outside the project.
+5. **Guideline refinements** (optional): proposed wording changes to any guideline the ICs gave feedback on.
+
+Collect candidates as you go so nothing is lost: tag status-log entries "Postmortem item", keep a running
+`postmortem-notes.md`, and have every hand-off end with graded follow-ups. The IC writing the report works
+read-only from those sources. You review the full text (and any script) before publishing.
