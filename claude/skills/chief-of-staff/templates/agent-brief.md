@@ -39,6 +39,6 @@ Shared resources: <e.g. "wrap e2e runs in `resource-lock.sh acquire <id>` … `r
 Run long gates in the foreground, or block on them. Don't go idle "waiting" for a background job.
 
 ## Hand-off
-1. `<handoff dir>/<id>.md`: summary, decisions and why, gates (command → pass/fail), risks, guideline
+1. `<$JOB absolute path>/handoff/<id>.md`: summary, decisions and why, gates (command → pass/fail), risks, guideline
    feedback, follow-ups graded Nit/Warning/Error/Fatal.
 2. Final reply, ≤10 lines: READY-TO-SIGN / BLOCKED: <question>, staged count, gates, hand-off path.

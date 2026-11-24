@@ -33,6 +33,11 @@ the hand-off. Make the decisions that are yours, log them, and escalate the rest
    deleted.
 5. Ask once, up front, for the conventions you need: ticket key, PR title pattern, branch pattern, base branch,
    reviewers, gate commands, and merge style.
+6. **Job directory.** Keep every project file in `$JOB = $CLAUDE_JOB_DIR/tmp/`, the CoS session's own Claude Code job
+   dir. That way, parallel CoS sessions never share a folder. Use this fixed layout: `brief.md` (the shared IC brief),
+   `status.html` (the artifact source), `handoff/<id>.md`, `<id>-rebase/` (rebase kits), and `postmortem-notes.md`.
+   Write `$JOB`'s absolute path into every IC brief and into the status artifact. A restarted session gets a *new*
+   `$CLAUDE_JOB_DIR`, so keep using the original path recorded on the status page; don't re-derive it.
 
 ## 2. Running ICs
 
@@ -45,7 +50,8 @@ the hand-off. Make the decisions that are yours, log them, and escalate the rest
 - **Parallelism:** run sub-phases at once when their files don't overlap, or when the overlap is small and you
   accept one rebase. Record that call as an L2 decision.
 - **Read-only oversight:** you may inspect an IC's worktree, logs and processes, but don't edit its files.
-- **Hand-off contract:** each IC writes `handoff/<id>.md` (summary, decisions and why, gates as command →
+  Likewise, you and ICs may use mcp credentials (e.g. Jira) on a read-only basis.
+- **Hand-off contract:** each IC writes `$JOB/handoff/<id>.md` (summary, decisions and why, gates as command →
   pass/fail, risks, guideline feedback, follow-ups graded Nit/Warning/Error/Fatal). Its final reply is
   ≤10 lines: `READY-TO-SIGN` / `BLOCKED: <question>`, staged count, gates, hand-off path.
 

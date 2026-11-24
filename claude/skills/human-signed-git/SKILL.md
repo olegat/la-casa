@@ -37,7 +37,7 @@ otherwise: no comments, reviews, labels, merges or edits.
 
 ## Rebase kit (when a signed branch conflicts)
 The agent prepares the kit; the human runs it (rebasing re-signs). Put it outside the repo (e.g.
-`<job-tmp>/<id>-rebase/`), containing:
+`$CLAUDE_JOB_DIR/tmp/<id>-rebase/`, or the orchestrator's recorded `$JOB` path for an IC), containing:
 - `README.md` from `templates/rebase-readme.md`.
 - `files/<repo-path>`: resolved copies of ONLY the conflicted files.
 - `resolution-vs-<base>.diff` and gate logs, for review.
